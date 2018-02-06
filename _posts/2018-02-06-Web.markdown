@@ -3,7 +3,7 @@ layout:     post
 title:      "本人的第一次WEB开发学习"
 date:       2018-02-6 12:00:00
 author:     "xu"
-header-img: "img/post-bg-miui6.jpg"
+header-img: "img/05.png"
 tags:
     - Web
     - Javaee
