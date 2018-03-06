@@ -4,7 +4,7 @@ title:      "Linux的学习"
 subtitle:   "从开发到维护，从防护到攻击"
 date:       2018-03-06 17:00:00
 author:     "xu"
-header-img: "img/post-in/post-Linux.jpg"
+header-img: "img/in-post/post-Linux.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
