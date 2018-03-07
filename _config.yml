@@ -3,8 +3,8 @@ title: 春和景明，波澜不惊
 SEOTitle: 徐东篱的博客
 header-img: img/home-bg.jpg
 email: xdlisatiger.outlook.com
-description: "关于前端与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
-keyword: "徐东篱,徐东篱的博客, Hux Blog, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 设计"
+description: "徐东篱的博客，记录和成长，感恩生命中的你"
+keyword: "徐东篱,徐东篱的博客, 博客, 个人网站, 互联网, Web, Javaee, 前端, 设计"
 url: "https://youdonotlove.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -67,7 +67,7 @@ ga_domain: huangxuan.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "小小的我，小小寂寞<br>每晚临睡前的我，一个人忧愁的度过<br>不安或落寞，都有你陪着我"
+sidebar-about-description: "想要做个好人<br>留给世界一点点美好<br>一点点代码"
 sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
