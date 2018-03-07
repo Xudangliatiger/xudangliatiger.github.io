@@ -4,54 +4,6 @@ title:      "Linux的学习"
 subtitle:   "从开发到维护，从防护到攻击"
 date:       2018-03-06 17:00:00
 author:     "xu"
-header-img: "img/post-bg-re-vs-ng2.jpg"
-header-mask: 0.3
-catalog:    true
-tags:
-    - Linux
----
-
-
-##安装各种环境
-
->JDK的安装：
-
-https://jingyan.baidu.com/article/63f236284283300208ab3d03.html
-
-Sh是可执行文件，执行方法，直接终端里 到目录下 sh 某某.sh即可
-
-
->使用wget命令出错
-
-wget在使用HTTPS协议时，默认会去验证网站的证书，而这个证书验证经常会失败。
-解决方案
-原命令加上"--no-check-certificate"选项，就能排除掉这个错误。
-
-
->安装 LAMP，与写php应用
-
-直接sudo apt-get  install   lamp，OK，稳妥的一批
-后续的PHP直接copy一个框架，像git上面架设博客一样，直接copy，然后自己写，（经历了自己配置ssm框架的过程，现在所有的框架在我眼里简直，太tm简单了，君不见javaEE是多么坑人，留下没技术的眼泪！）<br>
-另外，这中方法是debian系的安装方式，redhat系Linux是另一种命令行格式
->Ide的安转，直接深度应用商店
-
-连微信小程序开发软件都有，一键安装<br>
-最好的就是直接jetbrains全家桶，在商店里面有一个类似JET全家桶的安装器。
-在此之前你需要注册一个jetbrains的账号，在官网使用学生邮箱就可以免费试用原价$199的正版软件。<br>
-当然，你也可以商店下载Vim使用
-
-## WINE（红酒）
-关于怎么在Linux下运行QQ和微信，好像就是通过WINE（红酒）神马配置的做到的，具体坑待填
-## GITHUB的使用
-详见 易老师博客 
-配置好本地的git和github的ssh秘钥之后**_````_**,待更新
-
----
-layout:     post
-title:      "Linux的学习"
-subtitle:   "从开发到维护，从防护到攻击"
-date:       2018-03-06 17:00:00
-author:     "xu"
 header-img: "img/in-post/post-linux.jpg"
 header-mask: 0.3
 catalog:    true
