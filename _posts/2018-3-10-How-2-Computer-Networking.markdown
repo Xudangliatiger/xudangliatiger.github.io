@@ -4,7 +4,7 @@ title:      "计算机网络的学习"
 subtitle:   "缘分是一张网，将世人缠绕，却不让他们拥抱"
 date:       2018-03-10 18:00:00
 author:     "xu"
-header-img: "img/in-post/post-linux.jpg"
+header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
