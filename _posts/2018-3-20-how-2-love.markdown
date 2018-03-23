@@ -4,7 +4,7 @@ title:      "她不爱我"
 subtitle:   "questioning eyes on me"
 date:       2018-03-10 18:00:00
 author:     "xu"
-header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
+header-img: "img/in-post/how-2-love/how-2-love.PNG "
 header-mask: 0.3
 catalog:    true
 tags:
