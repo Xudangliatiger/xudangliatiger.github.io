@@ -2,7 +2,7 @@
 layout:     post
 title:      "数据库的学习"
 subtitle:   "data is the power"
-date:       2018-03-10 18:00:00
+date:       2018-03-23 18:00:00
 author:     "xu"
 header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
 header-mask: 0.3

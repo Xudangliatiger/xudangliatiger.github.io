@@ -2,15 +2,15 @@
 layout:     post
 title:      "她不爱我"
 subtitle:   "questioning eyes on me"
-date:       2018-03-10 18:00:00
+date:       2018-03-20 18:00:00
 author:     "xu"
-header-img: "img/in-post/how-2-love/how-2-love.PNG "
+header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
     - 生活感悟
 ---
-# 
+ 
 
 只想努力学习，将来有一天再看到你的时候，我好像有一点资本来追求你<br>
 当然喜欢你是肯定的，却不能为了爱情付出，因为我一无所有，怎么给你呢<br>
