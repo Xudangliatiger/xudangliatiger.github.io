@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器学习的学习"
-subtitle:   "小叮当找妈妈"
+subtitle:   "Training makes him stronger"
 date:       2018-04-02 16:18:00
 author:     "xu"
 header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
