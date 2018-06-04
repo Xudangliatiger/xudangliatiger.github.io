@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "人世间的准则"
-subtitle:   "fellow herat or fellow the world"
+subtitle:   "fellow the herat or fellow the world"
 date:       2018-06-04 18:43:00
 author:     "xu"
 header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
