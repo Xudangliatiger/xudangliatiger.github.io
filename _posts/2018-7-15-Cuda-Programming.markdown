@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Programing using CUDA & Geometry"
+title:      "Programming using CUDA & Geometry"
 subtitle:   "Solve problems with thousands of Cpus"
 date:       2018-07-15 22:48:00
 author:     "xu"
@@ -9,6 +9,7 @@ header-mask: 0.3
 catalog:    true
 tags:
     - CUDA
+    - Algorithm
 ---
 
 CUDA编程哈，第一次接触，关于gpu的使用问题，以及几何学
@@ -67,3 +68,13 @@ thrust：Scan Reduce
 
 感觉这个课程是在设计算法啊
 parallel 算法
+
+
+NC-class
+
+
+> Gemotry
+
+（Convex Hull）闭包
+
+Linear programming
