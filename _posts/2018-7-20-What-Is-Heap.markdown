@@ -1,5 +1,5 @@
 ---
-layout:     post
+#layout:     post
 title:      "Heap"
 subtitle:   "advandced structrue"
 date:       2018-07-22 18:06:00
