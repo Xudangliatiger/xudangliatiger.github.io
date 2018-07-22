@@ -2,7 +2,7 @@
 layout:     post
 title:      "Cloud-Programming"
 subtitle:   "Use Paas to create something"
-date:       2018-07-15 22:48:00
+date:       2018-07-19 22:48:00
 author:     "xu"
 header-img: "img/in-post/cuda-programing/head.jpg"
 header-mask: 0.3
