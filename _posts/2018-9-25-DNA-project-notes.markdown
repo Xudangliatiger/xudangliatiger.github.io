@@ -11,4 +11,8 @@ tags:
     - MachineLearning
     - Bioinformation
 ---
-	So we trying to classifi the different type of one mategenomeics while in the past,people aways solve these problems with string rugulation algroithems, however ,it was to slow to colve problem in right time which we want .so we trying to 
+
+So we are trying to classifi the different type of one mategenomeics while in the past,people aways solve these problems with string rugulation algroithems, however ,it was to slow to colve problem in right time which we want .
+
+
+ 
