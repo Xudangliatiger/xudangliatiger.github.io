@@ -1,6 +1,6 @@
 ---
 #layout:     post
-title:      "DNAprojectNotes"
+title:      "DNA Project Notes"
 subtitle:   "First step to bioinformation,solve sequences classification using overfitting of LSTM"
 date:       2018-09-25 14:06:00
 author:     "xu"
@@ -8,7 +8,7 @@ header-img: "img/in-post/DNA-projects/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - MachineLearning
+    - DeepLearning
     - Bioinformation
 ---
 

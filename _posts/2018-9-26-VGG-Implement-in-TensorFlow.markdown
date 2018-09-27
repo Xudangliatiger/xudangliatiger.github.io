@@ -8,7 +8,7 @@ header-img: "img/in-post/DNA-projects/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - MachineLearning
+    - DeepLearning
     - CNN
     - ComputerVersion
     - TensorFlow
