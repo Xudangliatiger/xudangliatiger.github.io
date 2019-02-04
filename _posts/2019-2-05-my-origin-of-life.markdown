@@ -36,5 +36,5 @@ tags:
 计算机学习，我来啦！2018年的2月份，我刚刚从亲戚公司的实习中学会写java，我刚刚决定搞计算机，这样想起来，我也才入门计算机一年，再肝便是了
 ![2019年大年初一凌晨三点的我](/img/in-post/My-Origin-of-Life/IMG_20190205_005318F.jpg)
 <center>
-    <img src=/img/in-post/My-Origin-of-Life/IMG_20190205_005318F.jpg>
+    <img src="/img/in-post/My-Origin-of-Life/IMG_20190205_005318F.jpg">
 </center>
