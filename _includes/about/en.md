@@ -37,6 +37,7 @@ Chengdu, Sichuan
 Harbin, Heilongjiang
 ```
 
+
 - Research Assistant in Group of Intelligent Signal Processing
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/)
 
