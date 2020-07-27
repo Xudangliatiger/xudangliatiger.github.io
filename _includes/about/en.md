@@ -1,29 +1,10 @@
-<!-- ---
-layout: cv
-title: about
-email:
-  url: mailto:woden@cs.cmu.edu
-  text: woden@cs.cmu.edu
-homepage:
-  url: http://cs.cmu.edu/~woden
-  text: cs.cmu.edu/~woden
---- -->
+
 
 > Yet another man.
 
 HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Computer and science learning !
 
 
-
-<!--
-include contact information from the front matter
-Supported arguments:
-    - homepage: url, text
-    - phone
-    - email
--->
-
-{% include cv.html %}
 
 
 ## Education
