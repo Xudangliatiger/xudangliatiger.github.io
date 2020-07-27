@@ -8,7 +8,7 @@ HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Compute
 
 ---
 layout: cv
-title: Wode "Nimo" Ni
+title: about
 email:
   url: mailto:woden@cs.cmu.edu
   text: woden@cs.cmu.edu
@@ -17,17 +17,7 @@ homepage:
   text: cs.cmu.edu/~woden
 ---
 
-# Wode **Ni**
 
-<!--
-include contact information from the front matter
-Supported arguments:
-    - homepage: url, text
-    - phone
-    - email
--->
-
-{% include cv-contact.html %}
 
 ## Education
 
