@@ -1,11 +1,3 @@
-
-
-> Yet another man.
-
-HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Computer and science learning !
-
-
-
 ---
 layout: cv
 title: about
@@ -16,6 +8,13 @@ homepage:
   url: http://cs.cmu.edu/~woden
   text: cs.cmu.edu/~woden
 ---
+
+> Yet another man.
+
+HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Computer and science learning !
+
+
+
 
 
 
