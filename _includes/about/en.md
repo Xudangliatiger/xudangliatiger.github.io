@@ -9,32 +9,27 @@ HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Compute
 
 ## Education
 
-### **Carnegie Mellon University** `2018.9 -`
+### **University of Electricty Science and Techology of China** `2020.7 - `
 
 ```
-Pittsburgh, PA
+Chengdu, Sichuan
 ```
 
-- Ph.D. in Software Engineering
-- Co-advised by [Ken Koedinger](http://pact.cs.cmu.edu/koedinger.html) and [Josh Sunshine](http://www.cs.cmu.edu/~jssunshi/)
+- Research Assistant in [Data Intelligence Group](diggers.ai)
+- Advised by [Prof. Wen li](liwen.com)
 
-### **Columbia University** `2016.9 - 2018.5`
 
-```
-New York, NY
-```
-
-- B.S. in Computer Science, _Magna Cum Laude_
-- Vision, Graphics track
-
-### **Dickinson College** `2013.9 - 2016.5`
+### **Harbin Engeering University** `2016.9 - 2020.6`
 
 ```
-Carlisle, PA
+Harbin, Heilongjiang
 ```
 
-- B.S. in Computer Science, _Summa Cum Laude_
-- Computer Science Departmental Honors
+- B.E. in Computer Science
+- Co-advised by [Jian Guan](http://pact.cs.cmu.edu/koedinger.html) and [Wenwu Wang](http://www.cs.cmu.edu/~jssunshi/)
+
+
+
 
 ## Publications
 
