@@ -15,7 +15,15 @@ HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Compute
 
 
 
+<!--
+include contact information from the front matter
+Supported arguments:
+    - homepage: url, text
+    - phone
+    - email
+-->
 
+{% include cv-contact.html %}
 
 
 ## Education
