@@ -1,10 +1,10 @@
 # Site settings
 title: 春和景明，波澜不惊
-SEOTitle: 徐东篱的博客
+SEOTitle: 徐东篱的主页
 header-img: img/home-bg.jpg
 email: xdlisatiger.outlook.com
 description: "徐东篱的博客，记录和成长，感恩生命中的你"
-keyword: "徐东篱,徐东篱的博客, 博客, 个人网站, 互联网, Web, Javaee, 前端, 设计"
+keyword: "徐东篱,徐东篱的主页, 博客, 个人网站, 互联网, Web, Javaee, 前端, 设计"
 url: "https://youdonotlove.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -91,13 +91,13 @@ friends: [
     #     href: "http://su.gallery/"
     # },{
         title: "易老師",
-        href: "http://chanchan.me"
+        href: "https://chanchann.github.io"
     },{
         title: "嘉伟兄",
         href: "https://zjw1.top"
     },{
         title: "orzzzjq",
-        href: "https://jiaqizhanzhi.github.io"
+        href: "https://orzzzjq.github.io"
     }
    
    
