@@ -8,11 +8,9 @@ multilingual: true
 
 <!-- Language Selector -->
 <select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0"selected> 英文 English </option>
-    <option value="1"> 中文 Chinese </option>    
+    <option value="1"selected> 英文 English </option>
+    <option value="0"> 中文 Chinese </option>    
 </select>
-
-
 
 <!-- English Version -->
 <div class="en post-container">
@@ -25,7 +23,6 @@ multilingual: true
     {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
     {{ about_zh | markdownify }}
 </div>
-
 
 <!-- 来必力City版安装代码 -->
 <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk2Ny8xMDUwMg==">
