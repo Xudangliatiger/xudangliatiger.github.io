@@ -112,7 +112,7 @@ Worked on server-side web applications and server deployment tools. -->
 <!-- Max Krieger (CMU, independent research & [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2018 - Now` <br>
 Courtney Miller (New College of Florida, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br>
 Anael Kuperwajs Cohen (Macalester College, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br> -->
-For juinors from dig, if you are interested in cooperating with me to build state-of-the-art method for Object Detection, please check the [diggers.wiki](https://dig.uestc.cn/wiki/doku.php?id=mentor:xudongli) for more information!
+For juniors from dig, if you are interested in cooperating with me to build state-of-the-art method for Object Detection, please check the [diggers.wiki](https://dig.uestc.cn/wiki/doku.php?id=mentor:xudongli) for more information!
 
 ## Honors & Awards
 The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligence  `Shenzhen, Dec 2018` <br>
