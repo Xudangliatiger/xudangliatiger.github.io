@@ -1,5 +1,3 @@
-
-
 > Yet another man.
 
 HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Computer and science learning !
@@ -43,13 +41,13 @@ Harbin, Heilongjiang
 
 ## Publications
 
-### [**Association Loss for Visual Object Detection**](http://penrose.ink/media/Penrose_SIGGRAPH2020.pdf)
+### [**Association Loss for Visual Object Detection**](http:/)
 **Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang.<br> 
 _IEEE Signal Processing Letters 2020, to appear._<br>
 [[PDF](unknow)]
-[[BibTeX]({{ page.homepage.url }}/assets/siggraph20-penrose.txt)]
-[[www](http://penrose.ink/siggraph20.html)]
-[[repo](https://github.com/penrose/penrose)]
+[[BibTeX]({{ page.homepage.url }})]
+[[www](http:/]
+[[repo](http)]
 
 <!-- ### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]({{ page.homepage.url }}/assets/chi-20-natural-diagramming.pdf)
 
@@ -114,6 +112,7 @@ Worked on server-side web applications and server deployment tools. -->
 <!-- Max Krieger (CMU, independent research & [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2018 - Now` <br>
 Courtney Miller (New College of Florida, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br>
 Anael Kuperwajs Cohen (Macalester College, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br> -->
+For juinors from dig, if you are interested in cooperating with me to build state-of-the-art method for Object Detection, please check the [diggers.wiki](https://dig.uestc.cn/wiki/doku.php?id=mentor:xudongli) for more information!
 
 ## Honors & Awards
 The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligence  `Shenzhen, Dec 2018` <br>
