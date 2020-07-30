@@ -20,7 +20,7 @@ Harbin, Heilongjiang
 
 
 ## Experience
-### **University of Electricty Science and Techology of China** `2020.7 - `
+### **University of Electronic Science and Techology of China** `2020.7 - `
 
 ```
 Chengdu, Sichuan
