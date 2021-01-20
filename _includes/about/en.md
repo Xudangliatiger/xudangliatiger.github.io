@@ -1,6 +1,6 @@
 > Yet another man.
 
-HI！I am Xudongli,a poor guy who is going to drown in the deep ocean of Computer and science learning !
+HI！I am Dongli Xu, 东篱 徐， this name is given by my father from a famous achaient poem 采菊东篱下，悠然见南山， this word 东篱 (Dongli) also showed in later poems like '东篱把酒黄昏后'，it is a command scene of peaceful life and nature. 
 
 
 
@@ -43,11 +43,10 @@ Harbin, Heilongjiang
 
 ### [**Association Loss for Visual Object Detection**](http:/)
 **Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang.<br> 
-_IEEE Signal Processing Letters 2020, to appear._<br>
-[[PDF](unknow)]
-[[BibTeX]({{ page.homepage.url }})]
-[[www](http:/]
-[[repo](http)]
+in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi: 10.1109/LSP.2020.3013160.<br>
+[[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
+[[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss)]
+[[repo](https://github.com/Xudangliatiger/AssociationLoss)]
 
 <!-- ### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]({{ page.homepage.url }}/assets/chi-20-natural-diagramming.pdf)
 
