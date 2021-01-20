@@ -1,6 +1,6 @@
 > Yet another man.
 
-HI！I am Dongli Xu, 东篱 徐， this name is given by my father from a famous achaient poem 采菊东篱下，悠然见南山， this word 东篱 (Dongli) also showed in later poems like '东篱把酒黄昏后'，it is a command scene of peaceful life and nature. 
+HI！I am Dongli Xu, 东篱 徐，this name comes from a famous  poem ‘采菊东篱下，悠然见南山’
 
 
 
@@ -16,7 +16,7 @@ Harbin, Heilongjiang
 ```
 
 - B. E. in Computer Science
-- GPA 3.2/4
+- GPA 80.1/100
 
 
 ## Experience
@@ -41,9 +41,8 @@ Harbin, Heilongjiang
 
 ## Publications
 
-### [**Association Loss for Visual Object Detection**](http:/)
-**Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang.<br> 
-in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi: 10.1109/LSP.2020.3013160.<br>
+### [**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)
+**Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang. in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi: 10.1109/LSP.2020.3013160.<br>
 [[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
 [[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss)]
 [[repo](https://github.com/Xudangliatiger/AssociationLoss)]
