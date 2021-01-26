@@ -9,7 +9,7 @@ HI！I am Dongli Xu, 东篱 徐，this name comes from a famous  poem ‘采菊�
 
 
 
-### **Harbin Engeering University** `2016.9 - 2020.6`
+### **Harbin Engineering University** `2016.9 - 2020.6`
 
 ```
 Harbin, Heilongjiang
@@ -29,7 +29,7 @@ Chengdu, Sichuan
 - Research Assistant in [Data Intelligence Group](diggers.ai)
 - Advised by [Prof. Wen li](liwen.com)
 
-### **Harbin Engeering University** `2016.9 - 2020.6`
+### **Harbin Engineering University** `2016.9 - 2020.6`
 
 ```
 Harbin, Heilongjiang
