@@ -8,7 +8,7 @@ header-img: "img/in-post/DNA-projects/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - DeepLearning
+    - Deep Learning
 ---
 
 我们在处理小样本材料的时候，怎么样才能做到和训练数千万的样本相同的效果呢，现在我们有一个叫做迁移学习的思想来解决小样本问题！ 

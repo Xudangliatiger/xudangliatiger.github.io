@@ -8,7 +8,7 @@ header-img: "img/in-post/cuda-programing/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - CloudProgramming
+    - Cloud Programming
     - Bluemix 
 ---
 首先我们上了一天的类似于软件工程的课程，老师念了接近100页的PPT，我真的很佩服他的备课能力。

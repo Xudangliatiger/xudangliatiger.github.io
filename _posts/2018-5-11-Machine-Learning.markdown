@@ -8,7 +8,7 @@ header-img: "img/in-post/post-how-2-computernetworking/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - MachineLearning
+    - Machine Learning
 ---
 线性回归函数
 

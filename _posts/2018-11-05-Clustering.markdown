@@ -8,7 +8,7 @@ header-img: "img/in-post/clustering/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - MachineLearning
+    - Machine Learning
 ---
 
 一般来说做聚类是一种无监督学习方法，我们在一定的维度变化的，里面将所有的信息进行整合，然后对该整合结果进行一种映射变换，使之能够反映出不同的subclass 之间的差别，然后利用这个差别来对整块数据的划分。

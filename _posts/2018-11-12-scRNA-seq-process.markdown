@@ -8,7 +8,7 @@ header-img: "img/in-post/sc-RNA-seq/head.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - MeachineLearning
+    - Meachine Learning
     - Bioinformation
 ---
 
