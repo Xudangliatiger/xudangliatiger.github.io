@@ -46,14 +46,14 @@ Harbin, Heilongjiang, P. R. China
 
 ## Publications
 
-**Dongli Xu**, Jinhong Deng, Wen Li, "[**Revisiting AP Loss for Dense Object Detection**]()," in _IEEE/CVF CVPR_, pp. 1435-1439, 2022.<br>
+**Dongli Xu**, Jinhong Deng, Wen Li, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF CVPR_, pp., 2022, doi:.<br>
 [[PDF]()]
 [[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
 [[repo](https://github.com/Xudangliatiger/APE-Loss)]
 
-**Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi: 10.1109/LSP.2020.3013160.<br>
+**Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.<br>
 [[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
-[[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
+[[BibTeX]({{page.homepage.url}}/paper/2020_SPL_associationLoss.txt)]
 [[repo](https://github.com/Xudangliatiger/AssociationLoss)]
 
 <!-- ### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]({{ page.homepage.url }}/assets/chi-20-natural-diagramming.pdf)
@@ -137,7 +137,7 @@ John Montgomery Scholarship `Dickinson, 2013` <br> -->
 
 ---
 
-## Teaching
+<!-- ## Teaching -->
 
 <!-- Teaching Assistant, **Programming Languages and Translators (COMS 4115)** `Columbia, 2017 - 2018` <br>
 Teaching Assistant, **Introduction to Java II (COMP 132)** `Dickinson, 2016` <br>
