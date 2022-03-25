@@ -1,7 +1,7 @@
 ---
 #layout:     post
 title:      "VGG's Implement Using Tensorflow"
-subtitle:   "Stronger Network In Computer Version"
+subtitle:   "Stronger Network In Computer Vision"
 date:       2018-09-26 21:03:00
 author:     "xu"
 header-img: "img/in-post/DNA-projects/head.jpg"
