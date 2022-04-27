@@ -1,8 +1,10 @@
 
-Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He received his B. E. from Harbin Engineering University (2020), investigating computer vision in the Department of Computer Science.
+Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked in University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com). He received his B. E. from Harbin Engineering University (2020) and co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), investigating computer vision in the Department of Computer Science.
 
 
-
+## Reseach Interests:
+- Computer Vision
+- Object Detection
 <!-- ## Education
 ### **University of Sydney** `2021.8 - `
 
@@ -23,7 +25,7 @@ Harbin, Heilongjiang, P. R. China
 - B. E. in Computer Science
  -->
 
-## Experience
+<!-- ## Experience
 ### **University of Electronic Science and Techology of China** `2020.7 - 2021.8 `
 
 ```
@@ -31,7 +33,7 @@ Chengdu, Sichuan, P. R. China
 ```
 
 - Research Assistant in [Data Intelligence Group](diggers.ai)
-- Advised by [Prof. Wen li](liwen.com)
+- 
 
 ### **Harbin Engineering University** `2016.9 - 2020.6`
 
@@ -40,16 +42,16 @@ Harbin, Heilongjiang, P. R. China
 ```
 
 - Research Assistant in Group of Intelligent Signal Processing
-- Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/)
+- Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
 ## Publications
 
-**Dongli Xu**, Jinhong Deng, Wen Li, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF CVPR_, pp., 2022, doi:.<br>
+**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition_, pp., 2022, doi:.<br>
 [[PDF]()]
 [[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
 [[repo](https://github.com/Xudangliatiger/APE-Loss)]
 
-**Dongli Xu**, Jian Guan, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.<br>
+**Dongli Xu**, Jian Guan*, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.<br>
 [[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2020_SPL_associationLoss.txt)]
 [[repo](https://github.com/Xudangliatiger/AssociationLoss)]
@@ -112,12 +114,12 @@ Worked with prof. Steven Feiner, on **Cyber Affordance Visualization in Augument
 _Software Engineering Intern_<br>
 Worked on server-side web applications and server deployment tools. -->
 
-## Mentoring
+<!-- ## Mentoring -->
 
 <!-- Max Krieger (CMU, independent research & [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2018 - Now` <br>
 Courtney Miller (New College of Florida, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br>
 Anael Kuperwajs Cohen (Macalester College, [REUSE](https://www.cmu.edu/scs/isr/reuse/)) `CMU, 2019` <br> -->
-For juniors from dig, if you are interested in cooperating with me to build state-of-the-art method for Object Detection, please check the [diggers.wiki](https://dig.uestc.cn/wiki/doku.php?id=mentor:xudongli) for more information!
+
 
 ## Honors & Awards
 The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligence  `Shenzhen, Dec 2018` <br>
