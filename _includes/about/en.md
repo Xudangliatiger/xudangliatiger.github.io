@@ -1,5 +1,4 @@
-
-Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked in University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com). He received his B. E. from Harbin Engineering University (2020) and co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), investigating computer vision in the Department of Computer Science.
+Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked in University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the Department of Computer Science. He received his B. E. from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 
 ## Reseach Interests:
@@ -8,7 +7,6 @@ Dongli Xu has been a master student in the School of Computer Science at Univers
 
 <!-- ## Education
 ### **University of Sydney** `2021.8 - `
-
 ```
 City Road, Camperdown/Darlington, NSW 2006, Australia
 ```
@@ -50,12 +48,12 @@ Harbin, Heilongjiang, P. R. China
 **Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition_, pp., 2022, doi:.
 [[PDF]()]
 [[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
-[[repo](https://github.com/Xudangliatiger/APE-Loss)]<br>
+[[Repo](https://github.com/Xudangliatiger/APE-Loss)]<br>
 
 **Dongli Xu**, Jian Guan*, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.
 [[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2020_SPL_associationLoss.txt)]
-[[repo](https://github.com/Xudangliatiger/AssociationLoss)]<br>
+[[Repo](https://github.com/Xudangliatiger/AssociationLoss)]<br>
 
 <!-- ### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]({{ page.homepage.url }}/assets/chi-20-natural-diagramming.pdf)
 
@@ -125,6 +123,12 @@ Anael Kuperwajs Cohen (Macalester College, [REUSE](https://www.cmu.edu/scs/isr/r
 ## Honors & Awards
 The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligence  `Shenzhen, Dec 2018` <br>
 
+
+
+## Contact Details
+
+TEL: +86-188-4579-3185
+Email: [dongliixu@gmail](dongliixu@gmail)
 <!-- CHI'20 Best Paper Honourable Mention Award `CMU, 2020` <br> -->
 <!-- Phi Beta Kappa `Dickinson, 2018` <br>
 Excellence in Computer Science Award `Columbia, 2018` <br>
