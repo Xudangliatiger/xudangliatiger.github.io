@@ -88,17 +88,17 @@ service-worker: true
 
 # Friends
 friends: [
-    {
+    # {
     #     title: "Su",
     #     href: "http://su.gallery/"
     # },{
     #     title: "Shiyu Yi",
     #     href: "https://chanchann.github.io"
     # },{
-        title: "Jiawei Zhang",
-        href: "https://zjw1.top"
-    },{
-        title: "Jiaqi Zheng",
-        href: "https://orzzzjq.github.io"
-    }
+    #     title: "Jiawei Zhang",
+    #     href: "https://zjw1.top"
+    # },{
+    #     title: "Jiaqi Zheng",
+    #     href: "https://orzzzjq.github.io"
+    # }
 ]
