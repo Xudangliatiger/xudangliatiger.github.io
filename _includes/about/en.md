@@ -1,11 +1,9 @@
-> Yet another man.
 
-HI！I am Dongli Xu, 东篱 徐，this name comes from a famous poem ‘采菊东篱下，悠然见南山’
-
+Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He received his B. E. from Harbin Engineering University (2020), investigating computer vision in the Department of Computer Science.
 
 
 
-## Education
+<!-- ## Education
 ### **University of Sydney** `2021.8 - `
 
 ```
@@ -23,7 +21,7 @@ Harbin, Heilongjiang, P. R. China
 ```
 
 - B. E. in Computer Science
-
+ -->
 
 ## Experience
 ### **University of Electronic Science and Techology of China** `2020.7 - 2021.8 `
