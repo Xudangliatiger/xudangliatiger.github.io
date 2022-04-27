@@ -157,5 +157,3 @@ Research Experiences for Undergraduates in Software Engineering Admission Commit
 ### Footer
 
 Last updated: May 2022
-
-
