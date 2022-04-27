@@ -127,8 +127,8 @@ The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligen
 
 ## Contact Details
 
-TEL: +86-188-4579-3185
-Email: [dongliixu@gmail](dongliixu@gmail)
+TEL: +86-188-4579-3185<br>
+Email: [dongliixu@gmail](mailto:dongliixu@gmail)<br>
 <!-- CHI'20 Best Paper Honourable Mention Award `CMU, 2020` <br> -->
 <!-- Phi Beta Kappa `Dickinson, 2018` <br>
 Excellence in Computer Science Award `Columbia, 2018` <br>
@@ -154,8 +154,8 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 Research Experiences for Undergraduates in Software Engineering Admission Committee `CMU, 2019 - 2020` -->
 
-<!-- ### Footer
+### Footer
 
-Last updated: May 2013 -->
+Last updated: May 2022
 
 
