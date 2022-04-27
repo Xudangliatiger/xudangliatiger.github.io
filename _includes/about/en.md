@@ -47,15 +47,15 @@ Harbin, Heilongjiang, P. R. China
 
 ## Publications
 
-**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition_, pp., 2022, doi:.<br>
+**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition_, pp., 2022, doi:.
 [[PDF]()]
 [[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
-[[repo](https://github.com/Xudangliatiger/APE-Loss)]
+[[repo](https://github.com/Xudangliatiger/APE-Loss)]<br>
 
-**Dongli Xu**, Jian Guan*, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.<br>
+**Dongli Xu**, Jian Guan*, Pengming Feng, Wenwu Wang, "[**Association Loss for Visual Object Detection**](https://ieeexplore.ieee.org/document/9153932)," in _IEEE Signal Processing Letters_, vol. 27, pp. 1435-1439, 2020, doi:10.1109/LSP.2020.3013160.
 [[PDF](http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2020_SPL_associationLoss.txt)]
-[[repo](https://github.com/Xudangliatiger/AssociationLoss)]
+[[repo](https://github.com/Xudangliatiger/AssociationLoss)]<br>
 
 <!-- ### [**How Domain Experts Create Conceptual Diagrams and Implications for Tool Design**]({{ page.homepage.url }}/assets/chi-20-natural-diagramming.pdf)
 
