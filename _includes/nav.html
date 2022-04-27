@@ -20,9 +20,7 @@
                         <a href="{{ site.baseurl }}/">About</a>
                     </li>
                     {% for page in site.pages %}
-                        {% if page.url contains 'page' %}
-                            {% comment %}Do nothing{% endcomment %}
-                        {% elif page.title %}
+                        {% if page.title and page.autogen == nil %}
                             <li>
                                 <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
                             </li>
