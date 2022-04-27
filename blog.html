@@ -1,0 +1,44 @@
+---
+layout: page
+title: "Blog"
+description: "风过留声，雁过留痕."
+header-img: "img/about-bg-walle.jpg"
+multilingual: true
+---
+
+<!-- Language Selector -->
+<select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
+    <option value="0"selected> English </option>
+    <option value="1"> 中文  </option>    
+</select>
+
+<!-- English Version -->
+<div class="en post-container">
+    {% capture about_en %}{% include about/zh.md%}{% endcapture %}
+    {{ about_en | markdownify }}
+</div>
+
+<!-- Chinese Version -->
+<div class="zh post-container">
+    {% capture about_zh %}{% include about/en.md%}{% endcapture %}
+    {{ about_zh | markdownify }}
+</div>
+
+<!-- 来必力City版安装代码 -->
+<!-- <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzk2Ny8xMDUwMg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div> -->
+<!-- City版安装代码已完成 -->

@@ -6,7 +6,7 @@ email: dongliixu@gmail.com
 description: "Thanks for visiting!"
 keyword: "徐东篱,donglixu, homepage, Dongli's homepage, Web"
 url: "donglixu.site"              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+baseurl: "/about"                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
