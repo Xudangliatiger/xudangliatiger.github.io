@@ -92,15 +92,13 @@ friends: [
     #     title: "Su",
     #     href: "http://su.gallery/"
     # },{
-        title: "Shiyu Yi",
-        href: "https://chanchann.github.io"
-    },{
-        title: "Jiawei Zheng",
+    #     title: "Shiyu Yi",
+    #     href: "https://chanchann.github.io"
+    # },{
+        title: "Jiawei Zhang",
         href: "https://zjw1.top"
     },{
-        title: "orzzzjq",
+        title: "Jiaqi Zheng",
         href: "https://orzzzjq.github.io"
     }
-   
-   
 ]
