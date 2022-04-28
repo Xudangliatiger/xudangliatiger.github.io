@@ -1,4 +1,4 @@
-Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked in University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the Department of Computer Science. He received his B. E. from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked at University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the Department of Computer Science. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 
 ## Reseach Interests:
