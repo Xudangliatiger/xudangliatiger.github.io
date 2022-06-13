@@ -1,4 +1,4 @@
-Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked at University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the Department of Computer Science. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu has been a master student in the School of Computer Science at University of Sydney since 2021. He worked at University of Electronic Science and Techology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 
 ## Reseach Interests:
@@ -47,9 +47,9 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2022
 
-**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp., 2022, doi:.
-[[PDF]()]
-[[BibTeX]({{ page.homepage.url }}/paper/2020_SPL_associationLoss.txt)]
+**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**](https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp。 14187-14196, 2022, doi:.
+[[PDF](https://openaccess.thecvf.com/content/CVPR2022/papers/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.pdf)]
+[[BibTeX]({{ page.homepage.url }}/paper/2022_CVPR_APELoss.txt)]
 [[Repo](https://github.com/Xudangliatiger/APE-Loss)]<br>
 
 ### 2020

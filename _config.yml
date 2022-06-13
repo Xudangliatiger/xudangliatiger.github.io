@@ -88,9 +88,9 @@ service-worker: true
 
 # Friends
 friends: [
-    # {
-    #     title: "Su",
-    #     href: "http://su.gallery/"
+    {
+        title: "Jinhong Deng",
+        href: "https://kinredon.github.io/jhdeng/"
     # },{
     #     title: "Shiyu Yi",
     #     href: "https://chanchann.github.io"

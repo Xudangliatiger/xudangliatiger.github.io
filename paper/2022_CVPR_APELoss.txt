@@ -1,0 +1,8 @@
+@InProceedings{Xu_2022_CVPR,
+    author    = {Xu, Dongli and Deng, Jinhong and Li, Wen},
+    title     = {Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022},
+    pages     = {14187-14196}
+}
