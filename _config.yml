@@ -1,6 +1,6 @@
 # Site settings
 title: Dongli Xu
-SEOTitle: Dongli's homepage
+SEOTitle: Dongli Xu's homepage
 header-img: img/home-bg.jpg
 email: dongliixu@gmail.com
 description: "Thanks for visiting!"
@@ -63,7 +63,7 @@ netease_comment: false
 
 # Google Analytics
 # ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-# ga_domain: huangxuan.me
+# ga_domain: donglixu.site
 
 
 
