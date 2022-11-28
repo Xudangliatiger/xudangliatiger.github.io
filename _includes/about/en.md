@@ -1,5 +1,13 @@
 Dongli Xu has been a master student in the School of Computer Science at the University of Sydney since 2021, supervised by [Dr. Chang Xu](changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
+## News
+<!-- - [Nov. 2022] I will be graduated by this year! Looking for a Ph.D. position now. -->
+- [Nov. 2022] I will serve as a reviewer for CVPR'23,
+- [Nov. 2022] Two papers were submitted to CVPR'23.
+<details>
+  <summary>[More]</summary>
+  - [July 2021] Start my master study at the University of Sydney.
+</details>
 
 ## Research Interests:
 - Computer Vision
@@ -46,17 +54,6 @@ Harbin, Heilongjiang, P. R. China
 ## Publications
 
 ### 2022
-<ProjectCard image="/projects/1.png">
-
-  Harry P., Hermione G., *et al*
-  
-  **The Making of Harry Potter's Wand**
-  
-  Harry's wand was broken in 1997, but was repaired by him after the 1998 Battle of Hogwarts. Usually the repair of a wand is impossible, but with the use of the Elder Wand it was achievable.
-  
-  [[PDF](https://www.google.com)] [[arXiv](https://arxiv.org)]
-
-</ProjectCard>
 
 **Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**](https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp. 14187-14196, 2022, doi:.
 [[PDF](https://openaccess.thecvf.com/content/CVPR2022/papers/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.pdf)]
