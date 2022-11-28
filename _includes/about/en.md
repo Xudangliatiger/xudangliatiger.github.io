@@ -1,12 +1,12 @@
-Dongli Xu has been a master student in the School of Computer Science at the University of Sydney since 2021, supervised by [Dr. Chang Xu](changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu has been a master's student in the School of Computer Science at the University of Sydney since 2021, supervised by [Dr. Chang Xu](changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](liwen.com), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ## News
 - [Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.
 - [Nov. 2022] I will serve as a reviewer for CVPR'23.
 - [Nov. 2022] Two papers are submitted to CVPR'23.
-<details>
+- <details>
   <summary>[More]</summary>
-  - [July 2021] Start my master study at the University of Sydney.
+  - [July 2021] Start my master's study at the University of Sydney.
 </details>
 
 ## Research Interests:
