@@ -46,6 +46,17 @@ Harbin, Heilongjiang, P. R. China
 ## Publications
 
 ### 2022
+<ProjectCard image="/projects/1.png">
+
+  Harry P., Hermione G., *et al*
+  
+  **The Making of Harry Potter's Wand**
+  
+  Harry's wand was broken in 1997, but was repaired by him after the 1998 Battle of Hogwarts. Usually the repair of a wand is impossible, but with the use of the Elder Wand it was achievable.
+  
+  [[PDF](https://www.google.com)] [[arXiv](https://arxiv.org)]
+
+</ProjectCard>
 
 **Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**](https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp. 14187-14196, 2022, doi:.
 [[PDF](https://openaccess.thecvf.com/content/CVPR2022/papers/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.pdf)]
