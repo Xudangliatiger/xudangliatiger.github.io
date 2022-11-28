@@ -4,7 +4,8 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
 - [Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.
 - [Nov. 2022] I will serve as a reviewer for CVPR'23.
 - [Nov. 2022] Two papers are submitted to CVPR'23.
-- <details>
+
+<details>
   <summary>[More]</summary>
   - [July 2021] Start my master's study at the University of Sydney.
 </details>
