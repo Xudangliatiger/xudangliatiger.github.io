@@ -3,14 +3,21 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
 ---
 
 ## News
-- [Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.
-- [Nov. 2022] I will serve as a reviewer for CVPR'23.
-- [Nov. 2022] Two papers are submitted to CVPR'23.
-- <details><summary>[More]</summary>
-'''
-- [July 2021] Start my master's study at the University of Sydney.
-'''
-</details>
+
+<div class="news">
+        <!-- <h3 >Updates</h3> -->
+        <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
+          <td style="border-style: none; border-width: medium;">
+            <ul style="text-align:justify;height: 130px; overflow:auto;">
+            <li class="font">[Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.</li>
+            <li class="font">[Nov. 2022] I will serve as a reviewer for CVPR'23.</li>
+            <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
+            <details><summary>[More]</summary>
+                <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
+            </ul>  
+          </td>
+          <!--</div>-->
+      </div>
 
 
 
@@ -169,7 +176,7 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 ## Service
 
-Conference Reviewer: `CVPR, 2023-`
+Conference Reviewer: `CVPR, 2023`
 
 ---
 ### Footer
