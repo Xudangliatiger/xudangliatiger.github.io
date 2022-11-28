@@ -14,12 +14,13 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
             <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
             <details><summary>[More]</summary>
                 <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
+            </details>
             </ul>  
           </td>
           <!--</div>-->
       </div>
 
-
+---
 
 ## Research Interests:
 - Computer Vision
@@ -149,10 +150,11 @@ The Second Award of CAAI The 4th Chinese Youth Congress on Artificial Intelligen
 
 
 
-## Contact Details
+<!-- ## Contact Details
 
 TEL: +86-188-4579-3185<br>
-Email: [dongliixu@gmail](mailto:dongliixu@gmail)<br>
+Email: [dongliixu@gmail](mailto:dongliixu@gmail)<br> -->
+
 <!-- CHI'20 Best Paper Honourable Mention Award `CMU, 2020` <br> -->
 <!-- Phi Beta Kappa `Dickinson, 2018` <br>
 Excellence in Computer Science Award `Columbia, 2018` <br>
