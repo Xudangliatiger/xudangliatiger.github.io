@@ -9,8 +9,9 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
         <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
+            <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
+            <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
             <li class="font">[Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.</li>
-            <li class="font">[Nov. 2022] I will serve as a reviewer for CVPR'23.</li>
             <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
             <details><summary><font color=blue>[More]</font></summary>
                 <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
@@ -64,6 +65,11 @@ Harbin, Heilongjiang, P. R. China
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
 ## Publications
+### 2023
+Jinhong Deng,**Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, 2023.
+[[PDF]()]
+[[BibTeX]({{page.homepage.url}}/paper/2023_CVPR_HarmoniousTeacher.txt)]
+[[Repo]]<br>
 
 ### 2022
 
