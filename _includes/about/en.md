@@ -13,9 +13,9 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
             <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
             <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
             <details><summary><font color=blue>[More]</font></summary>
-                <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
-                <li class="font">[Nov. 2022] I will be graduated by this semester! Looking for a Ph.D. position now.</li>
+                <li class="font">[Nov. 2022] I will be graduated by this semester!</li>
                 <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
+                <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
             </details>
             </ul>  
           </td>
