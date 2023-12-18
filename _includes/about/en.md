@@ -31,12 +31,15 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
 
 ## Education
 ### **University of Sydney** `Australia, 2021.8 - 2023.1`
+```
 - M. in Information Technology
+```
 
 
-
-### **Harbin Engineering University** `Harbin, P. R. China, 2016.9 - 2020.6`
+### **Harbin Engineering University** `Harbin, China 2016.9 - 2020.6`
+```
 - B. E. in Computer Science
+```
 
 
 <!-- ## Experience
