@@ -69,6 +69,19 @@ Harbin, Heilongjiang, P. R. China
 
 ## Publications
 
+### Preprints
+**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li, "[**Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer**](),"
+[[PDF]()]
+[[BibTeX]({{page.homepage.url}}/paper/)]
+[[Repo]()]<br>
+
+**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You,  Wen Li, Chang Xu, "[**Learning to Shift Duplication for NMS-Free One-Stage Object Detection**](),"
+[[PDF]()]
+[[BibTeX]({{page.homepage.url}}/paper/)]
+[[Repo]()]<br>
+
+
+
 ### 2024
 Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He, Rubo Zhang, "[**FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images**]()," in _IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)_, pp., 2024, doi:10.1109/
 [[PDF]()]
