@@ -29,7 +29,7 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
 - Object Detection
 - Generative Model
 
-## Education
+<!-- ## Education
 ### **University of Sydney** `Australia, 2021.8 - 2023.1`
 ```
 - M. in Information Technology
@@ -39,7 +39,7 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
 ### **Harbin Engineering University** `Harbin, China 2016.9 - 2020.6`
 ```
 - B. E. in Computer Science
-```
+``` -->
 
 
 <!-- ## Experience
