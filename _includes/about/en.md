@@ -29,7 +29,7 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
 - Object Detection
 - Generative Model
 
-<!-- ## Education
+## Education
 ### **University of Sydney** `2021.8 - 2023.1`
 ```
 City Road, Camperdown/Darlington, NSW 2006, Australia
@@ -46,7 +46,7 @@ Harbin, Heilongjiang, P. R. China
 ```
 
 - B. E. in Computer Science
- -->
+
 
 <!-- ## Experience
 ### **University of Electronic Science and Techology of China** `2020.7 - 2021.8 `
@@ -67,9 +67,8 @@ Harbin, Heilongjiang, P. R. China
 - Research Assistant in Group of Intelligent Signal Processing
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
-## Publications
 
-### Preprints
+## Preprints
 **Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li, "[**Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer**](),"
 [[PDF]()]
 [[BibTeX]({{page.homepage.url}}/paper/)]
@@ -80,6 +79,7 @@ Harbin, Heilongjiang, P. R. China
 [[BibTeX]({{page.homepage.url}}/paper/)]
 [[Repo]()]<br>
 
+## Publications
 
 
 ### 2024
