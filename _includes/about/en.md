@@ -1,4 +1,4 @@
-Dongli Xu has been a master's student in the School of Computer Science at the University of Sydney since 2021, supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu is a reserach engineer at NullmaxAI focusing on autonomous driving and generative model. He was a master's student in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
 
@@ -9,7 +9,8 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
         <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
-            <li class="font">[Mar. 2023] One paper is submitted to ICCV23.</li>
+            <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
+            <li class="font">[Dec. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
             <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
             <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
             <details><summary><font color=blue>[More]</font></summary>
@@ -26,9 +27,10 @@ Dongli Xu has been a master's student in the School of Computer Science at the U
 ## Research Interests:
 - Computer Vision
 - Object Detection
+- Generative Model
 
 <!-- ## Education
-### **University of Sydney** `2021.8 - `
+### **University of Sydney** `2021.8 - 2023.1`
 ```
 City Road, Camperdown/Darlington, NSW 2006, Australia
 ```
@@ -66,15 +68,22 @@ Harbin, Heilongjiang, P. R. China
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
 ## Publications
-### 2023
-Jinhong Deng,**Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**]()," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, 2023.
+
+### 2024
+Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He, Rubo Zhang, "[**FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images**]()," in _IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)_, pp., 2024, doi:10.1109/
 [[PDF]()]
+[[BibTeX]({{page.homepage.url}}/paper/)]
+[[Repo]()]<br>
+
+### 2023
+Jinhong Deng,**Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**](https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp.23829-23838, 2023, doi:10.1109/CVPR52729.2023.02282
+[[PDF](https://openaccess.thecvf.com/content/CVPR2023/papers/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2023_CVPR_HarmoniousTeacher.txt)]
-[[Repo]]<br>
+[[Repo](https://github.com/kinredon/Harmonious-Teacher)]<br>
 
 ### 2022
 
-**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**](https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp. 14187-14196, 2022, doi:.
+**Dongli Xu**, Jinhong Deng, Wen Li*, "[**Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection**](https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp. 14187-14196, 2022, doi:10.1109/CVPR52688.2022.01379.
 [[PDF](https://openaccess.thecvf.com/content/CVPR2022/papers/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2022_CVPR_APELoss.txt)]
 [[Repo](https://github.com/Xudangliatiger/APE-Loss)]<br>
@@ -184,8 +193,8 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 ## Service
 
-Conference Reviewer: `CVPR, 2023`
-
+Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-` 
+Journal Reviewer: `ACM Computing Surveys, 2023`
 ---
 ### Footer
-Last updated: Nov. 2022
+Last updated: Dec. 2023
