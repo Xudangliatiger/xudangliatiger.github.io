@@ -10,7 +10,7 @@ Dongli Xu is a reserach engineer at NullmaxAI focusing on autonomous driving and
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
             <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
-            <li class="font">[Dec. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
+            <li class="font">[Nov. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
             <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
             <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
             <details><summary><font color=blue>[More]</font></summary>
