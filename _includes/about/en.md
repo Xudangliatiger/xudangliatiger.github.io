@@ -76,7 +76,7 @@ Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He,
 [[Repo]()]<br>
 
 ### 2023
-Jinhong Deng,**Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**](https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp.23829-23838, 2023, doi:10.1109/CVPR52729.2023.02282
+Jinhong Deng, **Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**](https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp.23829-23838, 2023, doi:10.1109/CVPR52729.2023.02282
 [[PDF](https://openaccess.thecvf.com/content/CVPR2023/papers/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.pdf)]
 [[BibTeX]({{page.homepage.url}}/paper/2023_CVPR_HarmoniousTeacher.txt)]
 [[Repo](https://github.com/kinredon/Harmonious-Teacher)]<br>
@@ -193,7 +193,7 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 ## Service
 
-Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-` 
+Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-`<br>
 Journal Reviewer: `ACM Computing Surveys, 2023`
 ---
 ### Footer
