@@ -200,9 +200,9 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 ## Service
 
-Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-`<br>
+Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-` `ECCV, 2024-`<br>
 Journal Reviewer: `ACM Computing Surveys, 2023`
 
 ---
 ### Footer
-Last updated: Dec. 2023
+Last updated: Feb. 2024
