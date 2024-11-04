@@ -1,4 +1,9 @@
-Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusing on autonomous driving and generative model. He was a master's student in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+
+
+
+
+
+Dongli Xu is an incoming Ph.D student at CVSSP, University of Surrey, under the supervision of [Prof. Wenwu Wang](https://personalpages.surrey.ac.uk/w.wang/) and  the co-supervision of [Prof. Philip J.B. Jackson](https://www.surrey.ac.uk/people/philip-jackson). He worked as a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
 
@@ -9,6 +14,8 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
         <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
+            <li class="font">[Oct. 2024] One paper is accepted by NeurIPS'25. Congratulations to Xuanjia!</li>
+            <li class="font">[May 2024] I will be joining the CVSSP as a Ph.D student.</li>
             <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
             <li class="font">[Nov. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
             <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
@@ -27,7 +34,11 @@ Dongli Xu is a reserach engineer at [NullmaxAI](https://www.nullmax.ai/) focusin
 ## Research Interests:
 - Computer Vision
 - Object Detection
+- Signal/Audio/Speech/Music Processing
+- Multimodal
 - Generative Model
+
+
 
 <!-- ## Education
 ### **University of Sydney** `Australia, 2021.8 - 2023.1`
@@ -77,8 +88,13 @@ Harbin, Heilongjiang, P. R. China
 
 
 ### 2024
-Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He, Rubo Zhang, "[**FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images**]()," in _IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)_, pp., 2024, doi:10.1109/
-[[PDF]()]
+Jiaxuan Zhao, Jian Guan, Congyi Fan, **Dongli Xu**, Youtian Lin, Haiwei Pan, Pengming Feng, "[**FastDrag: Manipulate Anything in One Step**](https://fastdrag-site.github.io/)," in _Adv. Neural Inf. Process. Syst. (NeurIPS)_, pp., 2024, doi:/
+[[PDF](https://arxiv.org/pdf/2405.15769)]
+[[BibTeX]({{page.homepage.url}}/paper/)]
+[[Repo](https://github.com/XuanjiaZ/FastDrag)]<br>
+
+Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He, Rubo Zhang, "[**FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images**](https://ieeexplore.ieee.org/document/10448501)," in _IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)_, pp.3420-3424, 2024, doi:10.1109/ICASSP48485.2024.10448501
+[[PDF](https://ieeexplore.ieee.org/document/10448501)]
 [[BibTeX]({{page.homepage.url}}/paper/)]
 [[Repo]()]<br>
 
@@ -200,9 +216,9 @@ Computer Lab Consultant `Dickinson, 2014 - 2016` <br> -->
 
 ## Service
 
-Conference Reviewer: `CVPR, 2023-2024` `ICASSP, 2024-` `ECCV, 2024-`<br>
+Conference Reviewer: `CVPR, 2023-2025`  `ECCV, 2024` `ICLR, 2025` `AAAI, 2025` `ICASSP, 2024-2025`<br>
 Journal Reviewer: `ACM Computing Surveys, 2023`
 
 ---
 ### Footer
-Last updated: Feb. 2024
+Last updated: Nov. 2024
