@@ -3,7 +3,7 @@
 
 
 
-Dongli Xu is an incoming Ph.D student at CVSSP, University of Surrey, under the supervision of [Prof. Wenwu Wang](https://personalpages.surrey.ac.uk/w.wang/) and  the co-supervision of [Prof. Philip J.B. Jackson](https://www.surrey.ac.uk/people/philip-jackson). He worked as a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu is a research assistant at SAIS, He is looking for a PhD position! He worked as a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
 
@@ -14,13 +14,15 @@ Dongli Xu is an incoming Ph.D student at CVSSP, University of Surrey, under the 
         <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
+            <li class="font">[Dec. 2024] I am looking for a PhD position.</li>
+            <li class="font">[Dec. 2024] I can not join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection. ATAS reviews are unfair and discriminatory, targeting Chinese student based on biased criteria rather than facts.</li>
             <li class="font">[Oct. 2024] One paper is accepted by NeurIPS'25. Congratulations to Xuanjia!</li>
-            <li class="font">[May 2024] I will be joining the CVSSP as a Ph.D student.</li>
-            <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
-            <li class="font">[Nov. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
-            <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
-            <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
+            <li class="font">[Aug. 2024] I will be joining the CVSSP as a Ph.D student, under the supervision of [Prof. Wenwu Wang](https://personalpages.surrey.ac.uk/w.wang/) and  the co-supervision of [Prof. Philip J.B. Jackson](https://www.surrey.ac.uk/people/philip-jackson).</li>
             <details><summary><font color=blue>[More]</font></summary>
+                <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
+                <li class="font">[Nov. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
+                <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
+                <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
                 <li class="font">[Nov. 2022] I will be graduated by this semester!</li>
                 <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
                 <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
@@ -33,10 +35,12 @@ Dongli Xu is an incoming Ph.D student at CVSSP, University of Surrey, under the 
 ---
 ## Research Interests:
 - Computer Vision
-- Object Detection
+  - Object Detection
 - Signal/Audio/Speech/Music Processing
 - Multimodal
 - Generative Model
+  - Diffusion
+  - Autoregressive Model
 
 
 
@@ -96,7 +100,6 @@ Jiaxuan Zhao, Jian Guan, Congyi Fan, **Dongli Xu**, Youtian Lin, Haiwei Pan, Pen
 Hongning Liu, Pengming Feng, Mingjie Xie, **Dongli Xu**, Jian Guan, Guangjun He, Rubo Zhang, "[**FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images**](https://ieeexplore.ieee.org/document/10448501)," in _IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)_, pp.3420-3424, 2024, doi:10.1109/ICASSP48485.2024.10448501
 [[PDF](https://ieeexplore.ieee.org/document/10448501)]
 [[BibTeX]({{page.homepage.url}}/paper/)]
-[[Repo]()]<br>
 
 ### 2023
 Jinhong Deng, **Dongli Xu**, Wen Li*, Lixing Duan, "[**Harmonious Teacher for Cross-domain Object Detection**](https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html)," in _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, pp.23829-23838, 2023, doi:10.1109/CVPR52729.2023.02282
