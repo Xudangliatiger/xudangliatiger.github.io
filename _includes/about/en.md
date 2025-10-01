@@ -14,7 +14,8 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
         <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
           <td style="border-style: none; border-width: medium;">
             <ul style="text-align:justify;height: 130px; overflow:auto;">
-            <li class="font">[Jun. 2025] Two papers are accepted by ICCV with high scores. Congratulations to Tan and Congyi!</li>
+            <li class="font">[Jun. 2025] A paper is accepted by NeurIPS. Congratulations to Tan!</li>
+            <li class="font">[Jun. 2025] Two papers are accepted by ICCV. Congratulations to Tan and Congyi!</li>
             <li class="font">[Jun. 2025] I accept the PhD offer at KU Leuven that supported by [Flanders AI Research Program](https://www.flandersairesearch.be/en) </li>
             <details><summary><font color=blue>[More]</font></summary>
                 <li class="font">[Dec. 2024] I am looking for a PhD position.</li>
@@ -80,6 +81,12 @@ Harbin, Heilongjiang, P. R. China
 
 
 ## Preprints
+
+
+**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko, "[**SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model**]()." 
+
+**Dongli Xu***, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim, "[**Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models**]()."
+
 **Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li, "[**Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer**](),"
 [[PDF]()]
 [[BibTeX]({{page.homepage.url}}/paper/)]
@@ -93,8 +100,11 @@ Harbin, Heilongjiang, P. R. China
 ## Publications
 
 ### 2025
+Tan Pan, Kaiyu Guo, **Dongli Xu**, Zhaorui Tan, Chen Jiang, Deshu Chen, Xin Guo, Brian C. Lovell, Limei Han, Yuan Cheng, Mahsa Baktashmotlagh, "[**Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization**](https://arxiv.org/abs/2509.15791)", in _Adv. Neural Inf. Process. Syst. (NeurIPS)_, 2025
+[[PDF](https://arxiv.org/pdf/2509.15791)]
 
-Tan Pan, Zhaorui Tan, Kaiyu Guo, **Dongli Xu**, Weidi Xu, Chen Jiang, Xin Guo, Yuan Qi, Yuan Cheng, "**Structure-aware Semantic Discrepancy and Consistency for 3D Medical Image Self-supervised Learning**," in _IEEE/CVF International Conference on Computer Vision (ICCV)_, 2025
+Tan Pan, Zhaorui Tan, Kaiyu Guo, **Dongli Xu**, Weidi Xu, Chen Jiang, Xin Guo, Yuan Qi, Yuan Cheng, "[**Structure-aware Semantic Discrepancy and Consistency for 3D Medical Image Self-supervised Learning**](https://arxiv.org/abs/2507.02581)," in _IEEE/CVF International Conference on Computer Vision (ICCV)_, 2025
+[[PDF](https://arxiv.org/pdf/2507.02581)]
 
 Congyi Fan, Jian Guan, Xuanjia Zhao, **Dongli Xu**, Youtian Lin, Tong Ye, Pengming Feng, Haiwei Pan, "[**Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation**](https://arxiv.org/abs/2503.17340)," in _IEEE/CVF International Conference on Computer Vision (ICCV)_, 2025
 [[PDF](https://arxiv.org/abs/2503.17340)]

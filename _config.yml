@@ -90,7 +90,7 @@ service-worker: true
 friends: [
     {
         title: "Jinhong Deng",
-        href: "https://kinredon.github.io/jhdeng/"
+        href: "https://jhdeng-vision.github.io/"
     # },{
     #     title: "Shiyu Yi",
     #     href: "https://chanchann.github.io"
