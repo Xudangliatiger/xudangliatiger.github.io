@@ -28,11 +28,11 @@
     }
   
   .paper-card .card-image {
-    flex: 0 0 150px; /* 固定图片宽度 */
-    height: 100px; /* 固定图片高度，调整以适应GIF */
-    object-fit: cover; /* 确保图片或GIF填充 */
-    border-radius: 8px;
-  }
+    flex: 0 0 150px; /* 固定图片容器宽度 */
+    width: 150px; /* 强制图片宽度 */
+    /*height: 100px; !* 固定图片高度 *!*/
+    object-fit: cover; /* 确保图片填充 */
+    border-radius: 8px;}
   
   .paper-card .card-content {
     flex: 1; /* 文字部分自适应宽度 */
@@ -260,7 +260,7 @@ Harbin, Heilongjiang, P. R. China
   <div class="paper-card">
     <div class="card-content">
       <h4>Learning to Shift Duplication for NMS-Free One-Stage Object Detection</h4>
-      <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Wen Li, Chang Xu</div>
+      <div class="authors"><strong>Dongli Xu</strong>, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Wen Li, Chang Xu</div>
       <div class="venue">arXiv preprint</div>
       <div class="links">
         <a href="#">PDF</a>
@@ -274,6 +274,9 @@ Harbin, Heilongjiang, P. R. China
 ## Publications
 
 ### 2025
+<div class="publications-grid">
+</div>
+
 Tan Pan, Kaiyu Guo, **Dongli Xu**, Zhaorui Tan, Chen Jiang, Deshu Chen, Xin Guo, Brian C. Lovell, Limei Han, Yuan Cheng, Mahsa Baktashmotlagh, "[**Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization**](https://arxiv.org/abs/2509.15791)", in _Adv. Neural Inf. Process. Syst. (NeurIPS)_, 2025
 [[PDF](https://arxiv.org/pdf/2509.15791)]
 
