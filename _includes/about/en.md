@@ -1,9 +1,83 @@
 
+<style>
+  .section-title {
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .paper-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px; /* 确保每张卡片之间有间隔 */
+    width: 100%; /* 每张卡片宽度100%，独占一行 */
+  }
+  
+  .paper-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .paper-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .paper-card h4 {
+    margin: 0 0 10px;
+    color: #333;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  
+  .paper-card .authors {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .paper-card .venue {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+    font-style: italic;
+  }
+  
+  .paper-card .links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .paper-card .links a {
+    background: #f0f0f0;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background 0.3s;
+  }
+  
+  .paper-card .links a:hover {
+    background: #667eea;
+    color: #fff;
+  }
 
+</style>
 
-
-
-Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He worked as a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
 
@@ -79,6 +153,51 @@ Harbin, Heilongjiang, P. R. China
 - Research Assistant in Group of Intelligent Signal Processing
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
+
+## Preprints
+<div class="publications-grid">
+  <div class="paper-card">
+    <h4>SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model</h4>
+    <div class="authors">**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko</div>
+    <div class="venue">arXiv preprint</div>
+    <div class="links">
+      <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
+    </div>
+  </div>
+  
+  <div class="paper-card">
+    <h4>Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models</h4>
+    <div class="authors">**Dongli Xu***, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim</div>
+    <div class="venue">arXiv preprint</div>
+    <div class="links">
+      <a href="#">PDF</a>
+      <a href="#">BibTeX</a>
+      <a href="#">Repo</a>
+    </div>
+  </div>
+  
+  <div class="paper-card">
+    <h4>Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer</h4>
+    <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li</div>
+    <div class="venue">arXiv preprint</div>
+    <div class="links">
+      <a href="#">PDF</a>
+      <a href="{{ site.url }}/papers/balance_queries.bib">BibTeX</a>
+      <a href="#">Repo</a>
+    </div>
+  </div>
+  
+  <div class="paper-card">
+    <h4>Learning to Shift Duplication for NMS-Free One-Stage Object Detection</h4>
+    <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Wen Li, Chang Xu</div>
+    <div class="venue">arXiv preprint</div>
+    <div class="links">
+      <a href="#">PDF</a>
+      <a href="{{ site.url }}/papers/shift_duplication.bib">BibTeX</a>
+      <a href="#">Repo</a>
+    </div>
+  </div>
+</div>
 
 ## Preprints
 
