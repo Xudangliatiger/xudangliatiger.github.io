@@ -66,13 +66,13 @@
   }
   
   .paper-card .links a:hover {
-    background: linear-gradient(to bottom, #0071e3, #bf5af2); /* 垂直渐变：深蓝到紫 */
-    color: #fff;
+    background: linear-gradient(to right, #C8AEDC, #9AB8E0, #87CDEE); /* 水平渐变：饱和度更高的淡紫到浅天蓝 */
+    color: #ffffff;
     border-color: transparent;
-    text-shadow: none; /* 确保文字不模糊 */
-    filter: none; /* 移除可能的模糊滤镜 */
+    text-shadow: none; /* 确保文字清晰 */
+    filter: none; /* 移除可能的模糊 */
+    transition: all 0.3s ease;
   }
-
   .timeline-card {
     background: #fff;
     border-left: 4px solid #0071e3;
