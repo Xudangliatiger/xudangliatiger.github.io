@@ -29,7 +29,7 @@
   
   .paper-card .card-image {
     flex: 0 0 150px; /* 固定图片容器宽度 */
-    width: 150px; /* 强制图片宽度 */
+    width: 200px; /* 强制图片宽度 */
     /*height: 100px; !* 固定图片高度 *!*/
     object-fit: cover; /* 确保图片填充 */
     border-radius: 8px;}
