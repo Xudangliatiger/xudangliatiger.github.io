@@ -83,9 +83,9 @@ Harbin, Heilongjiang, P. R. China
 ## Preprints
 
 
-**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko, "[**SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model**]()." 
+**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko, "[**SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model**](https://arxiv.org/abs/2510.00996)." [[PDF](https://arxiv.org/pdf/2510.00996)]
 
-**Dongli Xu***, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim, "[**Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models**]()."
+**Dongli Xu**\*, Xuanming Cui\*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim, "[**Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models**]()."
 
 **Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li, "[**Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer**](),"
 [[PDF]()]
