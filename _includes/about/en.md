@@ -182,16 +182,18 @@
   @media (max-width: 768px) {
     .paper-card {
       flex-direction: column;
-      align-items: stretch; /* 拉伸以填充高度 */
+      align-items: flex-start;
     }
     .paper-card .card-image {
       width: 100%;
       max-width: 100%;
       height: auto; /* 自动高度 */
-      margin-bottom: 15px; /* 增加间距，避免紧贴 */
+      object-fit: contain; /* 完整显示 */
+      margin-bottom: 15px; /* 间距 */
+      flex: 0 0 auto; /* 移除固定宽度约束 */
     }
     .paper-card .card-content {
-      width: 100%; /* 确保内容占满 */
+      width: 100%;
     }}
 </style>
 
