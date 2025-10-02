@@ -236,7 +236,7 @@ Harbin, Heilongjiang, P. R. China
 </div>
   
   <div class="paper-card">
-    <img src="{{page.homepage.url}}/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
+    <img src="{{page.homepage.url}}/img/papers/2025-10-2-ORT.png" alt="Paper Image" class="card-image">
     <div class="card-content">
     <h4>Revisiting Random Generation Order: Ordinal-biased Random Training for Efficient Visual Autoregressive Models</h4>
     <div class="authors"> <strong>Dongli Xu</strong>*, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim</div>
@@ -245,6 +245,7 @@ Harbin, Heilongjiang, P. R. China
   </div>
   
   <div class="paper-card">
+    <div class="card-content">
     <h4>Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer</h4>
     <div class="authors"> <strong>Dongli XU</strong>, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li</div>
     <div class="venue">arXiv preprint</div>
@@ -253,16 +254,19 @@ Harbin, Heilongjiang, P. R. China
       <a href="{{ site.url }}/papers/balance_queries.bib">BibTeX</a>
       <a href="#">Repo</a>
     </div>
+    </div>
   </div>
   
   <div class="paper-card">
-    <h4>Learning to Shift Duplication for NMS-Free One-Stage Object Detection</h4>
-    <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Wen Li, Chang Xu</div>
-    <div class="venue">arXiv preprint</div>
-    <div class="links">
-      <a href="#">PDF</a>
-      <a href="{{ site.url }}/papers/shift_duplication.bib">BibTeX</a>
-      <a href="#">Repo</a>
+    <div class="card-content">
+      <h4>Learning to Shift Duplication for NMS-Free One-Stage Object Detection</h4>
+      <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Wen Li, Chang Xu</div>
+      <div class="venue">arXiv preprint</div>
+      <div class="links">
+        <a href="#">PDF</a>
+        <a href="{{ site.url }}/papers/shift_duplication.bib">BibTeX</a>
+        <a href="#">Repo</a>
+      </div>
     </div>
   </div>
 </div>
