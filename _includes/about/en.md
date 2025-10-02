@@ -182,14 +182,17 @@
   @media (max-width: 768px) {
     .paper-card {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch; /* 拉伸以填充高度 */
     }
     .paper-card .card-image {
-      width: 100%; /* 手机上全宽 */
-      max-width: 100%; /* 防止溢出 */
+      width: 100%;
+      max-width: 100%;
       height: auto; /* 自动高度 */
+      margin-bottom: 15px; /* 增加间距，避免紧贴 */
     }
-  }
+    .paper-card .card-content {
+      width: 100%; /* 确保内容占满 */
+    }}
 </style>
 
 Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
