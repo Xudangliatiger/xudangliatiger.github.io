@@ -29,7 +29,7 @@
   
   .paper-card .card-image {
     flex: 0 0 150px; /* 固定图片容器宽度 */
-    width: 200px; /* 强制图片宽度 */
+    width: 300px; /* 强制图片宽度 */
     /*height: 100px; !* 固定图片高度 *!*/
     object-fit: cover; /* 确保图片填充 */
     border-radius: 8px;}
@@ -220,7 +220,7 @@ Harbin, Heilongjiang, P. R. China
 - Research Assistant in Group of Intelligent Signal Processing
 - Co-advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1), [Dr. Pengming Feng](http://) and [Prof. Wenwu Wang](http://personal.ee.surrey.ac.uk/Personal/W.Wang/) -->
 
-
+---
 ## Preprints
 <div class="publications-grid">
   <div class="paper-card">
@@ -272,11 +272,10 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 
-
+---
 ## Publications
 
 ### 2025
-<h3>2025</h3>
 <div class="paper-card">
 
 [//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
