@@ -271,11 +271,145 @@ Harbin, Heilongjiang, P. R. China
   </div>
 </div>
 
+
+
 ## Publications
 
 ### 2025
-<div class="publications-grid">
+<h3>2025</h3>
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://arxiv.org/abs/2509.15791">Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization</a></h4>
+    <div class="authors">Tan Pan, Kaiyu Guo, <strong>Dongli Xu</strong>, Zhaorui Tan, Chen Jiang, Deshu Chen, Xin Guo, Brian C. Lovell, Limei Han, Yuan Cheng, Mahsa Baktashmotlagh</div>
+    <div class="venue">Annual Conference on Neural Information Processing Systems (NeurIPS), 2025</div>
+    <div class="links">
+      <a href="https://arxiv.org/pdf/2509.15791">PDF</a>
+    </div>
+  </div>
 </div>
+
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://arxiv.org/abs/2507.02581">Structure-aware Semantic Discrepancy and Consistency for 3D Medical Image Self-supervised Learning</a></h4>
+    <div class="authors">Tan Pan, Zhaorui Tan, Kaiyu Guo, <strong>Dongli Xu</strong>, Weidi Xu, Chen Jiang, Xin Guo, Yuan Qi, Yuan Cheng</div>
+    <div class="venue">IEEE/CVF International Conference on Computer Vision (ICCV), 2025</div>
+    <div class="links">
+      <a href="https://arxiv.org/pdf/2507.02581">PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://arxiv.org/abs/2503.17340">Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation</a></h4>
+    <div class="authors">Congyi Fan, Jian Guan, Xuanjia Zhao, <strong>Dongli Xu</strong>, Youtian Lin, Tong Ye, Pengming Feng, Haiwei Pan</div>
+    <div class="venue">IEEE/CVF International Conference on Computer Vision (ICCV), 2025</div>
+    <div class="links">
+      <a href="https://arxiv.org/abs/2503.17340">PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://arxiv.org/pdf/2412.18235">Band Prompting Aided SAR and Multi-Spectral Data Fusion Framework for Local Climate Zone Classification</a></h4>
+    <div class="authors">Haiyan Lan, Shujun Li, Mingjie Xie, Xuanjia Zhao, Hongning Liu, Pengming Feng, <strong>Dongli Xu</strong>, Guangjun He, Jian Guan</div>
+    <div class="venue">IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2025</div>
+    <div class="links">
+      <a href="https://arxiv.org/pdf/2412.18235">PDF</a>
+    </div>
+  </div>
+</div>
+
+### 2024
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://fastdrag-site.github.io/">FastDrag: Manipulate Anything in One Step</a></h4>
+    <div class="authors">Jiaxuan Zhao, Jian Guan, Congyi Fan, <strong>Dongli Xu</strong>, Youtian Lin, Haiwei Pan, Pengming Feng</div>
+    <div class="venue">Annual Conference on Neural Information Processing Systems (NeurIPS), 2024</div>
+    <div class="links">
+      <a href="https://arxiv.org/pdf/2405.15769">PDF</a>
+      <a href="{{page.homepage.url}}/paper/">BibTeX</a>
+      <a href="https://github.com/XuanjiaZ/FastDrag">Repo</a>
+    </div>
+  </div>
+</div>
+
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://ieeexplore.ieee.org/document/10448501">FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images</a></h4>
+    <div class="authors">Hongning Liu, Pengming Feng, Mingjie Xie, <strong>Dongli Xu</strong>, Jian Guan, Guangjun He, Rubo Zhang</div>
+    <div class="venue">IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2024</div>
+    <div class="links">
+      <a href="https://ieeexplore.ieee.org/document/10448501">PDF</a>
+      <a href="{{page.homepage.url}}/paper/">BibTeX</a>
+    </div>
+  </div>
+</div>
+
+### 2023
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html">Harmonious Teacher for Cross-domain Object Detection</a></h4>
+    <div class="authors">Jinhong Deng, <strong>Dongli Xu</strong>, Wen Li, Lixing Duan</div>
+    <div class="venue">IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2023 </div>
+    <div class="links">
+      <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.pdf">PDF</a>
+      <a href="{{page.homepage.url}}/paper/2023_CVPR_HarmoniousTeacher.txt">BibTeX</a>
+      <a href="https://github.com/kinredon/Harmonious-Teacher">Repo</a>
+    </div>
+  </div>
+</div>
+
+### 2022
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html">Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection</a></h4>
+    <div class="authors"><strong>Dongli Xu</strong>, Jinhong Deng, Wen Li</div>
+    <div class="venue">IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2022</div>
+    <div class="links">
+      <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.pdf">PDF</a>
+      <a href="{{page.homepage.url}}/paper/2022_CVPR_APELoss.txt">BibTeX</a>
+      <a href="https://github.com/Xudangliatiger/APE-Loss">Repo</a>
+    </div>
+  </div>
+</div>
+
+### 2020
+<div class="paper-card">
+
+[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
+  <div class="card-content">
+    <h4><a href="https://ieeexplore.ieee.org/document/9153932">Association Loss for Visual Object Detection</a></h4>
+    <div class="authors"><strong>Dongli Xu</strong>, Jian Guan, Pengming Feng, Wenwu Wang</div>
+    <div class="venue">IEEE Signal Processing Letters (SPL), 2020 </div>
+    <div class="links">
+      <a href="http://epubs.surrey.ac.uk/858303/1/XuGFW_SPL_2020.pdf">PDF</a>
+      <a href="{{page.homepage.url}}/paper/2020_SPL_associationLoss.txt">BibTeX</a>
+      <a href="https://github.com/Xudangliatiger/AssociationLoss">Repo</a>
+    </div>
+  </div>
+</div>
+
+## Publications
+
+### 2025
 
 Tan Pan, Kaiyu Guo, **Dongli Xu**, Zhaorui Tan, Chen Jiang, Deshu Chen, Xin Guo, Brian C. Lovell, Limei Han, Yuan Cheng, Mahsa Baktashmotlagh, "[**Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization**](https://arxiv.org/abs/2509.15791)", in _Adv. Neural Inf. Process. Syst. (NeurIPS)_, 2025
 [[PDF](https://arxiv.org/pdf/2509.15791)]
