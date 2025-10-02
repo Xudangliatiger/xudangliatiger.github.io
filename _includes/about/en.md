@@ -17,15 +17,33 @@
   
   
   
-  .paper-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 113, 227, 0.15), /* 增强悬停光晕 */
-                0 0 25px rgba(191, 90, 242, 0.1),
-                0 6px 15px rgba(0, 0, 0, 0.1);
-    text-shadow: none; /* 确保文字不模糊 */
-    filter: none; /* 移除可能的模糊滤镜 */
+  .paper-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(0, 113, 227, 0.1), /* 柔和蓝色光晕 */
+                0 0 20px rgba(191, 90, 242, 0.05), /* 紫色微光 */
+                0 4px 10px rgba(0, 0, 0, 0.05); /* 底端阴影 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex; /* 使用Flexbox布局 */
+    align-items: center; /* 垂直居中 */
+    gap: 20px; /* 图片和文字间距 */
   }
   
+  .paper-card .card-image {
+    flex: 0 0 150px; /* 固定图片宽度 */
+    height: 100px; /* 固定图片高度，调整以适应GIF */
+    object-fit: cover; /* 确保图片或GIF填充 */
+    border-radius: 8px;
+  }
+  
+  .paper-card .card-content {
+    flex: 1; /* 文字部分自适应宽度 */
+  }
+
   .paper-card h4 {
     margin: 0 0 12px;
     font-size: 1.2em;
@@ -34,13 +52,19 @@
   }
   
   .paper-card .authors {
-    font-style: italic;
+    /*font-style: italic;*/
     color: #6e6e73;
     margin-bottom: 12px;
     font-size: 0.95em;
   }
+
+  .paper-card .authors strong {
+    font-weight: bold; /* 将"Dongli Xu"加粗 */
+    color: #1d1d1f; /* 确保与背景对比 */
+  }
   
   .paper-card .venue {
+    font-style: italic;
     font-weight: 500;
     color: #515154;
     margin-bottom: 16px;
@@ -114,9 +138,15 @@
   }
   
   @media (max-width: 768px) {
-    .paper-card, .timeline-card {
-      width: 100%;
+    .paper-card {
+      flex-direction: column; /* 移动端堆叠 */
+      align-items: flex-start;
     }
+    .paper-card .card-image {
+      width: 100%; /* 移动端图片全宽 */
+      height: auto; /* 自动调整高度 */
+    }
+  }
   }
 </style>
 
@@ -200,13 +230,16 @@ Harbin, Heilongjiang, P. R. China
 ## Preprints
 <div class="publications-grid">
   <div class="paper-card">
+  <img src="{{page.homepage.url}}/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
+  <div class="card-content">
     <h4>SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model</h4>
-    <div class="authors">**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko</div>
+    <div class="authors"><strong>Dongli Xu</strong>, Aleksei Tiulpin, Matthew B. Blaschko</div>
     <div class="venue">arXiv preprint</div>
     <div class="links">
       <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
     </div>
   </div>
+</div>
   
   <div class="paper-card">
     <h4>Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models</h4>
