@@ -63,7 +63,7 @@
                 0 6px 15px rgba(0, 0, 0, 0.1);
   }
   .paper-card .card-image {
-    flex: 0 0 150px;
+    flex: 0 0 300px;
     width: 300px;
     /*height: 100px;*/
     object-fit: cover;
