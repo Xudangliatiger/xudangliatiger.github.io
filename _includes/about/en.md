@@ -58,15 +58,16 @@
   }
   
   .gold-card:hover {
-    box-shadow: 0 12px 40px rgba(184, 134, 11, 0.25), /* 增强金色悬停光晕 */
+    box-shadow: 0 12px 40px rgba(255,215,0, 0.3), /* 增强金色悬停光晕 */
                 0 0 25px rgba(218, 165, 32, 0.2),
                 0 6px 15px rgba(0, 0, 0, 0.1);
   }
   .paper-card .card-image {
-    flex: 0 0 300px;
-    width: 300px;
-    /*height: 100px;*/
-    object-fit: cover;
+    flex: 0 0 300px; /* 桌面端固定宽度 */
+    width: 100%; /* 响应式宽度 */
+    max-width: 300px; /* 桌面端最大宽度 */
+    height: auto; /* 自动调整高度 */
+    object-fit: contain; /* 完整显示图片 */
     border-radius: 8px;
   }
   
@@ -184,8 +185,9 @@
       align-items: flex-start;
     }
     .paper-card .card-image {
-      width: 100%;
-      height: auto;
+      width: 100%; /* 手机上全宽 */
+      max-width: 100%; /* 防止溢出 */
+      height: auto; /* 自动高度 */
     }
   }
 </style>
@@ -223,6 +225,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
       </div>
 
 ---
+
 ## Research Interests:
 - Computer Vision
   - Object Detection
