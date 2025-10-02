@@ -1,20 +1,7 @@
 
 <style>
 
-  .paper-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 30px rgba(0, 113, 227, 0.1), /* 柔和蓝色光晕 */
-                0 0 20px rgba(191, 90, 242, 0.05), /* 紫色微光 */
-                0 4px 10px rgba(0, 0, 0, 0.05); /* 底端阴影 */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
-    margin-bottom: 30px;
-    width: 100%;
-    backdrop-filter: blur(100px); /* 可选：增加模糊效果，需浏览器支持 */
-  }
-  
+ 
   
   
   .paper-card {
@@ -32,6 +19,13 @@
     align-items: center; /* 垂直居中 */
     gap: 20px; /* 图片和文字间距 */
   }
+
+   .paper-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 113, 227, 0.15), /* 增强悬停光晕 */
+                  0 0 25px rgba(191, 90, 242, 0.1),
+                  0 6px 15px rgba(0, 0, 0, 0.1);
+    }
   
   .paper-card .card-image {
     flex: 0 0 150px; /* 固定图片宽度 */
