@@ -228,7 +228,7 @@ Harbin, Heilongjiang, P. R. China
   <div class="card-content">
     <h4>SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model</h4>
     <div class="authors"><strong>Dongli Xu</strong>, Aleksei Tiulpin, Matthew B. Blaschko</div>
-    <div class="venue">arXiv preprint</div>
+    <div class="venue">arXiv preprint, October 2025</div>
     <div class="links">
       <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
     </div>
@@ -236,19 +236,17 @@ Harbin, Heilongjiang, P. R. China
 </div>
   
   <div class="paper-card">
-    <h4>Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models</h4>
-    <div class="authors">**Dongli Xu***, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim</div>
-    <div class="venue">arXiv preprint</div>
-    <div class="links">
-      <a href="#">PDF</a>
-      <a href="#">BibTeX</a>
-      <a href="#">Repo</a>
+    <img src="{{page.homepage.url}}/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
+    <div class="card-content">
+    <h4>Revisiting Random Generation Order: Ordinal-biased Random Training for Efficient Visual Autoregressive Models</h4>
+    <div class="authors"> <strong>Dongli Xu</strong>*, Xuanming Cui*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim</div>
+    <div class="venue">Will be released soon!</div>
     </div>
   </div>
   
   <div class="paper-card">
     <h4>Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer</h4>
-    <div class="authors">**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li</div>
+    <div class="authors"> <strong>Dongli XU</strong>, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li</div>
     <div class="venue">arXiv preprint</div>
     <div class="links">
       <a href="#">PDF</a>
