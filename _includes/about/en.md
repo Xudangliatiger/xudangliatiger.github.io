@@ -277,8 +277,6 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2025
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://arxiv.org/abs/2509.15791">Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization</a></h4>
     <div class="authors">Tan Pan, Kaiyu Guo, <strong>Dongli Xu</strong>, Zhaorui Tan, Chen Jiang, Deshu Chen, Xin Guo, Brian C. Lovell, Limei Han, Yuan Cheng, Mahsa Baktashmotlagh</div>
@@ -290,8 +288,6 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://arxiv.org/abs/2507.02581">Structure-aware Semantic Discrepancy and Consistency for 3D Medical Image Self-supervised Learning</a></h4>
     <div class="authors">Tan Pan, Zhaorui Tan, Kaiyu Guo, <strong>Dongli Xu</strong>, Weidi Xu, Chen Jiang, Xin Guo, Yuan Qi, Yuan Cheng</div>
@@ -303,8 +299,6 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://arxiv.org/abs/2503.17340">Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation</a></h4>
     <div class="authors">Congyi Fan, Jian Guan, Xuanjia Zhao, <strong>Dongli Xu</strong>, Youtian Lin, Tong Ye, Pengming Feng, Haiwei Pan</div>
@@ -316,8 +310,6 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://arxiv.org/pdf/2412.18235">Band Prompting Aided SAR and Multi-Spectral Data Fusion Framework for Local Climate Zone Classification</a></h4>
     <div class="authors">Haiyan Lan, Shujun Li, Mingjie Xie, Xuanjia Zhao, Hongning Liu, Pengming Feng, <strong>Dongli Xu</strong>, Guangjun He, Jian Guan</div>
@@ -330,8 +322,6 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2024
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://fastdrag-site.github.io/">FastDrag: Manipulate Anything in One Step</a></h4>
     <div class="authors">Jiaxuan Zhao, Jian Guan, Congyi Fan, <strong>Dongli Xu</strong>, Youtian Lin, Haiwei Pan, Pengming Feng</div>
@@ -345,8 +335,6 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://ieeexplore.ieee.org/document/10448501">FPN with GMM Based Feature Enhancement Strategy for Object Detection in Remote Sensing Images</a></h4>
     <div class="authors">Hongning Liu, Pengming Feng, Mingjie Xie, <strong>Dongli Xu</strong>, Jian Guan, Guangjun He, Rubo Zhang</div>
@@ -360,8 +348,6 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2023
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html">Harmonious Teacher for Cross-domain Object Detection</a></h4>
     <div class="authors">Jinhong Deng, <strong>Dongli Xu</strong>, Wen Li, Lixing Duan</div>
@@ -376,8 +362,6 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2022
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://openaccess.thecvf.com/content/CVPR2022/html/Xu_Revisiting_AP_Loss_for_Dense_Object_Detection_Adaptive_Ranking_Pair_CVPR_2022_paper.html">Revisiting AP Loss for Dense Object Detection: Adaptive Ranking Pair Selection</a></h4>
     <div class="authors"><strong>Dongli Xu</strong>, Jinhong Deng, Wen Li</div>
@@ -392,8 +376,6 @@ Harbin, Heilongjiang, P. R. China
 
 ### 2020
 <div class="paper-card">
-
-[//]: # (  <img src="https://via.placeholder.com/150x100" alt="Paper Image" class="card-image">)
   <div class="card-content">
     <h4><a href="https://ieeexplore.ieee.org/document/9153932">Association Loss for Visual Object Detection</a></h4>
     <div class="authors"><strong>Dongli Xu</strong>, Jian Guan, Pengming Feng, Wenwu Wang</div>
