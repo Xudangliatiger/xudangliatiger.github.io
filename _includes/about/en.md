@@ -92,7 +92,7 @@
   }
   
   .paper-card .authors {
-    font-style: italic;
+    
     color: #6e6e73;
     margin-bottom: 12px;
     font-size: 0.95em;
@@ -104,6 +104,7 @@
   }
   
   .paper-card .venue {
+    font-style: italic;
     font-weight: 500;
     color: #515154;
     margin-bottom: 16px;
