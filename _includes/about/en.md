@@ -39,34 +39,33 @@
                 0 6px 15px rgba(0, 0, 0, 0.1);
   }
   
-  .gold-card {
-    box-shadow: 0 8px 30px rgba(218, 165, 32, 0.1), /* 金色光晕 */
-                0 0 20px rgba(255, 215, 0, 0.05), /* 金色微光 */
-                0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-  
-  .gold-card:hover {
-    box-shadow: 0 12px 40px rgba(218, 165, 32, 0.15), /* 增强金色悬停光晕 */
-                0 0 25px rgba(255, 215, 0, 0.1),
-                0 6px 15px rgba(0, 0, 0, 0.1);
-  }
-  
   .purple-card {
-    box-shadow: 0 8px 30px rgba(191, 90, 242, 0.1), /* 紫色光晕 */
-                0 0 20px rgba(128, 0, 128, 0.05), /* 深紫微光 */
+    box-shadow: 0 8px 30px rgba(107, 35, 142, 0.15), /* 更浓郁的紫色光晕 */
+                0 0 20px rgba(128, 0, 128, 0.1), /* 深紫微光 */
                 0 4px 10px rgba(0, 0, 0, 0.05);
   }
   
   .purple-card:hover {
-    box-shadow: 0 12px 40px rgba(191, 90, 242, 0.15), /* 增强紫色悬停光晕 */
-                0 0 25px rgba(128, 0, 128, 0.1),
+    box-shadow: 0 12px 40px rgba(107, 35, 142, 0.2), /* 增强紫色悬停光晕 */
+                0 0 25px rgba(128, 0, 128, 0.15),
                 0 6px 15px rgba(0, 0, 0, 0.1);
   }
   
+  .gold-card {
+    box-shadow: 0 8px 30px rgba(184, 134, 11, 0.2), /* 更浓郁的金色光晕 */
+                0 0 20px rgba(218, 165, 32, 0.15), /* 亮金微光 */
+                0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .gold-card:hover {
+    box-shadow: 0 12px 40px rgba(184, 134, 11, 0.25), /* 增强金色悬停光晕 */
+                0 0 25px rgba(218, 165, 32, 0.2),
+                0 6px 15px rgba(0, 0, 0, 0.1);
+  }
   .paper-card .card-image {
     flex: 0 0 150px;
-    width: 150px;
-    height: 100px;
+    width: 300px;
+    /*height: 100px;*/
     object-fit: cover;
     border-radius: 8px;
   }
@@ -393,8 +392,8 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 ### 2023
-<div class="paper-card">
-  <div class="card-content">
+<div class="paper-card purple-card">
+  <div class="card-content ">
     <h4><a href="https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html">Harmonious Teacher for Cross-domain Object Detection</a></h4>
     <div class="authors">Jinhong Deng, <strong>Dongli Xu</strong>, Wen Li, Lixing Duan</div>
     <div class="venue">IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2023 </div>
