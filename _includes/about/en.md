@@ -1,80 +1,123 @@
 
 <style>
-  .section-title {
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-  }
-  
+
   .paper-card {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(0, 113, 227, 0.1), /* 柔和蓝色光晕 */
+                0 0 20px rgba(191, 90, 242, 0.05), /* 紫色微光 */
+                0 4px 10px rgba(0, 0, 0, 0.05); /* 底端阴影 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
-    overflow: hidden;
-    margin-bottom: 20px; /* 确保每张卡片之间有间隔 */
-    width: 100%; /* 每张卡片宽度100%，独占一行 */
+    margin-bottom: 30px;
+    width: 100%;
+    backdrop-filter: blur(100px); /* 可选：增加模糊效果，需浏览器支持 */
   }
   
-  .paper-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  }
+  
   
   .paper-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 113, 227, 0.15), /* 增强悬停光晕 */
+                0 0 25px rgba(191, 90, 242, 0.1),
+                0 6px 15px rgba(0, 0, 0, 0.1);
+    text-shadow: none; /* 确保文字不模糊 */
+    filter: none; /* 移除可能的模糊滤镜 */
   }
   
   .paper-card h4 {
-    margin: 0 0 10px;
-    color: #333;
-    font-size: 1.1em;
-    font-weight: bold;
+    margin: 0 0 12px;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #1d1d1f;
   }
   
   .paper-card .authors {
     font-style: italic;
-    color: #666;
-    margin-bottom: 10px;
+    color: #6e6e73;
+    margin-bottom: 12px;
+    font-size: 0.95em;
   }
   
   .paper-card .venue {
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 15px;
-    font-style: italic;
+    font-weight: 500;
+    color: #515154;
+    margin-bottom: 16px;
+    font-size: 0.9em;
   }
   
   .paper-card .links {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
   }
   
   .paper-card .links a {
-    background: #f0f0f0;
-    color: #333;
-    padding: 4px 8px;
-    border-radius: 4px;
+    background: #fff;
+    color: #0071e3;
+    padding: 6px 12px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
     text-decoration: none;
-    font-size: 0.9em;
-    transition: background 0.3s;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: all 0.3s ease;
   }
   
   .paper-card .links a:hover {
-    background: #667eea;
+    background: linear-gradient(to bottom, #0071e3, #bf5af2); /* 垂直渐变：深蓝到紫 */
     color: #fff;
+    border-color: transparent;
+    text-shadow: none; /* 确保文字不模糊 */
+    filter: none; /* 移除可能的模糊滤镜 */
   }
 
+  .timeline-card {
+    background: #fff;
+    border-left: 4px solid #0071e3;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .timeline-card h4 {
+    margin: 0 0 8px;
+    color: #1d1d1f;
+    font-weight: 500;
+  }
+  
+  .timeline-card .date {
+    font-style: italic;
+    color: #6e6e73;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+  }
+  
+  .news ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #1d1d1f;
+  }
+  
+  .news ul li {
+    margin-bottom: 10px;
+    font-size: 0.95em;
+  }
+  
+  details summary {
+    cursor: pointer;
+    color: #0071e3;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .paper-card, .timeline-card {
+      width: 100%;
+    }
+  }
 </style>
 
 Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
@@ -198,23 +241,6 @@ Harbin, Heilongjiang, P. R. China
     </div>
   </div>
 </div>
-
-## Preprints
-
-
-**Dongli Xu**, Aleksei Tiulpin, Matthew B. Blaschko, "[**SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model**](https://arxiv.org/abs/2510.00996)." [[PDF](https://arxiv.org/pdf/2510.00996)]
-
-**Dongli Xu**\*, Xuanming Cui\*, Tan Pan, Chen Jiang, Yuan Cheng, Harry Yang, Ser-Nam Lim, "[**Revisiting Random Generation Order: Ordinal-Biased Random Training for Efficient Visual Autoregressive Models**]()."
-
-**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You, Chang Xu, Wen Li, "[**Exploring the Balance Between Quality and Quantity of Object Queries for Detection Transformer**](),"
-[[PDF]()]
-[[BibTeX]({{page.homepage.url}}/paper/)]
-[[Repo]()]<br>
-
-**Dongli Xu**, Jinhong Deng, Tao Huang, Xiu Su, Shan You,  Wen Li, Chang Xu, "[**Learning to Shift Duplication for NMS-Free One-Stage Object Detection**](),"
-[[PDF]()]
-[[BibTeX]({{page.homepage.url}}/paper/)]
-[[Repo]()]<br>
 
 ## Publications
 
