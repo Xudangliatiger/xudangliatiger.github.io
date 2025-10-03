@@ -401,7 +401,7 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 ### 2023
-<div class="paper-card purple-card">
+<div class="paper-card gold-card">
   <div class="card-content ">
     <h4><a href="https://openaccess.thecvf.com/content/CVPR2023/html/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.html">Harmonious Teacher for Cross-domain Object Detection</a></h4>
     <div class="authors">Jinhong Deng, <strong>Dongli Xu</strong>, Wen Li, Lixing Duan</div>
