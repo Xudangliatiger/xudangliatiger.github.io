@@ -393,9 +393,9 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 .timeline-item.gold .timeline-content {
   background: #fdf7eb; /* 更亮的淡金色 */
   /*border: 1px solid #e3cc96; !* 加一点边线对比 *!*/
- box-shadow: 0 8px 15px rgba(184, 134, 11, 0.2), /* 更浓郁的金色光晕 */
-                0 0 10px rgba(218, 165, 32, 0.15), /* 亮金微光 */
-                0 4px 5px rgba(0, 0, 0, 0.05);
+ /*box-shadow: 0 8px 15px rgba(184, 134, 11, 0.2), !* 更浓郁的金色光晕 *!*/
+ /*               0 0 10px rgba(218, 165, 32, 0.15), !* 亮金微光 *!*/
+ /*               0 4px 5px rgba(0, 0, 0, 0.05);*/
 }
 
 
