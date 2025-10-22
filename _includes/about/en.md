@@ -349,10 +349,6 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   background: #f4f7fc; /* 比原来更深一点的蓝底 */
 }
 
-.timeline-content:hover {
-  background: #e7efff; /* hover 更明显 */
-  transform: translateY(-1px);
-}
 
 .timeline-content a {
   color: #0056d6;
@@ -403,9 +399,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
                 0 4px 5px rgba(0, 0, 0, 0.05);
 }
 
-.timeline-item.gold .timeline-content:hover {
-  background: #fff4d4; /* hover 更暖一点 */
-}
+
 </style>
 
 <!-- timeline end -->
