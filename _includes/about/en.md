@@ -232,14 +232,14 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
     </div>
   </div>
 
-  <div class="timeline-item normal">
+  <div class="timeline-item ">
     <div class="timeline-date">Jun. 2025</div>
     <div class="timeline-content">
       Two papers are accepted by <b>ICCV</b>. Congratulations to <b>Tan</b> and <b>Congyi</b>!
     </div>
   </div>
 
-  <div class="timeline-item emph" >
+  <div class="timeline-item gold" >
     <div class="timeline-date">Jun. 2025</div>
     <div class="timeline-content">
       I accept the PhD offer at <b>KU Leuven</b>, supported by the 
@@ -255,7 +255,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   <div class="timeline-content">I am looking for a PhD position.</div>
 </div>
 
-<div class="timeline-item">
+<div class="timeline-item gold">
   <div class="timeline-date">Dec. 2024</div>
   <div class="timeline-content">
     I cannot join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection.  
@@ -270,7 +270,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   </div>
 </div>
 
-<div class="timeline-item">
+<div class="timeline-item gold">
   <div class="timeline-date">Aug. 2024</div>
   <div class="timeline-content">
     I will be joining <b>CVSSP</b> as a Ph.D. student under  
@@ -305,12 +305,12 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   <div class="timeline-content">I will graduate this semester!</div>
 </div>
 
-<div class="timeline-item normal">
+<div class="timeline-item">
   <div class="timeline-date">Nov. 2022</div>
   <div class="timeline-content">Two papers are submitted to <b>CVPR’23</b>.</div>
 </div>
 
-<div class="timeline-item emph">
+<div class="timeline-item gold">
   <div class="timeline-date">Jul. 2021</div>
   <div class="timeline-content">Started my master's study at the <b>University of Sydney</b>.</div>
 </div>
@@ -319,12 +319,11 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 </div>
 
 <style>
-/* 主体结构 */
 .timeline {
   position: relative;
   margin: 30px 0;
   padding-left: 25px;
-  border-left: 3px solid #d4b56f; /* 金色主线 */
+  border-left: 3px solid #d4b56f;
   font-size: 15px;
 }
 
@@ -334,19 +333,6 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   padding-left: 15px;
 }
 
-/* 默认：蓝色风格 */
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -11px;
-  top: 6px;
-  width: 12px;
-  height: 12px;
-  background-color: #0056d6; /* 蓝色圆点 */
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff;
-}
-
 .timeline-date {
   color: #333;
   font-weight: bold;
@@ -354,17 +340,17 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 }
 
 .timeline-content {
-  background: #fbfbfb; /* 冷白背景 */
-  padding: 10px 15px;
   border-radius: 8px;
   line-height: 1.6em;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  padding: 10px 15px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   transition: all 0.25s ease;
   color: #333;
+  background: #f4f7fc; /* 比原来更深一点的蓝底 */
 }
 
 .timeline-content:hover {
-  background: #f3f7ff; /* 淡蓝 hover */
+  background: #e7efff; /* hover 更明显 */
   transform: translateY(-1px);
 }
 
@@ -378,7 +364,20 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   text-decoration: underline;
 }
 
-/* “Show more history” 仍然金色 */
+/* 默认蓝圆点 */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: #0056d6;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #fff;
+}
+
+/* “Show more” 按钮 */
 .timeline-more summary {
   cursor: pointer;
   font-weight: 600;
@@ -391,15 +390,21 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   color: #b68936;
 }
 
-/* 强调项：改成金色风格 */
+/* 金色强调项 */
 .timeline-item.gold::before {
-  background-color: #d4b56f; /* 金色圆点 */
+  background-color: #d4b56f;
 }
+
 .timeline-item.gold .timeline-content {
-  background: #f9f7f3; /* 米白底 */
+  background: #fdf7eb; /* 更亮的淡金色 */
+  /*border: 1px solid #e3cc96; !* 加一点边线对比 *!*/
+ box-shadow: 0 8px 15px rgba(184, 134, 11, 0.2), /* 更浓郁的金色光晕 */
+                0 0 10px rgba(218, 165, 32, 0.15), /* 亮金微光 */
+                0 4px 5px rgba(0, 0, 0, 0.05);
 }
+
 .timeline-item.gold .timeline-content:hover {
-  background: #fff3cf; /* 淡金 hover */
+  background: #fff4d4; /* hover 更暖一点 */
 }
 </style>
 
