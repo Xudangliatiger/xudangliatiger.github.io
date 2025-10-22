@@ -215,7 +215,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 <div class="timeline">
 
   <!-- 2025 -->
-  <div class="timeline-item">
+  <div class="timeline-item gold">
     <div class="timeline-date">Oct. 2025</div>
     <div class="timeline-content">
       My research proposal on <b>next-generation visual AR models</b> has been approved by 
@@ -225,21 +225,21 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
     </div>
   </div>
 
-  <div class="timeline-item">
+  <div class="timeline-item normal">
     <div class="timeline-date">Jun. 2025</div>
     <div class="timeline-content">
       A paper is accepted by <b>NeurIPS</b>. Congratulations to <b>Tan</b>!
     </div>
   </div>
 
-  <div class="timeline-item">
+  <div class="timeline-item normal">
     <div class="timeline-date">Jun. 2025</div>
     <div class="timeline-content">
       Two papers are accepted by <b>ICCV</b>. Congratulations to <b>Tan</b> and <b>Congyi</b>!
     </div>
   </div>
 
-  <div class="timeline-item">
+  <div class="timeline-item emph" >
     <div class="timeline-date">Jun. 2025</div>
     <div class="timeline-content">
       I accept the PhD offer at <b>KU Leuven</b>, supported by the 
@@ -305,12 +305,12 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   <div class="timeline-content">I will graduate this semester!</div>
 </div>
 
-<div class="timeline-item">
+<div class="timeline-item normal">
   <div class="timeline-date">Nov. 2022</div>
   <div class="timeline-content">Two papers are submitted to <b>CVPR’23</b>.</div>
 </div>
 
-<div class="timeline-item">
+<div class="timeline-item emph">
   <div class="timeline-date">Jul. 2021</div>
   <div class="timeline-content">Started my master's study at the <b>University of Sydney</b>.</div>
 </div>
@@ -319,11 +319,12 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 </div>
 
 <style>
+/* 主体结构 */
 .timeline {
   position: relative;
   margin: 30px 0;
   padding-left: 25px;
-  border-left: 3px solid #d4b56f; /* 金米竖线 */
+  border-left: 3px solid #d4b56f; /* 金色主线 */
   font-size: 15px;
 }
 
@@ -333,6 +334,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   padding-left: 15px;
 }
 
+/* 默认：蓝色风格 */
 .timeline-item::before {
   content: "";
   position: absolute;
@@ -340,34 +342,34 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   top: 6px;
   width: 12px;
   height: 12px;
-  background-color: #c49a50; /* 深金圆点 */
+  background-color: #0056d6; /* 蓝色圆点 */
   border-radius: 50%;
   box-shadow: 0 0 0 3px #fff;
 }
 
 .timeline-date {
-  color: #444; /* 深灰日期 */
+  color: #333;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 .timeline-content {
-  background: #f9f7f3; /* 米白背景 */
+  background: #fbfbfb; /* 冷白背景 */
   padding: 10px 15px;
   border-radius: 8px;
   line-height: 1.6em;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
   color: #333;
 }
 
 .timeline-content:hover {
-  background: #fffbea; /* hover淡金 */
+  background: #f3f7ff; /* 淡蓝 hover */
   transform: translateY(-1px);
 }
 
 .timeline-content a {
-  color: #0056d6; /* 蓝色链接，与正文一致 */
+  color: #0056d6;
   text-decoration: none;
   font-weight: 500;
 }
@@ -376,19 +378,31 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   text-decoration: underline;
 }
 
+/* “Show more history” 仍然金色 */
 .timeline-more summary {
   cursor: pointer;
   font-weight: 600;
-  color: #c49a50;
+  color: #d4b56f;
   margin-top: 12px;
   padding-left: 10px;
 }
-
 .timeline-more summary:hover {
   text-decoration: underline;
   color: #b68936;
 }
+
+/* 强调项：改成金色风格 */
+.timeline-item.gold::before {
+  background-color: #d4b56f; /* 金色圆点 */
+}
+.timeline-item.gold .timeline-content {
+  background: #f9f7f3; /* 米白底 */
+}
+.timeline-item.gold .timeline-content:hover {
+  background: #fff3cf; /* 淡金 hover */
+}
 </style>
+
 <!-- timeline end -->
 
 
