@@ -322,8 +322,9 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 .timeline {
   position: relative;
   margin: 30px 0;
-  padding-left: 20px;
-  border-left: 3px solid #0056d6;
+  padding-left: 25px;
+  border-left: 3px solid #d4b56f; /* 金米竖线 */
+  font-size: 15px;
 }
 
 .timeline-item {
@@ -335,32 +336,40 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: -10px;
+  left: -11px;
   top: 6px;
   width: 12px;
   height: 12px;
-  background-color: #0056d6;
+  background-color: #c49a50; /* 深金圆点 */
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #f9f9f9;
+  box-shadow: 0 0 0 3px #fff;
 }
 
 .timeline-date {
-  color: #0056d6;
+  color: #444; /* 深灰日期 */
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .timeline-content {
-  background: #f9f9f9;
-  padding: 10px 14px;
+  background: #f9f7f3; /* 米白背景 */
+  padding: 10px 15px;
   border-radius: 8px;
   line-height: 1.6em;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.timeline-content:hover {
+  background: #fffbea; /* hover淡金 */
+  transform: translateY(-1px);
 }
 
 .timeline-content a {
-  color: #0056d6;
+  color: #0056d6; /* 蓝色链接，与正文一致 */
   text-decoration: none;
+  font-weight: 500;
 }
 
 .timeline-content a:hover {
@@ -369,13 +378,15 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 
 .timeline-more summary {
   cursor: pointer;
-  font-weight: bold;
-  color: #0056d6;
-  margin-top: 10px;
+  font-weight: 600;
+  color: #c49a50;
+  margin-top: 12px;
+  padding-left: 10px;
 }
 
 .timeline-more summary:hover {
   text-decoration: underline;
+  color: #b68936;
 }
 </style>
 <!-- timeline end -->
