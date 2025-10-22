@@ -201,33 +201,177 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 
 ---
 
-## News
 
-<div class="news">
-        <!-- <h3 >Updates</h3> -->
-        <!--<div style="overflow-y: scroll; height:150px; width:900px">-->
-          <td style="border-style: none; border-width: medium;">
-            <ul style="text-align:justify;height: 130px; overflow:auto;">
-            <li class="font">[Jun. 2025] A paper is accepted by NeurIPS. Congratulations to Tan!</li>
-            <li class="font">[Jun. 2025] Two papers are accepted by ICCV. Congratulations to Tan and Congyi!</li>
-            <li class="font">[Jun. 2025] I accept the PhD offer at KU Leuven that supported by [Flanders AI Research Program](https://www.flandersairesearch.be/en) </li>
-            <details><summary><font color=blue>[More]</font></summary>
-                <li class="font">[Dec. 2024] I am looking for a PhD position.</li>
-                <li class="font">[Dec. 2024] I can not join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection. ATAS reviews are unfair and discriminatory, targeting Chinese student based on biased criteria rather than facts.</li>
-                <li class="font">[Oct. 2024] One paper is accepted by NeurIPS'25. Congratulations to Xuanjia!</li>
-                <li class="font">[Aug. 2024] I will be joining the CVSSP as a Ph.D student, under the supervision of [Prof. Wenwu Wang](https://personalpages.surrey.ac.uk/w.wang/) and  the co-supervision of [Prof. Philip J.B. Jackson](https://www.surrey.ac.uk/people/philip-jackson).</li>
-                <li class="font">[Dec. 2023] One paper is accepted by ICASSP'24.</li>
-                <li class="font">[Nov. 2023] One paper is submiited to CVPR'24. Good Luck!</li>
-                <li class="font">[Feb. 2023] One paper is accepted by CVPR'23! Congratulations to Jinhong!</li>
-                <li class="font">[Jan. 2023] Graduated from the University of Sydney!</li>
-                <li class="font">[Nov. 2022] I will be graduated by this semester!</li>
-                <li class="font">[Nov. 2022] Two papers are submitted to CVPR'23.</li>
-                <li class="font">[July 2021] Start my master's study at the University of Sydney. </li>
-            </details>
-            </ul>  
-          </td>
-          <!--</div>-->
+## 📰 News
+
+<div class="timeline">
+
+  <!-- 2025 -->
+  <div class="timeline-item">
+    <div class="timeline-date">Oct. 2025</div>
+    <div class="timeline-content">
+      My research proposal on <b>next-generation visual AR models</b> has been approved by 
+      <a href="https://eurohpc-ju.europa.eu" target="_blank">EuroHPC AI Factory for Science and Collaborative EU Projects</a>.  
+      I’m thrilled to receive <b>80,000 H100 GPU hours</b> on the <a href="https://www.bsc.es/marenostrum/marenostrum-5" target="_blank">MareNostrum5</a> supercomputer 🎉  
+      Thanks to <b>Sebastian</b>, <b>Teodora</b>, and <b>Matthew</b> for the support!
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Jun. 2025</div>
+    <div class="timeline-content">
+      A paper is accepted by <b>NeurIPS</b>. Congratulations to <b>Tan</b>!
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Jun. 2025</div>
+    <div class="timeline-content">
+      Two papers are accepted by <b>ICCV</b>. Congratulations to <b>Tan</b> and <b>Congyi</b>!
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">Jun. 2025</div>
+    <div class="timeline-content">
+      I accept the PhD offer at <b>KU Leuven</b>, supported by the 
+      <a href="https://www.flandersairesearch.be/en" target="_blank">Flanders AI Research Program</a>.
+    </div>
+  </div>
+  <!-- HTML block -->
+  <details class="timeline-more" markdown="1">
+    <summary>Show more history</summary>
+
+    <!-- 2024 -->
+    <div class="timeline-item">
+      <div class="timeline-date">Dec. 2024</div>
+      <div class="timeline-content">I am looking for a PhD position.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Dec. 2024</div>
+      <div class="timeline-content">
+        I cannot join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection.  
+        ATAS reviews are <b>unfair and discriminatory</b>, targeting Chinese students.
       </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Oct. 2024</div>
+      <div class="timeline-content">
+        One paper is accepted by <b>NeurIPS’25</b>. Congratulations to <b>Xuanjia</b>!
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Aug. 2024</div>
+      <div class="timeline-content">
+        I will be joining <b>CVSSP</b> as a Ph.D. student under  
+        <a href="https://personalpages.surrey.ac.uk/w.wang/" target="_blank">Prof. Wenwu Wang</a>  
+        and co-supervised by  
+        <a href="https://www.surrey.ac.uk/people/philip-jackson" target="_blank">Prof. Philip J.B. Jackson</a>.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Dec. 2023</div>
+      <div class="timeline-content">One paper is accepted by <b>ICASSP’24</b>.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Nov. 2023</div>
+      <div class="timeline-content">One paper is <b>submitted to CVPR’24</b>. Good luck!</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Feb. 2023</div>
+      <div class="timeline-content">One paper is accepted by <b>CVPR’23</b>! Congratulations to <b>Jinhong</b>!</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Jan. 2023</div>
+      <div class="timeline-content">Graduated from the <b>University of Sydney</b>!</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Nov. 2022</div>
+      <div class="timeline-content">I will graduate this semester!</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Nov. 2022</div>
+      <div class="timeline-content">Two papers are submitted to <b>CVPR’23</b>.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Jul. 2021</div>
+      <div class="timeline-content">Started my master's study at the <b>University of Sydney</b>.</div>
+    </div>
+
+  </details>
+  <!-- end -->
+</div>
+
+<style>
+.timeline {
+  position: relative;
+  margin: 30px 0;
+  padding-left: 20px;
+  border-left: 3px solid #0056d6;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 15px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: #0056d6;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #f9f9f9;
+}
+
+.timeline-date {
+  color: #0056d6;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.timeline-content {
+  background: #f9f9f9;
+  padding: 10px 14px;
+  border-radius: 8px;
+  line-height: 1.6em;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.timeline-content a {
+  color: #0056d6;
+  text-decoration: none;
+}
+
+.timeline-content a:hover {
+  text-decoration: underline;
+}
+
+.timeline-more summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #0056d6;
+  margin-top: 10px;
+}
+
+.timeline-more summary:hover {
+  text-decoration: underline;
+}
+</style>
 
 ---
 
@@ -284,7 +428,8 @@ Harbin, Heilongjiang, P. R. China
     <div class="authors"><strong>Dongli Xu</strong>, Aleksei Tiulpin, Matthew B. Blaschko</div>
     <div class="venue">arXiv preprint, October 2025</div>
     <div class="links">
-      <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
+        <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
+        <a href="https://github.com/Xudangliatiger/SoftCFG">Repo</a>
     </div>
   </div>
 </div>
