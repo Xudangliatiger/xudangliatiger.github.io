@@ -208,6 +208,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 - Generative Model
   - Diffusion
   - Autoregressive Model
+
 ---
 ## 📰 News
 
