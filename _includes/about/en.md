@@ -195,9 +195,91 @@
     .paper-card .card-content {
       width: 100%;
     }}
+
+.timeline {
+  position: relative;
+  margin: 30px 0;
+  padding-left: 25px;
+  border-left: 3px solid #d4b56f;
+  font-size: 15px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 15px;
+}
+
+.timeline-date {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.timeline-content {
+  border-radius: 8px;
+  line-height: 1.6em;
+  padding: 10px 15px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
+  color: #333;
+  background: #f4f7fc; /* 比原来更深一点的蓝底 */
+}
+
+
+.timeline-content a {
+  color: #0056d6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.timeline-content a:hover {
+  text-decoration: underline;
+}
+
+/* 默认蓝圆点 */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: #0056d6;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #fff;
+}
+
+/* “Show more” 按钮 */
+.timeline-more summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #d4b56f;
+  margin-top: 12px;
+  padding-left: 10px;
+}
+.timeline-more summary:hover {
+  text-decoration: underline;
+  color: #b68936;
+}
+
+/* 金色强调项 */
+.timeline-item.gold::before {
+  background-color: #d4b56f;
+}
+
+.timeline-item.gold .timeline-content {
+  background: #fdf7eb; /* 更亮的淡金色 */
+  /*border: 1px solid #e3cc96; !* 加一点边线对比 *!*/
+ /*box-shadow: 0 8px 15px rgba(184, 134, 11, 0.2), !* 更浓郁的金色光晕 *!*/
+ /*               0 0 10px rgba(218, 165, 32, 0.15), !* 亮金微光 *!*/
+ /*               0 4px 5px rgba(0, 0, 0, 0.05);*/
+}
 </style>
 
-Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+
+
+Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
 ## Research Interests:
@@ -317,91 +399,8 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
 
 </div>
 
-<style>
-.timeline {
-  position: relative;
-  margin: 30px 0;
-  padding-left: 25px;
-  border-left: 3px solid #d4b56f;
-  font-size: 15px;
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 20px;
-  padding-left: 15px;
-}
-
-.timeline-date {
-  color: #333;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.timeline-content {
-  border-radius: 8px;
-  line-height: 1.6em;
-  padding: 10px 15px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  transition: all 0.25s ease;
-  color: #333;
-  background: #f4f7fc; /* 比原来更深一点的蓝底 */
-}
 
 
-.timeline-content a {
-  color: #0056d6;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.timeline-content a:hover {
-  text-decoration: underline;
-}
-
-/* 默认蓝圆点 */
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -11px;
-  top: 6px;
-  width: 12px;
-  height: 12px;
-  background-color: #0056d6;
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff;
-}
-
-/* “Show more” 按钮 */
-.timeline-more summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: #d4b56f;
-  margin-top: 12px;
-  padding-left: 10px;
-}
-.timeline-more summary:hover {
-  text-decoration: underline;
-  color: #b68936;
-}
-
-/* 金色强调项 */
-.timeline-item.gold::before {
-  background-color: #d4b56f;
-}
-
-.timeline-item.gold .timeline-content {
-  background: #fdf7eb; /* 更亮的淡金色 */
-  /*border: 1px solid #e3cc96; !* 加一点边线对比 *!*/
- /*box-shadow: 0 8px 15px rgba(184, 134, 11, 0.2), !* 更浓郁的金色光晕 *!*/
- /*               0 0 10px rgba(218, 165, 32, 0.15), !* 亮金微光 *!*/
- /*               0 4px 5px rgba(0, 0, 0, 0.05);*/
-}
-
-
-</style>
-
-<!-- timeline end -->
 
 
 
