@@ -219,8 +219,7 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
     <div class="timeline-date">Oct. 2025</div>
     <div class="timeline-content">
       My research proposal on <b>next-generation visual AR models</b> has been approved by 
-      <a href="https://eurohpc-ju.europa.eu" target="_blank">EuroHPC AI Factory for Science and Collaborative EU Projects</a>.  
-      I’m thrilled to receive <b>80,000 H100 GPU hours</b> on the <a href="https://www.bsc.es/marenostrum/marenostrum-5" target="_blank">MareNostrum5</a> supercomputer 🎉  
+      <a href="https://eurohpc-ju.europa.eu" target="_blank">EuroHPC AI Factory for Science and Collaborative EU Projects</a>, granting <b>80,000 H100 GPU hours</b> on the <a href="https://www.bsc.es/marenostrum/marenostrum-5" target="_blank">MareNostrum5</a> supercomputer 🎉  
       Thanks to <b>Sebastian</b>, <b>Teodora</b>, and <b>Matthew</b> for the support!
     </div>
   </div>
