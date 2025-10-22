@@ -200,8 +200,15 @@
 Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
 
 ---
-
-
+## Research Interests:
+- Computer Vision
+  - Object Detection
+- Signal/Audio/Speech/Music Processing
+- Multimodal
+- Generative Model
+  - Diffusion
+  - Autoregressive Model
+---
 ## 📰 News
 
 <div class="timeline">
@@ -238,78 +245,76 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
       <a href="https://www.flandersairesearch.be/en" target="_blank">Flanders AI Research Program</a>.
     </div>
   </div>
-  <!-- HTML block -->
-  <details class="timeline-more" markdown="1">
+
+<details class="timeline-more">
     <summary>Show more history</summary>
 
-    <!-- 2024 -->
-    <div class="timeline-item">
-      <div class="timeline-date">Dec. 2024</div>
-      <div class="timeline-content">I am looking for a PhD position.</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Dec. 2024</div>
+  <div class="timeline-content">I am looking for a PhD position.</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Dec. 2024</div>
-      <div class="timeline-content">
-        I cannot join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection.  
-        ATAS reviews are <b>unfair and discriminatory</b>, targeting Chinese students.
-      </div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Dec. 2024</div>
+  <div class="timeline-content">
+    I cannot join CVSSP since the Academic Technology Approval Scheme (ATAS) rejection.  
+    ATAS reviews are <b>unfair and discriminatory</b>, targeting Chinese students.
+  </div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Oct. 2024</div>
-      <div class="timeline-content">
-        One paper is accepted by <b>NeurIPS’25</b>. Congratulations to <b>Xuanjia</b>!
-      </div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Oct. 2024</div>
+  <div class="timeline-content">
+    One paper is accepted by <b>NeurIPS’25</b>. Congratulations to <b>Xuanjia</b>!
+  </div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Aug. 2024</div>
-      <div class="timeline-content">
-        I will be joining <b>CVSSP</b> as a Ph.D. student under  
-        <a href="https://personalpages.surrey.ac.uk/w.wang/" target="_blank">Prof. Wenwu Wang</a>  
-        and co-supervised by  
-        <a href="https://www.surrey.ac.uk/people/philip-jackson" target="_blank">Prof. Philip J.B. Jackson</a>.
-      </div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Aug. 2024</div>
+  <div class="timeline-content">
+    I will be joining <b>CVSSP</b> as a Ph.D. student under  
+    <a href="https://personalpages.surrey.ac.uk/w.wang/" target="_blank">Prof. Wenwu Wang</a>  
+    and co-supervised by  
+    <a href="https://www.surrey.ac.uk/people/philip-jackson" target="_blank">Prof. Philip J.B. Jackson</a>.
+  </div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Dec. 2023</div>
-      <div class="timeline-content">One paper is accepted by <b>ICASSP’24</b>.</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Dec. 2023</div>
+  <div class="timeline-content">One paper is accepted by <b>ICASSP’24</b>.</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Nov. 2023</div>
-      <div class="timeline-content">One paper is <b>submitted to CVPR’24</b>. Good luck!</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Nov. 2023</div>
+  <div class="timeline-content">One paper is <b>submitted to CVPR’24</b>. Good luck!</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Feb. 2023</div>
-      <div class="timeline-content">One paper is accepted by <b>CVPR’23</b>! Congratulations to <b>Jinhong</b>!</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Feb. 2023</div>
+  <div class="timeline-content">One paper is accepted by <b>CVPR’23</b>! Congratulations to <b>Jinhong</b>!</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Jan. 2023</div>
-      <div class="timeline-content">Graduated from the <b>University of Sydney</b>!</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Jan. 2023</div>
+  <div class="timeline-content">Graduated from the <b>University of Sydney</b>!</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Nov. 2022</div>
-      <div class="timeline-content">I will graduate this semester!</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Nov. 2022</div>
+  <div class="timeline-content">I will graduate this semester!</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Nov. 2022</div>
-      <div class="timeline-content">Two papers are submitted to <b>CVPR’23</b>.</div>
-    </div>
+<div class="timeline-item">
+  <div class="timeline-date">Nov. 2022</div>
+  <div class="timeline-content">Two papers are submitted to <b>CVPR’23</b>.</div>
+</div>
 
-    <div class="timeline-item">
-      <div class="timeline-date">Jul. 2021</div>
-      <div class="timeline-content">Started my master's study at the <b>University of Sydney</b>.</div>
-    </div>
-
+<div class="timeline-item">
+  <div class="timeline-date">Jul. 2021</div>
+  <div class="timeline-content">Started my master's study at the <b>University of Sydney</b>.</div>
+</div>
   </details>
-  <!-- end -->
+
 </div>
 
 <style>
@@ -372,17 +377,9 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Matthew Blaschko](https:
   text-decoration: underline;
 }
 </style>
+<!-- timeline end -->
 
----
 
-## Research Interests:
-- Computer Vision
-  - Object Detection
-- Signal/Audio/Speech/Music Processing
-- Multimodal
-- Generative Model
-  - Diffusion
-  - Autoregressive Model
 
 
 
