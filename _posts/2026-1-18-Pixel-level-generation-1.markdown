@@ -3,7 +3,7 @@ layout:     post
 title:      "像素级别的生成模型"
 date:       2026-01-18 16:00:00
 author:     "Dongli Xu"
-header-img: "/img/in-post/pixel-gen/img.png"
+header-img: "img/in-post/pixel-gen/img.png"
 tags:
     - Computer Vision
     - Generative Model
