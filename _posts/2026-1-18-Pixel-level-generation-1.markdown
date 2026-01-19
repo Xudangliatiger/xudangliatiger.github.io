@@ -30,7 +30,7 @@ tags:
 这是因为在我的思考中，PixelGen如果有好处，有作用，那么就不应该被限定于Diff框架，而是有利于所有的生成器，只要它们最后回归的是pixel就行了。
 > 方法 A：DINO 微调作为 pixel generator
 
-![三种不同的pipeline的区别](img/in-post/pixel-gen/02.png)
+![三种不同的pipeline的区别](/img/in-post/pixel-gen/02.png)
 
 一句话说明这个idea：**既然输入都是pixel了，那我们想要完成生成任务，就可以微调一个DINOv3的encoder，让它支持noised输入就完事了**。
 输出的特征就保持DINOv3的特征就行了，反正不管是[RAE](https://rae-dit.github.io/)还是[PixelDiT](https://arxiv.org/abs/2511.20645)都会训练一个pixel gen/ dino decoder来解码生成的语义信息。
