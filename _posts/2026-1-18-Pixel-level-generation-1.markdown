@@ -3,7 +3,7 @@ layout:     post
 title:      "像素级别的生成模型"
 date:       2026-01-18 16:00:00
 author:     "Dongli Xu"
-header-img: "img/pixel-gen/01.png"
+header-img: "/img/pixel-gen/01.png"
 tags:
     - Computer Vision
     - Generative Model
@@ -37,23 +37,29 @@ tags:
 
 这个idea同时还启发于REPA的训练方法，我们如果使用了DINO的特征来监督diff的中间特征（如图中的这个蓝色系线），那么可以理解为如下的objective：
 我们希望 diffusion 模型在某一中间层提取的表示，与干净图像的 DINO 特征对齐：
+
 $$
 h_\theta(x_t, t) \approx \text{DINO_teacher}(x_0),
 $$
+
 其中 $h_\theta(\cdot)$ 表示 diffusion 模型的中间特征，$\text{DINO_teacher}(x_0)$ 表示冻结的 DINO encoder，$x_t$ 是噪声图像，$x_0$ 是对应的干净图像。
 
 
 如果把这个目标再往前推一步，其实可以得到一个更直接的形式: 我们可以直接微调一个 DINO-style encoder，使其对噪声图像也保持语义一致,
 即：
+
 $$
 \text{DINO_studet}(x_t,t) \approx \text{DINO_teacher}(x_0),
 $$
+
 其中$\text{DINO_studet}(x_t,t)$ 是我们要微调的学生模型, 初始化来自于DINO_teacher相同的权重，t的信息输入则转化为一个简单的token扔在dino的prefix前面（DINO的输入本身包含了一个cls token和几个register tokens，我们只是增加了一个额外的token)。
 
 从这个角度看，DINO_studet作为pixel-space diffusion的话，在极限情况 $t \to 0$ 本身就是一个“完美解”：
+
 $$
 \text{DINO_studet}(x_t,t) = \text{DINO_teacher}(x_0).
 $$
+
 换句话说，在pixel空间的输入情况下，t->0时候，dino本身就是一个完美的生成器（因为能稳定获得dino(clean_x)), 所以我们微调它，让它在t更大的时候起点作用就行了。
 
 ### 为什么没有人微调感知器为生成器
@@ -66,8 +72,6 @@ $$
 
 1. DINO很小诶，只有20M-200M参数，它能用LORA微调成为一个生成器吗？
 2. 虽然DINO在t->0的时候是一个完美的（输入pixel 输出latent的）diff，但是t->1的时候不才是diff任务最难的部分么。
-
-
 
 
 
