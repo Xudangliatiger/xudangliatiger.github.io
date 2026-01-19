@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "像素级别的生成模型"
+title:      "像素级别的生成模型（一）"
 date:       2026-01-18 16:00:00
 author:     "Dongli Xu"
 header-img: "img/in-post/pixel-gen/img.png"
@@ -66,174 +66,46 @@ $$
 
 这个想法简单的离奇，我却又在想，为什么在传统的latent diffusion训练中并没有如此的思路呢？应该是传统的latent diff的输入与DINO不一致：它们不是图像输入，无法直接微调DINO网络来完成自己的任务。
 
+
+### 实验
+
+#### 复现
+我们首先自己复现了一下[PixelDiT](https://arxiv.org/abs/2511.20645)这篇文章。为什么不选择JIT或者DeCo呢？这单纯是我觉得这篇文章的不强制x-pred，我们可以用之前的v-pred代码，其次设置非常简单干净，没有啥额外的损失或者trick。
+但是由于其代码并没有开源，我们就根据paper中的公式进行了实现，效果到底差多少也没有具体验证，反正我并不是为了刷SOTA，只是为了验证idea，所以能跑起来就算赢。
+
+我的实现没有任何的特别的trick：pixel的输入阶段就是用了最简单的1D CNN输入（步长和kernel size都设置为patch的像素数量，一般就是16$*$16=256），然后接一段和传统latent diff一模一样的几十个trans blocks。
+最后再在每个输出的latent后面接上一个4层的超级轻量pixel diff就行了。pixel diff的trans block有特别的设计，就是PixelDit中的global attn，实现起来也特别简单。
+使用4张H100，用bs64*4的设置训练了187500iteration（总计为38个epoch），结果如下：
+![img.png](/img/in-post/pixel-gen/03.png)
+哇哦，初看居然还可以。整体来说training和inference都很稳定。我很满意baseline的效果，但是为了对其后面我们加入DINO微调的思路，我们新增加了REPA的实现：
+![img.png](/img/in-post/pixel-gen/04.png)
+哇哦，加上REPA之后这效果更棒了。我说实话不错啊，虽然和sota方法有区别。为了大家有个直观感受，我提供一个FID为1.27的AR在同样训练条件下的结果吧：
+![img.png](/img/in-post/pixel-gen/05.png)
+可以看到PixelDiT的结果还是细节模糊 但是整体语义结构比FID为1.27的AR会好一些，再加上diff本身训练就很慢，如果训练到800Epoch的话，效果应该会很惊艳。
+
+
+这次试验也让我有了一个非常明显的intuition：**_PixelGen还真行！可以跑，很简单，不难，效果可以。_**
+
+#### 输入端由单层CNN改为DINOv3-S
+
+接下来我们开始尝试将DINOv3-S给微调成为一个语义生成器，用来替代PixelDit中的semantic blocks。
+![img.png](/img/in-post/pixel-gen/06.png)
+我只能说，差距不大。
+
 ### 问题
 
-但是在后续的实验中，我们发现了一些问题，让我们对diff的生成好像理解得更深了：
+在后续的实验中，我们发现了用DINO处理noised输入并没有特别的效果，让我们对diff的生成好像理解得更深了：
 
-1. DINO很小诶，只有20M-200M参数，它能用LORA微调成为一个生成器吗？
-2. 虽然DINO在t->0的时候是一个完美的（输入pixel 输出latent的）diff，但是t->1的时候不才是diff任务最难的部分么。
+> 1. DINO很小诶，只有20M-200M参数，它能用LORA微调成为一个生成器吗？
 
+我仔细思考之后认为，DINOv3-S并不能微调成为一个生成器。原因如下：感知是一个绝对的单峰任务。虽然噪声加的不大的情况下，diff就是一个单峰任务，但这不包括t->1的时候。
+此时我们的网络需要学习从噪声到manifold上所有可能是目标样本的地方的方向，这个绝对是一个多峰问题。
+换句话说，在t->1的时候，就算是强行记忆这些信息，需要的参数也不止20M。但是如果我们在200M级别的S上做，参数空间应该能勉强够用。
 
+> 2. 虽然DINO在t->0的时候是一个完美的（输入pixel 输出latent的）diff，但是t->1的时候不才是diff任务最难的部分么。
 
-> 方法 B：Dual-level AR。
+没错，但是我们发现使用了DINO-S替代CNN输入之后，REPA loss下降的比较多，比较快，说明微调DINO确实能处理噪声输入，也就是0<t<1的情况下，它还是有点帮助PixelDiT学习REPA的作用。
 
-## 方法 B：Dual-level AR 的探索
+> 3. 更低的REPA损失，也就是代表着更好的DINO语义空间的去噪声效果，会不会帮助更好的生成最终pixel结果呢？
 
-在这个设计中，我们使用两个级联的 AR 模型：
-
-- **第一层：Semantic AR**（语义级别）
-- **第二层：Pixel AR**（像素级别）
-
-### 核心直觉
-
-第一层 AR 更像是在 **downsample 后的语义表征空间**上做 next-x prediction。  
-我这里刻意说 **next-x**，而不是 next-token / next-class，因为我并不强制它回归到某个离散类别或“标准语义 token”。
-
-换句话说：第一层输出可以是任意连续的深度特征（例如一个向量 $X$），只要它能承载“接下来应该生成什么”的语义建议即可。
-
-然后第二层 Pixel AR 把第一层输出当作 condition，在每一个patch中，同时输入所有已生成的像素，逐步回归下一个像素。
-
-你也可以从 **global-to-local** 的角度理解它：
-
-- 第一层负责全局语义和结构的可行性建议
-- 第二层负责局部细节建模，但必须服从第一层给出的语义条件
-
----
-
-### 实现细节：几个关键问题
-
-#### 1. **采样由谁来做？**
-
-   如果采样完全交给第二层 Pixel AR，而第一层只给“语义建议”，那第一层输出的特征就必须在某种意义上“包含当前步所有可能性”。
-
-   举个直观例子：我们已经生成了小狗的耳朵、头部轮廓，现在要预测眼睛这个 patch。  
-   眼睛可能是紫色、橙色、棕色……这是一个多峰分布。
-
-   如果第一层不采样，那它输出的特征 $X$ 就得同时表达这些多峰语义。  
-   第二层一边生成像素，一边还要“在多峰语义里做选择”。
-
-   于是会出现一个很典型的潜在矛盾：
-
-   - 假设一个 $16 \times 16$ patch，第二层在前 32 个像素时已经“隐式决定”用橙色瞳孔；
-   - 但第一层的复合语义特征仍包含紫色/棕色等峰；
-   - 后续像素回归仍不断接触这些不相关峰，容易造成干扰，甚至出现“前 32 个像素是橙色，后面又漂移成紫色”的不一致现象。
-
-#### 2. **多峰学习由谁来做？**
-
-   为了避免上面的问题，一个自然方案是：**在第一层就完成语义采样**。
-
-   例如第一层输出一个离散分布（比如 4096 类），并配一个长度为 4096 的“深度字典”。  
-   第一层采样得到 index，再从字典里取出一个“单峰语义特征”给第二层。
-
-   这样第二层 Pixel AR 的 condition 就不再是混合多峰，而是一个确定的语义选择。
-
-   **从“多峰学习”角度看：**
-   - 语义层的多峰建模 + 采样由第一层解决
-   - 像素层的多峰细节建模 + 采样由第二层解决
-
-
-#### 3. **Pixel AR 的 context 问题**
-
-Dual-level 架构中，一个绕不开的问题是：Pixel AR 在预测下一个 patch / pixel 时，是否需要看到所有已生成像素？
-直觉上需要，否则很难保证全局一致性（颜色、结构、边界连续）。
-
-但从理论上看，又似乎**不必如此**：semantic AR 已经吸收了历史像素的全部信息，只是细粒度细节在压缩过程中不可避免地丢失。
-
-问题在于，一旦我们仍选择将全部像素作为 context 输入 Pixel AR，序列长度会迅速膨胀，attention 复杂度达到 $O(N^2)$，显存与计算成本几乎不可承受。
-
-
-#### 4. **它和传统 tokenizer + AR 的区别是什么？**
-
-   在 dual-level AR 里：
-   - 第一层 semantic AR ≈ 传统的 tokenizer-based AR（只不过 token 可以是连续特征而不是离散 token）
-   - 第二层 pixel AR ≈ 在“语义 token 条件下”的细节生成器，但它直接在像素空间建模
-
-#### 5. **CFG 怎么实现？**
-
-   这一点在实现中非常关键：  
-   CFG 在 dual-level 架构里到底应该施加在第一层、第二层，还是同时施加？  
-   以及“uncond”应该去掉的是语义条件、还是像素历史、还是两者的某种组合？
-
-   这个问题我后面会单独开一节展开。
-
-## 方法 C: Hybrid Model, AR+Diffusion架构的探索
-
-在这个架构中，我们依旧采用semantic AR的设计，但是在pixel回归的阶段，我们把它弄成一个diffusion即可。
-
-这样做的好处：
-
-> 1: 复合语义特征不再会恶搞像素采样了
-
-这非常好理解，之前我们讲到 如果第一个阶段的AR不采样的话，第二个阶段的AR在采样的时候就需要处理多峰语义信息和已经采样的像素之间的可能出现的矛盾。
-那么有什么生成框架没有这样的矛盾呢？答案是diffusion，原因也很简单，diffusion在单步采样的时候会同时处理所有的像素点，绝对保障了像素之间的采样不会出现冲突。
-
-> 2: 多峰采样可以由第二阶段的diffusion单独搞定（不一定优于分开采样）
-
-在AR+Diffusion的框架下，AR提供一个多峰语义，diffusion提供一个最后的像素结果。
-
-这就是TiDAR: Think in Diffusion, Talk in Autoregression精神的反面嘛。那到底谁对了 谁错了呢
-
-
-也许也可以类似刚刚的设计，让第一阶段的AR还是进行采样再输入pixel diff。
-
-> 3: 这样的设计经过MAR的检验，大概率会起作用。
-
-我们仔细思考一下MAR的设计，虽然它是搞 AR+diffusion on latent feature的，但是我们完全可以吧$16*16*3$的像素值当成一个768长度的latent嘛，有何不可呢？
-
-
-
-### 实现问题
-
-但是在实现中，我们也发现了不少问题，其中很有意思的就是CFG的逻辑问题。
-
-#### CFG 如何在多层生成模型中实现
-
-在传统生成模型的CFG，我们有非常清晰的两路：
-
-- **cond**：输入条件 $c$（文本/类别/语义）
-- **uncond**：把条件置空（null token / 空提示）
-
-
-在传统生成模型的CFG 中，我们通常写成：
-$$
-\text{pred}_{\text{cfg}} = \text{pred}_{\text{uncond}} + s * \big(\text{pred}_{\text{cond}} - \text{pred}_{\text{uncond}}\big)
-$$
-这里的 $\text{pred}$ 可以是：$\epsilon$-pred, $x$-pred 和 $v$-pred 甚至是 AR 中的 logits。 
-本质上它只是“模型当前步的预测输出”，与具体参数化形式无关。这里 $s$ 是 cfg scale。
-
-但在 AR+Diffusion 中，我们的“条件”不止一个，Pixel diffusion 的条件至少包含两类信息：
-
-1. 外部条件 $c$（class / text / prompt）
-2. semantic AR 给出的语义特征 $z$（可能还是多峰的）
-
-于是问题来了：**uncond 到底该去掉哪一个？**
-
-##### 方案 1：通过 $z$ 实现 CFG（最合理也最稳妥）
-
-在该架构中，pixel generator 并不会直接看到外部条件 $c$，  
-它的唯一条件输入是 semantic AR 输出的语义表示 $z$。  
-因此，CFG 实际上发生在 **两种语义表示之间**：
-
-- 条件语义：$z_c = f_{\text{AR}}(c)$  
-- 无条件语义：$z_{\varnothing} = f_{\text{AR}}(\varnothing)$  
-
-pixel generator 定义为：
-
-- cond：$\text{pred}(x_t \mid z_c)$  
-- uncond：$\text{pred}(x_t \mid z_{\varnothing})$  
-
-CFG 为：
-$$
-\text{pred}_{\text{cfg}} = \text{pred}(x_t \mid z_{\varnothing})+ s\Big(
-\text{pred}(x_t \mid z_c)- \text{pred}(x_t \mid z_{\varnothing})\Big)
-$$
-
-本质上，这是在**语义表征空间上做 guidance**，而不是在像素空间。
-
-
-##### 更本质的问题
-
-在这个 Hybrid 框架下，CFG 的困难并不是公式层面，而是概念层面：
-
-> 条件不再是单一 prompt，而是一个分层条件系统。  
-> uncond 如何定义 → guidance 的语义就如何定义。
+实验告诉我们，可能不会。这大概率是因为语义空间的优化和像素空间的优化还是有一定的差别，也许pixel diff需要的语义并不绝对=DINOv3的特征。但是如果在[RAE](https://rae-dit.github.io/)的环境下，确实能帮助更好的生成。可惜RAE的输入也是DINO特征，并不能复用DINO这个输入是像素的网络。
