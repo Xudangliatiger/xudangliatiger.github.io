@@ -3,7 +3,7 @@ layout:     post
 title:      "像素级别的生成模型"
 date:       2026-01-18 16:00:00
 author:     "Dongli Xu"
-header-img: "/img/pixel-gen/img.png"
+header-img: "/img/in-post/pixel-gen/img.png"
 tags:
     - Computer Vision
     - Generative Model
@@ -49,15 +49,15 @@ $$
 即：
 
 $$
-\text{DINO_studet}(x_t,t) \approx \text{DINO_teacher}(x_0),
+\text{DINO_student}(x_t,t) \approx \text{DINO_teacher}(x_0),
 $$
 
-其中$\text{DINO_studet}(x_t,t)$ 是我们要微调的学生模型, 初始化来自于DINO_teacher相同的权重，t的信息输入则转化为一个简单的token扔在dino的prefix前面（DINO的输入本身包含了一个cls token和几个register tokens，我们只是增加了一个额外的token)。
+其中$\text{DINO_student}(x_t,t)$ 是我们要微调的学生模型, 初始化来自于DINO_teacher相同的权重，t的信息输入则转化为一个简单的token扔在dino的prefix前面（DINO的输入本身包含了一个cls token和几个register tokens，我们只是增加了一个额外的token)。
 
-从这个角度看，DINO_studet作为pixel-space diffusion的话，在极限情况 $t \to 0$ 本身就是一个“完美解”：
+从这个角度看，DINO_student作为pixel-space diffusion的话，在极限情况 $t \to 0$ 本身就是一个“完美解”：
 
 $$
-\text{DINO_studet}(x_t,t) = \text{DINO_teacher}(x_0).
+\text{DINO_student}(x_t,t) = \text{DINO_teacher}(x_0).
 $$
 
 换句话说，在pixel空间的输入情况下，t->0时候，dino本身就是一个完美的生成器（因为能稳定获得dino(clean_x)), 所以我们微调它，让它在t更大的时候起点作用就行了。
