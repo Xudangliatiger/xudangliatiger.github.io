@@ -509,6 +509,7 @@ Harbin, Heilongjiang, P. R. China
     </div>
   </div>
 </div>
+</div>
 
 <div class="publications-grid">
   <div class="paper-card">
@@ -517,6 +518,7 @@ Harbin, Heilongjiang, P. R. China
     <div class="authors">Rui Sun, Yiwen Yang, Kaiyu Guo, Chen Jiang, <strong>Dongli Xu</strong>, Zhaonan Liu, Tan Pan, Limei HAN, Xue Jiang, Wu Wei, Yuan Cheng</div>
     <div class="venue">International Conference on Learning Representations (ICLR), 2026</div>
   </div>
+</div>
 </div>
 
 <div class="publications-grid">
