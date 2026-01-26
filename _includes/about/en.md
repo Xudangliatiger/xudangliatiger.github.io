@@ -295,8 +295,22 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew Blaschko](
 ## 📰 News
 
 <div class="timeline">
-
+  <!-- 2026 -->
   <!-- 2025 -->
+  <div class="timeline-item normal">
+    <div class="timeline-date">Jan. 2026</div>
+    <div class="timeline-content">
+      Two papers are accepted by <b>ICLR</b>. Congratulations to <b>Rui</b>!
+    </div>
+  </div> 
+  <div class="timeline-item normal">
+    <div class="timeline-date">Jan. 2026</div>
+    <div class="timeline-content">
+      A paper is accepted by <b>ICASSP</b>. Congratulations to <b>Congyi</b>!
+    </div>
+  </div> 
+  
+
   <div class="timeline-item gold">
     <div class="timeline-date">Oct. 2025</div>
     <div class="timeline-content">
@@ -496,6 +510,14 @@ Harbin, Heilongjiang, P. R. China
   </div>
 </div>
 
+<div class="publications-grid">
+  <div class="paper-card gold-card">
+  <div class="card-content">
+    <h4>Disco: Densely-overlapping Cell Instance Segmentation via Adjacency-aware Collaborative Coloring</h4>
+    <div class="authors">Rui Sun, Yiwen Yang, Kaiyu Guo, Chen Jiang, <strong>Dongli Xu</strong>, Zhaonan Liu, Tan Pan, Limei HAN, Xue Jiang, Wu Wei, Yuan Cheng</div>
+    <div class="venue">International Conference on Learning Representations (ICLR), 2026</div>
+  </div>
+</div>
 
 <div class="publications-grid">
   <div class="paper-card">
