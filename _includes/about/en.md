@@ -511,7 +511,7 @@ Harbin, Heilongjiang, P. R. China
 </div>
 
 <div class="publications-grid">
-  <div class="paper-card gold-card">
+  <div class="paper-card">
   <div class="card-content">
     <h4>Disco: Densely-overlapping Cell Instance Segmentation via Adjacency-aware Collaborative Coloring</h4>
     <div class="authors">Rui Sun, Yiwen Yang, Kaiyu Guo, Chen Jiang, <strong>Dongli Xu</strong>, Zhaonan Liu, Tan Pan, Limei HAN, Xue Jiang, Wu Wei, Yuan Cheng</div>
