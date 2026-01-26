@@ -440,19 +440,7 @@ Harbin, Heilongjiang, P. R. China
 
 ---
 ## Preprints
-<div class="publications-grid">
-  <div class="paper-card gold-card">
-  <img src="{{page.homepage.url}}/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
-  <div class="card-content">
-    <h4>SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model</h4>
-    <div class="authors"><strong>Dongli Xu</strong>, Aleksei Tiulpin, Matthew B. Blaschko</div>
-    <div class="venue">arXiv preprint, October 2025</div>
-    <div class="links">
-        <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
-        <a href="https://github.com/Xudangliatiger/SoftCFG">Repo</a>
-    </div>
-  </div>
-</div>
+
   
   <div class="paper-card">
     <img src="{{page.homepage.url}}/img/papers/2025-10-2-ORT.png" alt="Paper Image" class="card-image">
@@ -493,6 +481,29 @@ Harbin, Heilongjiang, P. R. China
 
 ---
 ## Publications
+### 2026
+<div class="publications-grid">
+  <div class="paper-card gold-card">
+  <img src="/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
+  <div class="card-content">
+    <h4>SoftCFG: Uncertainty-guided Stable Guidance for Visual Autoregressive Model</h4>
+    <div class="authors"><strong>Dongli Xu</strong>, Aleksei Tiulpin, Matthew B. Blaschko</div>
+    <div class="venue">International Conference on Learning Representations (ICLR), 2026</div>
+    <div class="links">
+        <a href="https://arxiv.org/pdf/2510.00996.pdf">PDF</a>
+        <a href="https://github.com/Xudangliatiger/SoftCFG">Repo</a>
+    </div>
+  </div>
+</div>
+
+<div class="publications-grid">
+  <div class="paper-card">
+  <div class="card-content">
+    <h4>Physics-aware Novel-view Acoustic Synthesis with Vision-language Priors and 3D Acoustic Environment Modeling</h4>
+    <div class="authors">Congyi Fan, Jian Guan, Youtian Lin, <strong>Dongli Xu</strong>,, Tong Ye, Qiaoxi Zhu, Pengming Feng, Wenwu Wang</div>
+    <div class="venue">IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2026</div>
+  </div>
+</div>
 
 ### 2025
 <div class="paper-card">

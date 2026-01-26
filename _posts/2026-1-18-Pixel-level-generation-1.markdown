@@ -75,7 +75,7 @@ $$
 
 我的实现没有任何的特别的trick：pixel的输入阶段就是用了最简单的1D CNN输入（步长和kernel size都设置为patch的像素数量，一般就是16$*$16=256），然后接一段和传统latent diff一模一样的几十个trans blocks。
 最后再在每个输出的latent后面接上一个4层的超级轻量pixel diff就行了。pixel diff的trans block有特别的设计，就是PixelDit中的global attn，实现起来也特别简单。
-使用4张H100，用bs64*4的设置训练了187500iteration（总计为38个epoch），结果如下：
+使用4张H100，用bs$64*4$的设置训练了187500iteration（总计为38个epoch），结果如下：
 ![img.png](/img/in-post/pixel-gen/03.png)
 哇哦，初看居然还可以。整体来说training和inference都很稳定。我很满意baseline的效果，但是为了对其后面我们加入DINO微调的思路，我们新增加了REPA的实现：
 ![img.png](/img/in-post/pixel-gen/04.png)
