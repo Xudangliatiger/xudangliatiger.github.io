@@ -281,11 +281,7 @@
   align-items: center;
   gap: 10px;
   margin: 20px 0 30px;
-  padding: 12px 16px;
   color: #b42318;
-  background: #fff5f4;
-  border: 1px solid #fecdca;
-  border-radius: 10px;
   font-weight: 600;
 }
 
