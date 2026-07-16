@@ -296,6 +296,34 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew Blaschko](
 
 <div class="timeline">
   <!-- 2026 -->
+  <div class="timeline-item gold">
+    <div class="timeline-date">Jul. 2026</div>
+    <div class="timeline-content">
+      I am looking for a research internship on <b>World Models</b>, <b>Unified Models</b>, or <b>Multimodal Models</b>. Please feel free to reach out!
+    </div>
+  </div>
+
+  <div class="timeline-item normal">
+    <div class="timeline-date">Jun. 2026</div>
+    <div class="timeline-content">
+      Our work <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Xie_SynCLIP_Synonym-Coherent_Language-Image_Pretraining_for_Robust_Open-Vocabulary_Dense_Perception_CVPR_2026_paper.html" target="_blank"><b>SynCLIP</b></a> is published at <b>CVPR 2026</b>. Congratulations to <b>Mingjie</b> and <b>Guangjun</b>!
+    </div>
+  </div>
+
+  <div class="timeline-item normal">
+    <div class="timeline-date">Jun. 2026</div>
+    <div class="timeline-content">
+      Our work on <a href="https://ieeexplore.ieee.org/abstract/document/11558459/" target="_blank"><b>frequency-phase aware Mamba fusion</b></a> is published in <b>IEEE TGRS</b>. Congratulations to <b>Xinyue</b> and <b>Hongning</b>!
+    </div>
+  </div>
+
+  <div class="timeline-item gold">
+    <div class="timeline-date">May 2026</div>
+    <div class="timeline-content">
+      Our next EuroHPC project, <a href="https://www.eurohpc-ju.europa.eu/pixelgen-high-resolution-pixel-space-generation-diffusion-and-autoregression_en" target="_blank"><b>PixelGen: High-Resolution Pixel-Space Generation with Diffusion and Autoregression</b></a>, has been awarded <b>160,000 A100 GPU hours</b> on the <b>Leonardo BOOSTER</b> supercomputer 🎉
+    </div>
+  </div>
+
   <!-- 2025 -->
   <div class="timeline-item normal">
     <div class="timeline-date">Jan. 2026</div>
@@ -497,6 +525,33 @@ Harbin, Heilongjiang, P. R. China
 ## Publications
 ### 2026
 <div class="publications-grid">
+  <div class="paper-card">
+    <div class="card-content">
+      <h4><a href="https://ieeexplore.ieee.org/abstract/document/11558459/">Frequency-Phase Aware Mamba Fusion for Multi-scale Spatial Representation in Remote Sensing Image Interpretation</a></h4>
+      <div class="authors">Xinyue Liu, Hongning Liu, Mingjie Xie, <strong>Dongli Xu</strong>, Xianchao Zhang, Pengming Feng, Jian Guan</div>
+      <div class="venue">IEEE Transactions on Geoscience and Remote Sensing (TGRS), 2026</div>
+      <div class="links">
+        <a href="https://ieeexplore.ieee.org/abstract/document/11558459/">Paper</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="publications-grid">
+  <div class="paper-card">
+    <div class="card-content">
+      <h4><a href="https://openaccess.thecvf.com/content/CVPR2026/html/Xie_SynCLIP_Synonym-Coherent_Language-Image_Pretraining_for_Robust_Open-Vocabulary_Dense_Perception_CVPR_2026_paper.html">SynCLIP: Synonym-Coherent Language-Image Pretraining for Robust Open-Vocabulary Dense Perception</a></h4>
+      <div class="authors">Mingjie Xie, Guangjun He, <strong>Dongli Xu</strong>, Youtian Lin, Hongjue Li, Pengming Feng, Jian Guan, Yue Deng</div>
+      <div class="venue">IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026</div>
+      <div class="links">
+        <a href="https://openaccess.thecvf.com/content/CVPR2026/papers/Xie_SynCLIP_Synonym-Coherent_Language-Image_Pretraining_for_Robust_Open-Vocabulary_Dense_Perception_CVPR_2026_paper.pdf">PDF</a>
+        <a href="https://github.com/Justlovesmile/SynCLIP">Repo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="publications-grid">
   <div class="paper-card gold-card">
   <img src="/img/papers/2025-10-2-SoftCFG.png" alt="Paper Image" class="card-image">
   <div class="card-content">
@@ -682,4 +737,4 @@ Journal Reviewer: `ACM Computing Surveys, 2023`
 
 ---
 ### Footer
-Last updated: Jun. 2025
+Last updated: Jul. 2026
