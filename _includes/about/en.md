@@ -275,11 +275,56 @@
  /*               0 0 10px rgba(218, 165, 32, 0.15), !* 亮金微光 *!*/
  /*               0 4px 5px rgba(0, 0, 0, 0.05);*/
 }
+
+.internship-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 30px;
+  padding: 12px 16px;
+  color: #b42318;
+  background: #fff5f4;
+  border: 1px solid #fecdca;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.internship-alert a {
+  color: #b42318;
+  text-decoration: underline;
+}
+
+.internship-alert .pulse-dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  background: #e53935;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(229, 57, 53, 0.5);
+  animation: internship-pulse 1.8s infinite;
+}
+
+@keyframes internship-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
+  70% { box-shadow: 0 0 0 9px rgba(229, 57, 53, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .internship-alert .pulse-dot { animation: none; }
+}
 </style>
 
 
 
-Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). He also works as an intern at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). He was a research engineer at [NullmaxAI](https://www.nullmax.ai/) (2023-2024) focusing on autonomous driving and generative model. He received his master's degree in the School of Computer Science at the University of Sydney (2021-2023), supervised by [Dr. Chang Xu](http://changxu.xyz). He worked at the University of Electronic Science and Technology of China (2020-2021) with [Prof. Wen Li](http://wenli-vision.github.io/), investigating computer vision in the School of Computer Science and Engineering. He received his B. E. in Computer Science and Technology from Harbin Engineering University (2020) and was advised by [Prof. Jian Guan](http://homepage.hrbeu.edu.cn/web/guanjian1). 
+Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew B. Blaschko](https://homes.esat.kuleuven.be/~mblaschk/). His research focuses on generative models, particularly pixel-space generation, visual autoregressive and diffusion models, world models, and unified multimodal models.
+
+He has gained industry research experience at [SAIS](https://www.sais.com.cn/) and [Everlyn.ai](https://everlyn.app/). Before joining KU Leuven, he received his master's degree from the University of Sydney, conducted computer vision research at the University of Electronic Science and Technology of China, and received his bachelor's degree from Harbin Engineering University.
+
+<div class="internship-alert" role="status">
+  <span class="pulse-dot" aria-hidden="true"></span>
+  <span>I am currently seeking research internship opportunities in world models, unified models, and multimodal models. <a href="mailto:dongliixu@gmail.com">Let's connect!</a></span>
+</div>
 
 ---
 ## Research Interests:
@@ -296,13 +341,6 @@ Dongli Xu is a PhD student at KU Leuven, supervised by [Prof. Matthew Blaschko](
 
 <div class="timeline">
   <!-- 2026 -->
-  <div class="timeline-item gold">
-    <div class="timeline-date">Jul. 2026</div>
-    <div class="timeline-content">
-      I am looking for a research internship on <b>World Models</b>, <b>Unified Models</b>, or <b>Multimodal Models</b>. Please feel free to reach out!
-    </div>
-  </div>
-
   <div class="timeline-item normal">
     <div class="timeline-date">Jun. 2026</div>
     <div class="timeline-content">
