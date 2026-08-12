@@ -1,0 +1,72 @@
+---
+layout: default
+---
+{% assign current_lang = page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if current_lang == 'en' %}
+  {% assign project_matches = site.research_projects_en | where: 'project_id', page.project_id %}
+  {% assign hub_url = '/en/blog/#experiments' %}
+{% else %}
+  {% assign project_matches = site.research_projects | where: 'project_id', page.project_id %}
+  {% assign hub_url = '/blog/#experiments' %}
+{% endif %}
+{% assign project = project_matches | first %}
+{% if current_lang == 'en' %}
+  {% capture experiment_header_meta %}{{ site.title }} · {{ page.record_id }} · {{ page.status_label }} · Updated {{ page.updated_at | date: '%B %-d, %Y' }}{% endcapture %}
+{% else %}
+  {% capture experiment_header_meta %}{{ site.title }} · {{ page.record_id }} · {{ page.status_label }} · 更新于 {{ page.updated_at | date: '%Y.%m.%d' }}{% endcapture %}
+{% endif %}
+{% include research/article-header.html image=project.hero_image subtitle=page.stage meta=experiment_header_meta variant='experiment' %}
+<main class="research-shell research-experiment-page">
+  <nav class="research-note-utility research-experiment-utility" aria-label="Article navigation">
+    <div class="research-container research-note-utility__inner">
+      <a class="research-text-link research-text-link--muted" href="{{ hub_url | prepend: site.baseurl }}">← {{ t.hub.experiments_title }}</a>
+      {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+    </div>
+  </nav>
+
+  <div class="research-container research-experiment-body">
+    <aside class="research-experiment-aside">
+      {% if page.toc %}
+      <p class="research-eyebrow">{{ t.project.on_page }}</p>
+      <nav aria-label="{{ t.project.on_page }}">
+        {% for item in page.toc %}<a href="#{{ item.id }}">0{{ forloop.index }} / {{ item.label }}</a>{% endfor %}
+      </nav>
+      {% endif %}
+      {% if page.sources %}
+      <div class="research-experiment-sources">
+        <p class="research-eyebrow">{{ t.common.sources }}</p>
+        {% for source in page.sources %}
+        <div>
+          <span>{{ source.kind }}</span>
+          <strong>{{ source.label }}</strong>
+          <small>{{ source.detail }}</small>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </aside>
+    <article class="research-experiment-content post-container">
+      {% if page.hero_image %}
+      <figure class="research-experiment-lead">
+        <img src="{{ page.hero_image | prepend: site.baseurl }}" alt="{{ page.hero_alt }}">
+        <figcaption>{{ page.hero_caption }}</figcaption>
+      </figure>
+      {% endif %}
+      {{ content }}
+    </article>
+  </div>
+
+  <footer class="research-note-footer">
+    <div class="research-container research-experiment-footer__inner">
+      <a class="research-text-link" href="{{ project.url | prepend: site.baseurl }}">{{ t.common.overview_action }} <span aria-hidden="true">→</span></a>
+      <a class="research-text-link" href="{{ project.lab_url | prepend: site.baseurl }}">{{ t.common.lab_action }} <span aria-hidden="true">→</span></a>
+    </div>
+  </footer>
+</main>
+{% include research/mathjax.html %}
+{% if page.pipeline_visualization == 'v0191' %}
+<script defer src="{{ '/js/research-pipeline-v0191.js' | prepend: site.baseurl }}"></script>
+<script defer src="{{ '/js/research-refinement-v0191.js' | prepend: site.baseurl }}"></script>
+<script defer src="{{ '/js/research-shared-ar-v0191.js?v=70' | prepend: site.baseurl }}"></script>
+{% endif %}

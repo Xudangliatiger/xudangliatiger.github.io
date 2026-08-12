@@ -1,0 +1,10 @@
+{% assign current_lang = include.lang | default: include.project.lang | default: page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+<nav class="research-view-switcher" aria-label="Project view">
+  <a class="research-view-switcher__item{% if include.active == 'public' %} is-active{% endif %}" href="{{ include.project.url | prepend: site.baseurl }}">
+    <span><strong>{{ t.common.overview }}</strong><small>{{ t.common.overview_desc }}</small></span>
+  </a>
+  <a class="research-view-switcher__item{% if include.active == 'lab' %} is-active{% endif %}" href="{{ include.project.lab_url | prepend: site.baseurl }}">
+    <span><strong>{{ t.common.lab }}</strong><small>{{ t.common.lab_desc }}</small></span>
+  </a>
+</nav>

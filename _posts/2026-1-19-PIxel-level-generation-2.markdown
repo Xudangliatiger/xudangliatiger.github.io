@@ -3,10 +3,20 @@ layout:     post
 title:      "像素级别的生成模型（二）"
 date:       2026-01-19 16:00:00
 author:     "Dongli Xu"
+lang:       zh
+content_type: experiment
+alternate_url: /en/research/notes/pixelgen-02/
+project_id: pixel-generation
+record_id: "EXP-02"
+experiment_stage: "Dual-level AR"
+summary: "拆分 Semantic AR 与 Pixel AR，分析多峰采样、像素上下文长度、连续语义表示和分层 CFG 的归属问题。"
 header-img: "img/in-post/pixel-gen/img.png"
 tags:
     - Computer Vision
     - Generative Model
+    - Pixel Generation
+    - Autoregression
+    - Diffusion
 ---
 
 本文接上文对Pixel Diff的探索之后，我们开始探索搭建一个高效的Pixel AR
@@ -91,6 +101,11 @@ Dual-level 架构中，一个绕不开的问题是：Pixel AR 在预测下一个
    以及“uncond”应该去掉的是语义条件、还是像素历史、还是两者的某种组合？
 
    这个问题我后面会单独开一节展开。
+
+
+
+
+
 
 ## 方法 C: Hybrid Model, AR+Diffusion架构的探索
 
@@ -207,6 +222,3 @@ dim=16的情况下，head从1->4,能提升性能。像素之间交互的东西�
 > 5. attn之后的mlp还需要维度提升吗？
 
 mlp从dim*4->1024,能略微提升性能。但这里的mlp能存储的信息太少，参数量只有1-10M。但是缺点是参数量又增加不大，但是计算量堆到天上去了，我先对此保持怀疑吧。
-
-
-

@@ -1,0 +1,106 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (VIII): Where Do Hierarchical Errors Begin, and Where Does Detail Go?"
+description: "Temperature sweeps, GT forcing, three-versus-five-level comparisons, Laplacian residuals, and DMoL NLL localize two HPA failures: inherited coarse errors and under-produced fine residuals."
+card_summary: "Correct L0 stabilizes later levels, yet five levels are 1.69× slower than three in the matched diagnostic without a clear visual gain. GT detail exists; deep levels simply under-generate it."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-08"
+stage: "HPA Error Analysis"
+status: completed
+status_label: "Completed / mechanism diagnosis"
+evidence_state: "Includes fixed-checkpoint sampling, GT forcing, matched-step timing, and residual statistics; focal and blur-history improvements are not controlled results."
+date: 2026-07-17
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-08/
+source_summary: "6 diagnostics · 2 hierarchy comparisons · Laplacian / NLL"
+hero_image: /img/research/experiments/pixelar-v0178-laplacian.png
+hero_alt: "Ground-truth multiresolution pyramid and adjacent Laplacian residuals"
+hero_caption: "The GT pyramid retains edges, texture, and thin structures at late levels; target construction has not removed the detail."
+og_image: /img/research/experiments/pixelar-v0178-laplacian.png
+tags:
+  - Pixel Generation
+  - Hierarchical Autoregression
+  - Error Analysis
+  - Curriculum
+sources:
+  - kind: "DIAGNOSTIC"
+    label: "v0.17.7 temperature / GT forcing"
+    detail: "Fixed-checkpoint sampling and causal localization"
+  - kind: "RESULT"
+    label: "3-level vs 5-level @ 40k"
+    detail: "A single matched diagnostic: 25.01s vs 42.36s"
+  - kind: "METRIC"
+    label: "GT / generated Laplacian"
+    detail: "Adjacent-level residuals and DMoL NLL maps"
+toc:
+  - id: origin
+    label: "Error origin"
+  - id: forcing
+    label: "GT forcing"
+  - id: depth
+    label: "Depth and cost"
+  - id: residual
+    label: "Fine residuals"
+  - id: objective
+    label: "Objectives"
+---
+
+<section class="research-content-section research-content-section--lead" id="origin">
+  <p class="research-section-label">01 / Error origin</p>
+  <h2>L0 selects the mode; fine-level temperature only moves between noise and averaging</h2>
+  <p>At a fixed v0.17.7 checkpoint, the relatively stable no-CFG visual range is around <code>temperature 0.70–0.75</code>. Higher values add color and local variation but quickly become block noise and salt-and-pepper artifacts. Lower values suppress sampling and make structure conservative and blurred.</p>
+  <p>Per-level sweeps sharpen the conclusion. Holding L0 fixed while heating L1/L2 mostly adds unstructured high-frequency noise. Cooling L1/L2 to <code>0.50 / 0.25</code> removes grain but does not turn uncertain boundaries into coherent fine edges.</p>
+  <div class="research-experiment-verdict">
+    <span>Current reading</span>
+    <p>Temperature adjusts stochasticity inside the existing distribution. It cannot replace missing child-pixel coupling or make a fine level overturn an incorrect coarse mode.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="forcing">
+  <p class="research-section-label">02 / GT forcing</p>
+  <h2>Correcting the first level stabilizes the hierarchy, but errors still accumulate</h2>
+  <p>The GT-L0 diagnostic replaces the first sampled RGB level with its true coarse target and lets later levels generate freely at <code>temperature=0.75</code>. Semantics, color, and layout become substantially more stable, locating much of the free-run uncertainty at L0.</p>
+  <p>When the first four levels of the five-level model are forced to GT, final L16 can produce a result close to the real layout. The final head can condition on a clean prefix; normal inference fails primarily because history drifts across levels.</p>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>GT L0 strongly improves the global mode</h3><p>The first level controls identity, dominant color, and layout more than fine-level temperature does.</p></div></li>
+    <li><span>02</span><div><h3>GT history plus sampled L0 still amplifies local errors</h3><p>Even with correct positions, a wrong L0 value can expand through L1 and L2.</p></div></li>
+    <li><span>03</span><div><h3>The final level works with a correct prefix</h3><p>This points to sampled-history robustness and coarse calibration, not simply deleting fine levels.</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="depth">
+  <p class="research-section-label">03 / Depth and cost</p>
+  <h2>Five levels add positions but no clear structure at the matched step</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0178-five-level.png" alt="Five-level HPA qualitative and latency comparison">
+  <p class="research-figure-caption">Matched 40k diagnostic: three levels take about 25.01s and five take about 42.36s, or 1.69× slower in this setup, without a clear semantic gain from L8/L16.</p>
+  <p>The 1.69× ratio is not a general systems claim. It applies only to this script, hardware, and sampling configuration. The narrower supported conclusion is that two extra fully sampled levels materially increase dependency depth and latency without a corresponding visual gain at the same checkpoint step.</p>
+</section>
+
+<section class="research-content-section" id="residual">
+  <p class="research-section-label">04 / Fine residuals</p>
+  <h2>The true detail exists; the generated hierarchy increasingly underestimates it</h2>
+  <p>The GT multiresolution pyramid uses the model's exact target construction: patch-wise area downsampling, 8-bit rounding, then nearest upsampling for display. Adjacent-level residuals contain contours, fur, text, building edges, and thin texture, ruling out the idea that late targets contain no information.</p>
+  <table>
+    <thead><tr><th>Transition</th><th>GT mean |Δ|</th><th>Generated mean |Δ| (GT-L0)</th><th>Retained</th></tr></thead>
+    <tbody>
+      <tr><td>L1→L2</td><td>0.0481</td><td>0.0404</td><td>84%</td></tr>
+      <tr><td>L2→L4</td><td>0.0355</td><td>0.0266</td><td>75%</td></tr>
+      <tr><td>L4→L8</td><td>0.0283</td><td>0.0177</td><td>63%</td></tr>
+      <tr><td>L8→L16</td><td>0.0244</td><td>0.0132</td><td>54%</td></tr>
+    </tbody>
+  </table>
+  <p>Free-running v0.17.8 curriculum outputs decay even faster across levels: <code>0.0238 → 0.0154 → 0.0098 → 0.0096</code>. Deep stages behave more like conservative copies of parent RGB than generators of the structured innovation present in GT.</p>
+</section>
+
+<section class="research-content-section" id="objective">
+  <p class="research-section-label">05 / Objectives</p>
+  <h2>Focal loss finds hard pixels, but does not establish the main bottleneck</h2>
+  <p>Teacher-forced DMoL NLL maps align with edges and high-frequency regions. v0.17.8.1 therefore uses per-channel probability for focal weighting:</p>
+  <div class="research-equation">\[p_i=e^{-\mathrm{NLL}_i/3},\quad w_i=\mathrm{stopgrad}(1-p_i)^2,\quad \mathcal L=\frac{\sum_i w_i\mathrm{NLL}_i}{\sum_i w_i+\epsilon}.\]</div>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01781-focal.png" alt="Focal DMoL experiment and generated levels">
+  <p class="research-figure-caption">Visual quality remains broadly similar after focal reweighting. The loss can identify hard regions, but controlled evidence of better final generation is absent.</p>
+  <p>Blur history, noisy history, and a hot-L0/cool-fine schedule are also reasonable hypotheses, not completed improvements. The next record therefore changes structure more strongly: concentrate stochastic choice in one patch-level AR process and let later cascade decoders perform conditional refinement.</p>
+</section>

@@ -1,0 +1,153 @@
+{% assign shared_lang = include.lang | default: page.lang | default: 'zh' %}
+{% if shared_lang == 'en' %}
+  {% assign shared_aria = 'Interactive black-box view of shared HPA input and output token flow' %}
+  {% assign shared_pause = 'Pause unified HPA animation' %}
+  {% assign shared_play = 'Play unified HPA animation' %}
+  {% assign shared_pause_short = 'Pause' %}
+  {% assign shared_play_short = 'Play' %}
+  {% assign shared_stage_group = 'Select unified HPA stage' %}
+  {% assign shared_input = 'Stage input' %}
+  {% assign shared_embedding = 'Level + phase embedding' %}
+  {% assign shared_backbone_role = 'Cross-level and cross-phase reasoning' %}
+  {% assign shared_attention = 'Causal self-attention' %}
+  {% assign shared_attention_detail = 'KV cache · one active position' %}
+  {% assign shared_blocks = 'shared Transformer blocks ×N' %}
+  {% assign shared_hpa_input = 'one token enters at step t' %}
+  {% assign shared_hpa_output = 'one next-token distribution' %}
+  {% assign shared_hidden = 'Per-patch hidden state' %}
+  {% assign shared_direct_head = 'Coarse RGB head' %}
+  {% assign shared_direct_detail = 'L0 only · one RGB token at a time' %}
+  {% assign shared_condition = 'Condition mixer' %}
+  {% assign shared_condition_detail = 'parent RGB · level · phase · local position' %}
+  {% assign shared_adaln = 'AdaLN modulation' %}
+  {% assign shared_pixel_head = 'Tiny Pixel AR head' %}
+  {% assign shared_pixel_detail = 'shared weights · strict local raster order' %}
+  {% assign shared_local_core = 'Tiny AR ×4' %}
+  {% assign shared_streams = 'parallel patch streams' %}
+  {% assign shared_reembed = 'RGB re-embedding' %}
+  {% assign shared_training = 'TRAIN · expand all nine stage groups; teacher-force each local Pixel AR sequence' %}
+  {% assign shared_inference = 'INFER · reuse the same HPA and tiny head; roll only the current carrier KV forward' %}
+  {% assign shared_note = 'The large HPA decides what each active patch should contain. The lightweight shared Pixel AR head only resolves RGB pixels inside that patch; 128 patches reuse it in parallel.' %}
+  {% assign shared_nojs = 'Enable JavaScript to inspect each stage of the unified HPA architecture.' %}
+{% else %}
+  {% assign shared_aria = 'Shared HPA 输入与输出 token 流的交互式黑箱视图' %}
+  {% assign shared_pause = '暂停统一 HPA 动画' %}
+  {% assign shared_play = '播放统一 HPA 动画' %}
+  {% assign shared_pause_short = '暂停' %}
+  {% assign shared_play_short = '播放' %}
+  {% assign shared_stage_group = '选择统一 HPA 阶段' %}
+  {% assign shared_input = '阶段输入' %}
+  {% assign shared_embedding = 'Level + phase embedding' %}
+  {% assign shared_backbone_role = '负责跨 level 与跨 phase 推理' %}
+  {% assign shared_attention = 'Causal self-attention' %}
+  {% assign shared_attention_detail = 'KV cache · 当前只有一个 active position' %}
+  {% assign shared_blocks = '共享 Transformer blocks ×N' %}
+  {% assign shared_hpa_input = '第 t 步输入一个 token' %}
+  {% assign shared_hpa_output = '输出下一个 token 的分布' %}
+  {% assign shared_hidden = '每个 patch 的 hidden state' %}
+  {% assign shared_direct_head = 'Coarse RGB head' %}
+  {% assign shared_direct_detail = '仅用于 L0 · 每次输出一个 RGB token' %}
+  {% assign shared_condition = 'Condition mixer' %}
+  {% assign shared_condition_detail = 'parent RGB · level · phase · local position' %}
+  {% assign shared_adaln = 'AdaLN modulation' %}
+  {% assign shared_pixel_head = '轻量 Pixel AR head' %}
+  {% assign shared_pixel_detail = '共享参数 · patch 内严格 raster order' %}
+  {% assign shared_local_core = 'Tiny AR ×4' %}
+  {% assign shared_streams = '个并行 patch streams' %}
+  {% assign shared_reembed = 'RGB re-embedding' %}
+  {% assign shared_training = 'TRAIN · 展开全部九组 stage；每条局部 Pixel AR 序列使用 teacher forcing' %}
+  {% assign shared_inference = 'INFER · 复用同一个 HPA 与轻量 head；只把当前 carrier KV 滚动传给下一阶段' %}
+  {% assign shared_note = '大 HPA 决定每个 active patch 应该包含什么；共享的轻量 Pixel AR head 只负责在 patch 内逐像素实现 RGB，128 个 patches 并行复用它。' %}
+  {% assign shared_nojs = '启用 JavaScript 后可逐阶段检查统一 HPA 网络结构。' %}
+{% endif %}
+
+<div class="shared-ar-v0191"
+     id="shared-ar-visualization"
+     data-shared-ar-v0191
+     data-lang="{{ shared_lang }}"
+     data-pause-label="{{ shared_pause }}"
+     data-play-label="{{ shared_play }}"
+     data-pause-short="{{ shared_pause_short }}"
+     data-play-short="{{ shared_play_short }}">
+  <div class="shared-ar-v0191__topline">
+    <span>SHARED HPA · BLACK-BOX INPUT / OUTPUT TOKEN FLOW</span>
+    <button class="shared-ar-v0191__control" type="button" aria-label="{{ shared_pause }}" data-shared-control>
+      <span class="shared-ar-v0191__control-icon" aria-hidden="true"></span>
+      <span data-shared-control-label>{{ shared_pause_short }}</span>
+    </button>
+  </div>
+
+  <div class="shared-ar-v0191__stages" role="tablist" aria-label="{{ shared_stage_group }}">
+    <button type="button" role="tab" aria-selected="true" class="shared-ar-v0191__stage-button is-active" data-shared-stage="0"><strong>L0</strong><small>global AR</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="1"><strong>L1A</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="2"><strong>L1B</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="3"><strong>L2A</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="4"><strong>L2B</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="5"><strong>L3A</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="6"><strong>L3B</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="7"><strong>L4A</strong><small>128 patches</small></button>
+    <button type="button" role="tab" aria-selected="false" class="shared-ar-v0191__stage-button" data-shared-stage="8"><strong>L4B</strong><small>128 patches</small></button>
+  </div>
+
+  <div class="shared-ar-v0191__readout">
+    <strong data-shared-live-stage>L0 · Global AR</strong>
+    <span data-shared-live-detail>BOS + shifted coarse RGB → L0 RGB</span>
+    <small data-shared-stage-index>01 / 09</small>
+  </div>
+
+  <div class="shared-ar-v0191__architecture shared-ar-v0191__architecture--blackbox" role="img" aria-label="{{ shared_aria }}">
+    <div class="shared-ar-v0191__regroup">
+      <div>
+        <span>POST-L0 CAUSAL ORDER</span>
+        <div class="shared-ar-v0191__regroup-tokens shared-ar-v0191__regroup-tokens--mixed" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <strong>VISUAL REGROUP ONLY <i aria-hidden="true"></i></strong>
+      <div>
+        <span>CONTIGUOUS PHASE VIEW</span>
+        <div class="shared-ar-v0191__regroup-tokens shared-ar-v0191__regroup-tokens--split" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+
+    <div class="shared-ar-v0191__vertical-flow">
+      <section class="shared-ar-v0191__sequence-panel shared-ar-v0191__sequence-panel--input">
+        <div class="shared-ar-v0191__sequence-heading">
+          <span data-shared-hpa-input-label>{{ shared_hpa_input }}</span>
+          <strong data-shared-token-count>1 / 256 tokens</strong>
+        </div>
+        <div class="shared-ar-v0191__sequence-track" data-shared-input-track aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="shared-ar-v0191__phase-labels">
+          <code data-shared-input-a>causal prefix</code>
+          <code data-shared-input-b>next empty slots</code>
+        </div>
+      </section>
+
+      <div class="shared-ar-v0191__vertical-channel" aria-hidden="true"><i></i><span></span></div>
+
+      <section class="shared-ar-v0191__causal-box">
+        <span>SHARED WEIGHTS · CAUSAL MASK</span>
+        <h4>Shared HPA Autoregressive Transformer</h4>
+        <strong data-shared-core-mode>ONE NEXT-TOKEN STEP</strong>
+        <code data-shared-token-equation>x_t → HPA / KV → p(x_{t+1})</code>
+      </section>
+
+      <div class="shared-ar-v0191__vertical-channel" aria-hidden="true"><i></i><span></span></div>
+
+      <section class="shared-ar-v0191__sequence-panel shared-ar-v0191__sequence-panel--output">
+        <div class="shared-ar-v0191__sequence-heading">
+          <span data-shared-hpa-output-label>{{ shared_hpa_output }}</span>
+          <strong data-shared-output-code>x<sub>t+1</sub></strong>
+        </div>
+        <div class="shared-ar-v0191__sequence-track shared-ar-v0191__sequence-track--output" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <strong class="shared-ar-v0191__writeback-copy" data-shared-writeback>Append x<sub>t+1</sub> to the causal input sequence</strong>
+      </section>
+
+      <div class="shared-ar-v0191__writeback-rail" aria-hidden="true"><i></i><span></span></div>
+    </div>
+  </div>
+  <p class="sr-only" aria-live="polite" data-shared-announcement>L0 · Global AR</p>
+  <noscript><p class="shared-ar-v0191__noscript">{{ shared_nojs }}</p></noscript>
+</div>

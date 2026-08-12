@@ -1,0 +1,121 @@
+{% assign items = include.items %}
+{% assign current_lang = include.lang | default: page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if items %}
+{% if include.scroll %}
+  {% if current_lang == 'en' %}
+    {% assign slider_label = 'Key decisions and changes' %}
+  {% else %}
+    {% assign slider_label = '关键决定与方向变化' %}
+  {% endif %}
+<div class="research-timeline-slider" data-timeline-slider>
+  <div class="research-timeline-slider__frame">
+    <div class="research-timeline-slider__viewport" data-timeline-viewport tabindex="0" aria-label="{{ slider_label }}">
+{% endif %}
+<ol class="research-timeline{% if include.scroll %} research-timeline--slider{% endif %}">
+  {% for item in items %}
+  <li class="research-timeline__item research-timeline__item--{{ item.state | default: 'done' }}"{% if include.scroll %} data-timeline-item data-timeline-number="{{ forloop.index }}"{% endif %}>
+    <div class="research-timeline__rail" aria-hidden="true"><span></span></div>
+    <div class="research-timeline__content">
+      <div class="research-timeline__meta">
+        <time datetime="{{ item.date }}">{{ item.date }}</time>
+        {% if item.label %}<span>{{ item.label }}</span>{% endif %}
+      </div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.summary }}</p>
+      {% if item.decision %}<p class="research-timeline__decision"><strong>{{ t.common.decision }}</strong> {{ item.decision }}</p>{% endif %}
+      {% if item.url %}<a class="research-text-link" href="{{ item.url | prepend: site.baseurl }}">{{ t.common.raw_note }} <span aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+{% if include.scroll %}
+    </div>
+    <span class="research-timeline-slider__indicator" aria-hidden="true" data-timeline-indicator><span data-timeline-thumb></span></span>
+  </div>
+</div>
+<script>
+(function () {
+  document.querySelectorAll('[data-timeline-slider]:not([data-slider-ready])').forEach(function (slider) {
+    slider.setAttribute('data-slider-ready', 'true');
+    var viewport = slider.querySelector('[data-timeline-viewport]');
+    var frame = slider.querySelector('.research-timeline-slider__frame');
+    var indicator = slider.querySelector('[data-timeline-indicator]');
+    var thumb = slider.querySelector('[data-timeline-thumb]');
+    var items = Array.prototype.slice.call(slider.querySelectorAll('[data-timeline-item]'));
+    var activeIndex = items.length - 1;
+    var scrollFrame;
+    var indicatorTimer;
+    var indicatorReady = false;
+
+    function itemTop(item) {
+      return item.getBoundingClientRect().top - viewport.getBoundingClientRect().top + viewport.scrollTop;
+    }
+
+    function update(index) {
+      activeIndex = Math.max(0, Math.min(items.length - 1, index));
+    }
+
+    function updateIndicator(show) {
+      var trackHeight = indicator.clientHeight;
+      var maxScroll = Math.max(0, viewport.scrollHeight - viewport.clientHeight);
+      var thumbHeight = Math.max(30, trackHeight * Math.min(1, viewport.clientHeight / viewport.scrollHeight));
+      var travel = Math.max(0, trackHeight - thumbHeight);
+      var progress = maxScroll ? viewport.scrollTop / maxScroll : 0;
+      thumb.style.height = thumbHeight + 'px';
+      thumb.style.transform = 'translateY(' + (travel * progress) + 'px)';
+      if (show) {
+        frame.classList.add('is-scrolling');
+        window.clearTimeout(indicatorTimer);
+        indicatorTimer = window.setTimeout(function () { frame.classList.remove('is-scrolling'); }, 850);
+      }
+    }
+
+    function closestItem() {
+      var atTop = viewport.scrollTop <= 2;
+      var atEnd = viewport.scrollTop + viewport.clientHeight >= viewport.scrollHeight - 2;
+      if (atTop) { update(0); return; }
+      if (atEnd) { update(items.length - 1); return; }
+      var targetLine = viewport.scrollTop + 28;
+      var closest = 0;
+      var distance = Infinity;
+      items.forEach(function (item, index) {
+        var nextDistance = Math.abs(itemTop(item) - targetLine);
+        if (nextDistance < distance) {
+          distance = nextDistance;
+          closest = index;
+        }
+      });
+      update(closest);
+    }
+
+    function goTo(index) {
+      var nextIndex = Math.max(0, Math.min(items.length - 1, index));
+      viewport.scrollTo({ top: itemTop(items[nextIndex]), behavior: 'smooth' });
+      update(nextIndex);
+    }
+
+    viewport.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowUp') { event.preventDefault(); goTo(activeIndex - 1); }
+      if (event.key === 'ArrowDown') { event.preventDefault(); goTo(activeIndex + 1); }
+    });
+    viewport.addEventListener('scroll', function () {
+      window.cancelAnimationFrame(scrollFrame);
+      scrollFrame = window.requestAnimationFrame(function () {
+        closestItem();
+        updateIndicator(indicatorReady);
+      });
+    }, { passive: true });
+    window.addEventListener('resize', function () { updateIndicator(false); }, { passive: true });
+
+    window.requestAnimationFrame(function () {
+      viewport.scrollTop = viewport.scrollHeight;
+      update(items.length - 1);
+      updateIndicator(false);
+      window.requestAnimationFrame(function () { indicatorReady = true; });
+    });
+  });
+}());
+</script>
+{% endif %}
+{% endif %}

@@ -1,0 +1,103 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（七）：一个共享 Transformer 能否完成整个像素层级？"
+description: "v0.17.7 把 1×1、2×2、4×4 RGB patch tokens 拼成一条因果序列，用同一个 HPA Transformer 连接所有分辨率，只保留 level-specific 输入与预测头。"
+card_summary: "HPA 证明共享因果主干可以跨分辨率生成，但三层序列把训练成本推高约三倍，coarse error、并行 DMoL blur 与层级跳跃仍未解决。"
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-07"
+stage: "Hierarchical Pixel AR"
+status: completed
+status_label: "已完成 / 架构验证"
+evidence_state: "v0.17.7 有长训练、KV-cache 推理和多组诊断；Patch-MDN 与其他变体训练预算不完全一致。"
+date: 2026-07-03
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-07/
+source_summary: "HPA 实现 · 6 个版本 · 多尺度样本"
+hero_image: /img/research/experiments/pixelar-hpa-shared-sequence.png
+hero_alt: "Hierarchical Pixel AR with one shared causal Transformer across resolutions"
+hero_caption: "v0.17.7 HPA：不同分辨率使用各自的 RGB embedding 与 DMoL head，中间共享同一个 causal Transformer。"
+og_image: /img/research/experiments/pixelar-hpa-shared-sequence.png
+tags:
+  - Pixel Generation
+  - Hierarchical Autoregression
+  - DMoL
+  - Architecture
+sources:
+  - kind: "CODE"
+    label: "hierarchical_pixel_ar.py"
+    detail: "共享序列、level embedding 与 KV-cache 推理"
+  - kind: "LOG"
+    label: "v0.17.6–v0.17.7e"
+    detail: "DMoL、Patch-MDN、level decoder 与跳级实验"
+  - kind: "IMAGE"
+    label: "v0177-naive-three-level.png"
+    detail: "L1 / L2 / L4 / decoder0 对比"
+toc:
+  - id: architecture
+    label: "共享层级"
+  - id: variants
+    label: "版本消融"
+  - id: result
+    label: "生成结果"
+  - id: diagnosis
+    label: "失败模式"
+  - id: decision
+    label: "研究决定"
+---
+
+<section class="research-content-section research-content-section--lead" id="architecture">
+  <p class="research-section-label">01 / 共享层级</p>
+  <h2>把多个 RGB 分辨率写进同一条 token 序列</h2>
+  <p>CascadeAR 为每个尺度使用独立模块，跨层接口很多，也很难判断改进来自网络容量还是信息路径。v0.17.7 的 Hierarchical Pixel AR（HPA）改用一个共享主干：每个 macro patch 在 <code>1×1</code>、<code>2×2</code> 和 <code>4×4</code> 三个尺度各形成一个 token group，所有 groups 按层级顺序拼接进同一条 causal sequence。</p>
+  <div class="research-equation">\[S=[S_{L1};S_{L2};S_{L4}],\qquad H=\mathrm{Transformer}_{\theta}(S).\]</div>
+  <p>不同尺度的值维度不同，因此输入 RGB encoder 与 DMoL prediction head 仍然是 level-specific；Transformer、causal attention 与大部分参数共享。RoPE 在每一层重复使用 patch grid，learned level embedding 用于区分分辨率。</p>
+  <div class="research-experiment-verdict">
+    <span>验证目标</span>
+    <p>如果一个共享因果空间能够同时表示 coarse belief 与 fine refinement，就可以减少跨层模块差异，并让所有细层直接读取更早的全局上下文。</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="variants">
+  <p class="research-section-label">02 / 版本消融</p>
+  <h2>我们同时改变了层级跨度、预测分布和辅助 decoder</h2>
+  <table>
+    <thead><tr><th>版本</th><th>主要变化</th><th>可支持的判断</th></tr></thead>
+    <tbody>
+      <tr><td>v0.17.6 / 17.6b</td><td>Patch-MDN 与 full-tri coupling</td><td>加入 patch-level mixture 没有出现清晰稳定优势</td></tr>
+      <tr><td>v0.17.7</td><td><code>[1,2,4]</code> shared HPA + DMoL + L0 decoder</td><td>共享主干可以训练、采样并进行 KV-cache 推理</td></tr>
+      <tr><td>v0.17.7b</td><td>HPA + Patch-MDN</td><td>30k 结果仍弱；不能与 170k DMoL 作公平优劣结论</td></tr>
+      <tr><td>v0.17.7c</td><td><code>[1,2,4,8,16]</code></td><td>五层路径可运行，但不自动增加结构细节</td></tr>
+      <tr><td>v0.17.7d</td><td>每层增加 deterministic decoder loss</td><td>定性更稳定，可能提供 same-patch consistency regularization</td></tr>
+      <tr><td>v0.17.7e</td><td><code>[1,4,16]</code>，无 REG decoder</td><td>激进跳级在早期 4×4 阶段已经明显失真</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="result">
+  <p class="research-section-label">03 / 生成结果</p>
+  <h2>共享模型能逐层细化，但细层没有可靠修正 coarse branch</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0177-diagnosis.png" alt="v0.17.7 three-level HPA qualitative diagnosis">
+  <p class="research-figure-caption">v0.17.7：L1、L2、L4 与 deterministic decoder0。后续层提高名义分辨率并略微锐化，但没有稳定修复第一层已经选错的物体结构或边界。</p>
+  <p>正面结果是明确的：L0 能产生类别相关的颜色与布局，共享 Transformer 也能把这些状态传给更细层；模型不是“层级拼接后完全学不动”。但三层意味着每个 patch grid 的序列位置被重复三次，当前训练记录显示成本接近单层的三倍。</p>
+  <p>同时，细层 DMoL 在一个 token 内并行预测多个 RGB values。它们能读取相同的 coarse context，却缺少充分的 within-patch coordination；因此更热的采样往往增加盐胡椒噪声，更冷的采样又走向平滑平均。</p>
+</section>
+
+<section class="research-content-section" id="diagnosis">
+  <p class="research-section-label">04 / 失败模式</p>
+  <h2>结构共享没有自动解决三类误差</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Coarse branch 选择错误</h3><p>第一层一旦采样到错误颜色、布局或局部模式，后续层更常继承而不是推翻。</p></div></li>
+    <li><span>02</span><div><h3>Parallel DMoL 缺少组内协调</h3><p>一个 fine token 同时采样多个像素；边缘位置不确定时，各像素容易分别选择不同模式。</p></div></li>
+    <li><span>03</span><div><h3>增加层数同时增加曝光偏差</h3><p>训练看到 GT history，推理看到 sampled history。每加入一层，都增加一次分布漂移的机会。</p></div></li>
+  </ol>
+  <p>Patch-MDN 的早期结果没有给出清晰修复，但训练步数与 DMoL baseline 不匹配，因此这里不能公开声称“DMoL 普遍优于 Patch-MDN”。更准确的表述是：在现有预算和 checkpoint 下，改变输出分布族不足以解决层级误差。</p>
+</section>
+
+<section class="research-content-section" id="decision">
+  <p class="research-section-label">05 / 研究决定</p>
+  <h2>下一轮先定位误差起点，再讨论是否继续加层</h2>
+  <p>HPA 已经通过架构可行性验证，后续不再以“能否共享 Transformer”为主问题。我们转而做 controlled diagnostics：固定 checkpoint 扫 temperature / CFG，强制 GT L0 或 GT history，比较三层与五层的同一步数结果，并用 Laplacian residual 判断细层究竟增加了多少新信息。</p>
+</section>

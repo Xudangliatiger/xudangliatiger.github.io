@@ -1,0 +1,11 @@
+{% if page.lang == 'en' %}{% assign tags_url = '/en/tags/' %}{% else %}{% assign tags_url = '/tags/' %}{% endif %}
+{% assign featured_tag_limit = include.limit | default: site.data.content_tags.size %}
+<section>
+  {% unless include.no_rule %}<hr class="hidden-sm hidden-xs">{% endunless %}
+  <h5><a href="{{ tags_url | prepend: site.baseurl }}">FEATURED TAGS</a></h5>
+  <div class="tags">
+    {% for tag in site.data.content_tags limit: featured_tag_limit %}
+      <a href="{{ tags_url | prepend: site.baseurl }}#{{ tag.label | slugify }}" title="{{ tag.label }}" rel="2">{{ tag.label }}</a>
+    {% endfor %}
+  </div>
+</section>

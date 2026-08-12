@@ -3,6 +3,9 @@ layout:     post
 title:      "改进分类任务来让目标检测更加精准"
 date:       2021-01-20 16:00:00
 author:     "xu"
+lang:       zh
+content_type: blog
+alternate_url: /en/blog/notes/accurate-object-detection/
 header-img: "img/05.png"
 tags:
     - Computer Vision
@@ -44,7 +47,6 @@ NMS之于dense object detection。NMS使dense detector变得可能，一群框�
 >解决途径3：List-wise Ranking
 
 这是一个还没人做的领域
-
 
 
 

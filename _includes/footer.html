@@ -106,19 +106,19 @@
 </footer>
 
 <!-- jQuery -->
-<script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/jquery.min.js" | prepend: site.baseurl }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/hux-blog.min.js" | prepend: site.baseurl }}"></script>
 
 <!-- Service Worker -->
 {% if site.service-worker %}
-<script src="{{ "/js/snackbar.js " | prepend: site.baseurl }}"></script>
-<script src="{{ "/js/sw-registration.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/snackbar.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}"></script>
 {% endif %}
 
 <!-- async load function -->
@@ -284,6 +284,20 @@
     var $en = document.querySelector(".en");
     var $select = document.querySelector("select");
 
+    {% if page.url == '/' %}
+    function _syncHomepageNavigation(index){
+        var useEnglish = Number(index) === 0;
+        var baseUrl = "{{ site.baseurl }}";
+        var $brand = document.querySelector("[data-nav-brand]");
+        var $research = document.querySelector("[data-nav-research]");
+        var $tags = document.querySelector("[data-nav-tags]");
+
+        if ($brand) $brand.textContent = useEnglish ? "Dongli Xu" : "徐东篱";
+        if ($research) $research.href = baseUrl + (useEnglish ? "/en/blog/" : "/blog/");
+        if ($tags) $tags.href = baseUrl + (useEnglish ? "/en/tags/" : "/tags/");
+    }
+    {% endif %}
+
     // bind hashchange event
     // Changes at v1.7.2: change the language flag from hash-basing to in-memory basing
     // due to its confliction with catalog anchors.
@@ -308,6 +322,9 @@
             $en.style.display = "none";
             $en.classList.remove("active");
         }
+        {% if page.url == '/' %}
+        _syncHomepageNavigation($select.selectedIndex);
+        {% endif %}
         // interop with catalog 
         if ("{{ page.catalog }}") generateCatalog(".catalog-body");
     }

@@ -1,0 +1,6 @@
+{% assign status = include.status | default: 'active' %}
+{% assign label = include.label | default: status %}
+<span class="research-status research-status--{{ status }}">
+  <span class="research-status__dot" aria-hidden="true"></span>
+  {{ label }}
+</span>

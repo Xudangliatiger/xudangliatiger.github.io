@@ -3,10 +3,20 @@ layout:     post
 title:      "像素级别的生成模型（一）"
 date:       2026-01-18 16:00:00
 author:     "Dongli Xu"
+lang:       zh
+content_type: experiment
+alternate_url: /en/research/notes/pixelgen-01/
+project_id: pixel-generation
+record_id: "EXP-01"
+experiment_stage: "Baseline / Representation"
+summary: "复现 PixelDiT-style baseline，加入 REPA，并测试 DINOv3-S 能否从感知器微调为带噪像素输入的语义生成器。"
 header-img: "img/in-post/pixel-gen/img.png"
 tags:
     - Computer Vision
     - Generative Model
+    - Pixel Generation
+    - Diffusion
+    - DINOv3
 ---
 
 # 背景

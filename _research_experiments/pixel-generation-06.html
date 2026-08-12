@@ -1,0 +1,107 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（六）：去掉 Patchify 后，整幅图按什么顺序生成？"
+description: "v0.18.1 / v0.18.2 直接把整条对角线或整列作为一个 AR token，在减少顺序轮次的同时，也把生成方向写进了图像的周期性伪影。"
+card_summary: "Diagonal AR 与 Column AR 都能并行预测一组像素，但 58k / 117k 样本显示出与生成方向一致的结构噪声；顺序本身成为可测的图像偏置。"
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-06"
+stage: "Grouped Pixel AR"
+status: completed
+status_label: "已完成 / 顺序诊断"
+evidence_state: "v0.18.1 与 v0.18.2 有训练样本及 100 图 phase 统计；v0.18.3 只有实现与脚本。"
+date: 2026-06-29
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-06/
+source_summary: "2 个训练版本 · 100 图统计 · 1 个未验证版本"
+hero_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+hero_alt: "Period-16 phase profiles for diagonal and column pixel autoregressive models"
+hero_caption: "按 phase 聚合的梯度统计：生成顺序会留下 cohort-level 的方向性结构。"
+og_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+tags:
+  - Pixel Generation
+  - Autoregression
+  - Spatial Ordering
+  - Artifact Analysis
+sources:
+  - kind: "CONFIG"
+    label: "v0.18.1 / v0.18.2"
+    detail: "Diagonal-token 与 column-token Pixel AR"
+  - kind: "RESULT"
+    label: "58k / 117k samples"
+    detail: "两种生成顺序的可见结果"
+  - kind: "CSV"
+    label: "patch_phase_metrics.csv"
+    detail: "100 张图、P2–P32 phase variation"
+toc:
+  - id: setup
+    label: "顺序设计"
+  - id: samples
+    label: "训练结果"
+  - id: metrics
+    label: "周期诊断"
+  - id: boundary
+    label: "结论边界"
+  - id: next
+    label: "下一步"
+---
+
+<section class="research-content-section research-content-section--lead" id="setup">
+  <p class="research-section-label">01 / 顺序设计</p>
+  <h2>并行哪些像素，等价于规定哪些像素不能互相条件化</h2>
+  <p>完全 raster-order 的 256×256 Pixel AR 需要 65,536 个顺序步骤，无法直接作为高效生成器。v0.18.x 去掉 patchify，改为一次预测一个空间 group：group 内像素同时输出 DMoL 参数，group 之间保持自回归。</p>
+  <table>
+    <thead><tr><th>版本</th><th>一个 token 表示</th><th>顺序轮次</th><th>同组缺失依赖</th></tr></thead>
+    <tbody>
+      <tr><td>v0.18.1</td><td>一条完整图像对角线</td><td>约 511</td><td>同一对角线内像素</td></tr>
+      <tr><td>v0.18.2</td><td>一列 256 个像素</td><td>256</td><td>同一列内的纵向像素</td></tr>
+      <tr><td>v0.18.3</td><td>16×16 raster L0 → 32 列 L1</td><td>分层</td><td>已有代码，未见完整训练结果</td></tr>
+    </tbody>
+  </table>
+  <div class="research-experiment-verdict">
+    <span>核心取舍</span>
+    <p>group 越大，顺序轮次越少；但同组像素的条件独立假设越强，生成方向越容易成为图像纹理的一部分。</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="samples">
+  <p class="research-section-label">02 / 训练结果</p>
+  <h2>Diagonal 与 Column 都没有把并行像素组织成稳定语义</h2>
+  <p>v0.18.1 在约 58k step 的本地样本仍以噪声化结构为主；v0.18.2 训练到约 117k step 后，能够形成更大尺度的颜色区域，但可见列方向传播、竖向条带与周期重复。对 v0.18.2 的 temperature sweep 也没有把这些模式转化成稳定的 ImageNet 语义。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0181-diagonal-step58000.png" alt="v0.18.1 diagonal-token model samples at step 58k">
+  <p class="research-figure-caption">v0.18.1 · step 58k。对角线级并行降低了串行深度，但样本仍以方向性噪声和弱结构为主。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0182-column-step117000.png" alt="v0.18.2 column-token model samples at step 117k">
+  <p class="research-figure-caption">v0.18.2 · step 117k。列 token 把一整列同时采样，结果中出现与左到右生成方向一致的条带与传播痕迹。</p>
+</section>
+
+<section class="research-content-section" id="metrics">
+  <p class="research-section-label">03 / 周期诊断</p>
+  <h2>把“看起来有条纹”变成可比较的 phase variation</h2>
+  <p>为了避免只依赖挑选图片，我们对每个数据集的 100 张样本计算不同空间周期 <code>P ∈ {2,4,8,16,32}</code> 下的 gradient 与 Laplacian phase profile。对每个周期，使用各 phase 均值的范围相对于全局均值：</p>
+  <div class="research-equation">\[A_P=\frac{\max_k m_{P,k}-\min_k m_{P,k}}{\bar m_P}.\]</div>
+  <p>在 period 32 的横向梯度上，column 模型的 <code>A₃₂ ≈ 0.302</code>，diagonal 模型约为 <code>0.056</code>。这个差异与列方向条带的视觉现象一致：column grouping 把更强的横向 phase 偏置写进了样本分布。</p>
+  <div class="research-approach-grid research-approach-grid--report">
+    <article><span>18.1</span><h3>Diagonal</h3><p>P32 gradient-x phase variation 约 5.6%。</p><small>方向偏置较弱但仍显著</small></article>
+    <article><span>18.2</span><h3>Column</h3><p>P32 gradient-x phase variation 约 30.2%。</p><small>列传播留下强横向周期结构</small></article>
+    <article><span>Real</span><h3>ImageNet</h3><p>同一统计用于自然图像对照。</p><small>不把模型 phase 当成单图水印</small></article>
+  </div>
+</section>
+
+<section class="research-content-section" id="boundary">
+  <p class="research-section-label">04 / 结论边界</p>
+  <h2>这是分布级偏置，不是逐图可见的 watermark</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>已证实：空间顺序会改变伪影方向</h3><p>Diagonal 与 column 的样本及 phase profile 呈现不同的方向性偏置。</p></div></li>
+    <li><span>02</span><div><h3>已证实：更少步骤不等于更好生成</h3><p>把一列像素并行预测虽然只需 256 轮，但同列无条件依赖造成新的结构缺口。</p></div></li>
+    <li><span>03</span><div><h3>不能声称：每一张图都含可检测水印</h3><p>现有分析支持 cohort-level distribution effect；它没有恢复逐图精确 RGB 模板。</p></div></li>
+    <li><span>04</span><div><h3>未验证：v0.18.3 修复了问题</h3><p>raster L0 + column L1 已有模型、配置与脚本，但没有本地可见的完整训练产物。</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="next">
+  <p class="research-section-label">05 / 下一步</p>
+  <h2>需要层级上下文，也需要更细的组间通信</h2>
+  <p>纯 diagonal / column 模型把效率问题变成了空间依赖问题。下一阶段不再让一种全图顺序独自承担语义与细节，而是回到多分辨率层级：粗层负责全局模式，细层逐步增加像素密度，并显式研究 sampled value 与 hidden belief 如何跨层传递。</p>
+</section>

@@ -1,0 +1,33 @@
+{% assign project = include.project %}
+{% assign current_lang = include.lang | default: project.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if current_lang == 'en' %}
+  {% assign tag_index_url = '/en/tags/' %}
+  {% assign tag_list_label = 'Research tags' %}
+{% else %}
+  {% assign tag_index_url = '/tags/' %}
+  {% assign tag_list_label = '研究标签' %}
+{% endif %}
+<article class="research-project-card research-project-card--{{ project.accent | default: 'signal' }}">
+  <a class="research-project-card__visual" href="{{ project.url | prepend: site.baseurl }}" aria-label="Open {{ project.title }} discovery page">
+    <img src="{{ project.hero_image | prepend: site.baseurl }}" alt="{{ project.hero_alt }}" loading="lazy">
+    <span class="research-project-card__number">{{ include.index | default: '01' }}</span>
+  </a>
+  <div class="research-project-card__body">
+    <div class="research-project-card__meta">
+      {% include research/status-badge.html status=project.status label=project.status_label %}
+      <time datetime="{{ project.updated_at | date: '%Y-%m-%d' }}">{{ t.common.updated }} {{ project.updated_at | date: '%Y.%m.%d' }}</time>
+    </div>
+    <h3 class="research-project-card__title"><a href="{{ project.url | prepend: site.baseurl }}">{{ project.title }}</a></h3>
+    <p class="research-project-card__summary">{{ project.card_summary | default: project.description }}</p>
+    {% if project.tags %}
+    <ul class="research-chip-list" aria-label="{{ tag_list_label }}">
+      {% for tag in project.tags %}<li><a href="{{ tag_index_url | prepend: site.baseurl }}#{{ tag | slugify }}">{{ tag }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    <div class="research-project-card__actions">
+      <a class="research-text-link" href="{{ project.url | prepend: site.baseurl }}">{{ t.common.overview_action }} <span aria-hidden="true">→</span></a>
+      <a class="research-text-link research-text-link--muted" href="{{ project.lab_url | prepend: site.baseurl }}">{{ t.common.lab_action }}</a>
+    </div>
+  </div>
+</article>

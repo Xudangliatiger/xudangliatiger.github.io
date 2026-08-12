@@ -1,0 +1,109 @@
+{% assign pipeline_lang = include.lang | default: page.lang | default: 'zh' %}
+{% if pipeline_lang == 'en' %}
+  {% assign pipeline_aria = 'Interactive five-level phase-parallel image generation schedule' %}
+  {% assign pipeline_pause = 'Pause animation' %}
+  {% assign pipeline_play = 'Play animation' %}
+  {% assign pipeline_pause_short = 'Pause' %}
+  {% assign pipeline_play_short = 'Play' %}
+  {% assign pipeline_previous = 'Previous stage' %}
+  {% assign pipeline_next = 'Next stage' %}
+  {% assign pipeline_level_group = 'Select image level' %}
+  {% assign pipeline_phase_group = 'Select generation phase' %}
+  {% assign pipeline_global = 'Global AR' %}
+  {% assign pipeline_global_detail = '256 RGB tokens, generated one by one' %}
+  {% assign pipeline_resolution = 'image resolution' %}
+  {% assign pipeline_patch = 'pixels per macro patch' %}
+  {% assign pipeline_phase_a = 'Phase A' %}
+  {% assign pipeline_phase_b = 'Phase B' %}
+  {% assign pipeline_phase_a_detail = '128 patches advance together' %}
+  {% assign pipeline_phase_b_detail = 'reads completed A, then advances 128 patches' %}
+  {% assign pipeline_same_image = 'Same image, progressively finer pixels' %}
+  {% assign pipeline_note = 'L0 is a conventional 256-step global autoregressive scan. L1-L4 retain the same image while each level uses two batched A/B phase views; selecting a stage pauses autoplay so it can be inspected.' %}
+  {% assign pipeline_nojs = 'Enable JavaScript to inspect the interactive L0-L4 phase schedule.' %}
+{% else %}
+  {% assign pipeline_aria = '可交互的五层级 phase-parallel 图像生成流程' %}
+  {% assign pipeline_pause = '暂停动画' %}
+  {% assign pipeline_play = '播放动画' %}
+  {% assign pipeline_pause_short = '暂停' %}
+  {% assign pipeline_play_short = '播放' %}
+  {% assign pipeline_previous = '上一个阶段' %}
+  {% assign pipeline_next = '下一个阶段' %}
+  {% assign pipeline_level_group = '选择图像层级' %}
+  {% assign pipeline_phase_group = '选择生成 phase' %}
+  {% assign pipeline_global = 'Global AR' %}
+  {% assign pipeline_global_detail = '256 个 RGB tokens 逐个生成' %}
+  {% assign pipeline_resolution = '图像分辨率' %}
+  {% assign pipeline_patch = '每个 macro patch 的像素数' %}
+  {% assign pipeline_phase_a = 'Phase A' %}
+  {% assign pipeline_phase_b = 'Phase B' %}
+  {% assign pipeline_phase_a_detail = '128 个 patches 同步推进' %}
+  {% assign pipeline_phase_b_detail = '读取已完成的 A，再推进 128 个 patches' %}
+  {% assign pipeline_same_image = '同一张图，像素逐层变细' %}
+  {% assign pipeline_note = 'L0 使用传统的 256-step 全局自回归扫描；L1-L4 保持同一张图，并在每个 level 使用两次 batched A/B phase view。手动选择 stage 会暂停自动播放，便于逐步检查。' %}
+  {% assign pipeline_nojs = '启用 JavaScript 后可检查 L0-L4 的交互式 phase schedule。' %}
+{% endif %}
+
+<div class="pipeline-v0191"
+     id="pipeline-visualization"
+     data-pipeline-v0191
+     data-lang="{{ pipeline_lang }}"
+     data-pause-label="{{ pipeline_pause }}"
+     data-play-label="{{ pipeline_play }}"
+     data-pause-short="{{ pipeline_pause_short }}"
+     data-play-short="{{ pipeline_play_short }}"
+     data-resolution-label="{{ pipeline_resolution }}"
+     data-patch-label="{{ pipeline_patch }}"
+     data-global-label="{{ pipeline_global }}"
+     data-global-detail="{{ pipeline_global_detail }}"
+     data-phase-a-label="{{ pipeline_phase_a }}"
+     data-phase-b-label="{{ pipeline_phase_b }}"
+     data-phase-a-detail="{{ pipeline_phase_a_detail }}"
+     data-phase-b-detail="{{ pipeline_phase_b_detail }}">
+  <div class="pipeline-v0191__topline">
+    <span>PROPOSED MULTILEVEL SCHEDULE · SAME IMAGE / 5 SCALES</span>
+    <button class="pipeline-v0191__control" type="button" aria-label="{{ pipeline_pause }}" data-pipeline-control>
+      <span class="pipeline-v0191__control-icon" aria-hidden="true"></span>
+      <span data-pipeline-control-label>{{ pipeline_pause_short }}</span>
+    </button>
+  </div>
+
+  <div class="pipeline-v0191__controls">
+    <div class="pipeline-v0191__levels" role="tablist" aria-label="{{ pipeline_level_group }}">
+      <button type="button" role="tab" aria-selected="true" class="pipeline-v0191__level is-active" data-pipeline-level="0"><strong>L0</strong><span>16²</span><small>1×1 / patch</small></button>
+      <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__level" data-pipeline-level="1"><strong>L1</strong><span>32²</span><small>2×2 / patch</small></button>
+      <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__level" data-pipeline-level="2"><strong>L2</strong><span>64²</span><small>4×4 / patch</small></button>
+      <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__level" data-pipeline-level="3"><strong>L3</strong><span>128²</span><small>8×8 / patch</small></button>
+      <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__level" data-pipeline-level="4"><strong>L4</strong><span>256²</span><small>16×16 / patch</small></button>
+    </div>
+
+    <div class="pipeline-v0191__stage-controls">
+      <button class="pipeline-v0191__nav" type="button" aria-label="{{ pipeline_previous }}" title="{{ pipeline_previous }}" data-pipeline-previous>&#8592;</button>
+      <div class="pipeline-v0191__phases" role="tablist" aria-label="{{ pipeline_phase_group }}">
+        <button type="button" role="tab" aria-selected="true" class="pipeline-v0191__phase pipeline-v0191__phase--global is-active" data-pipeline-global>AR</button>
+        <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__phase" data-pipeline-phase="0">A</button>
+        <button type="button" role="tab" aria-selected="false" class="pipeline-v0191__phase" data-pipeline-phase="1">B</button>
+      </div>
+      <button class="pipeline-v0191__nav" type="button" aria-label="{{ pipeline_next }}" title="{{ pipeline_next }}" data-pipeline-next>&#8594;</button>
+      <span class="pipeline-v0191__stage-index" data-pipeline-stage-index>01 / 09</span>
+    </div>
+  </div>
+
+  <div class="pipeline-v0191__stage">
+    <canvas data-pipeline-canvas role="img" aria-label="{{ pipeline_aria }}"></canvas>
+    <div class="pipeline-v0191__hud" aria-hidden="true">
+      <strong data-pipeline-live-stage>L0 · {{ pipeline_global }}</strong>
+      <span data-pipeline-live-count>16×16 · 0 / 256</span>
+    </div>
+    <p class="sr-only" aria-live="polite" data-pipeline-announcement>L0 · {{ pipeline_global }}</p>
+  </div>
+
+  <div class="pipeline-v0191__legend" aria-label="Legend">
+    <span><i class="pipeline-v0191__key pipeline-v0191__key--serial"></i>L0 · {{ pipeline_global }}</span>
+    <span><i class="pipeline-v0191__key pipeline-v0191__key--a"></i>{{ pipeline_phase_a }} · ×128</span>
+    <span><i class="pipeline-v0191__key pipeline-v0191__key--context"></i>A → B context</span>
+    <span><i class="pipeline-v0191__key pipeline-v0191__key--b"></i>{{ pipeline_phase_b }} · ×128</span>
+    <strong>{{ pipeline_same_image }}</strong>
+  </div>
+  <p class="pipeline-v0191__note">{{ pipeline_note }}</p>
+  <noscript><p class="pipeline-v0191__noscript">{{ pipeline_nojs }}</p></noscript>
+</div>

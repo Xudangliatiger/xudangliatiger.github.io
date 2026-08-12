@@ -1,0 +1,28 @@
+{% assign experiment = include.experiment %}
+{% assign current_lang = include.lang | default: page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+<article class="research-experiment-card">
+  <div class="research-experiment-card__meta">
+    <time datetime="{{ experiment.updated_at | date: '%Y-%m-%d' }}">{{ experiment.updated_at | date: '%Y.%m.%d' }}</time>
+    <span>{{ experiment.record_id }}</span>
+  </div>
+  <div class="research-experiment-card__body">
+    <div class="research-experiment-card__heading">
+      <div>
+        <p class="research-eyebrow">{{ experiment.project_title }} / {{ experiment.stage }}</p>
+        <h3><a href="{{ experiment.url | prepend: site.baseurl }}">{{ experiment.title }}</a></h3>
+      </div>
+      <span class="research-experiment-card__state">{{ experiment.status_label }}</span>
+    </div>
+    <p class="research-experiment-card__summary">{{ experiment.card_summary | default: experiment.description }}</p>
+    {% if experiment.sources %}
+    <div class="research-source-chips" aria-label="{{ t.common.sources }}">
+      {% for source in experiment.sources %}<span>{{ source.kind }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    <div class="research-experiment-card__footer">
+      <p><strong>{{ t.common.evidence_state }}</strong>{{ experiment.evidence_state }}</p>
+      <a class="research-text-link" href="{{ experiment.url | prepend: site.baseurl }}">{{ t.common.full_record }} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</article>

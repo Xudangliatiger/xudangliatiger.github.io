@@ -1,0 +1,121 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (V): Low-resolution RGB Is Not a Sufficient Latent"
+description: "v0.16.8 replaces the pretrained codebook with low-resolution RGB. It preserves layout and object identity, but exposes missing information through blurred detail, patch boundaries, and unstable free runs."
+card_summary: "RGB-as-tokenizer removes the pretrained tokenizer, but one coarse RGB value maps to many high-resolution patches: mean decoding blurs them, while sampled coarse values propagate errors."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-05"
+stage: "RGB-as-tokenizer"
+status: completed
+status_label: "Validated / negative result"
+evidence_state: "v0.16.8.5c free-run samples and repeated patch artifacts are available; the causal account remains a working interpretation."
+date: 2026-06-21
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-05/
+source_summary: "v0.16.8 + v0.17.4–17.5 · samples · training records"
+hero_image: /img/research/experiments/pixelar-v01685c-diagnosis.png
+hero_alt: "Diagnosis of low-resolution RGB as an insufficient latent"
+hero_caption: "Three repeated v0.16.8.5c symptoms: averaged detail, patch artifacts, and ambiguity in the coarse latent."
+og_image: /img/research/experiments/pixelar-v01685c-diagnosis.png
+tags:
+  - Pixel Generation
+  - Autoregression
+  - Representation
+  - Negative Result
+sources:
+  - kind: "CODE"
+    label: "v0.16.7 / v0.16.8.x"
+    detail: "Codebook-style modes and the low-resolution RGB interface"
+  - kind: "LOG"
+    label: "CODEX_LOG.md"
+    detail: "Version map, patch artifacts, and current interpretation"
+  - kind: "IMAGE"
+    label: "v01685c-result.png"
+    detail: "Low-resolution RGB free-run samples"
+toc:
+  - id: change
+    label: "Interface"
+  - id: result
+    label: "Observation"
+  - id: cause
+    label: "Diagnosis"
+  - id: conclusion
+    label: "Conclusion"
+  - id: cascade
+    label: "CascadeAR check"
+  - id: next
+    label: "Next step"
+---
+
+<section class="research-content-section research-content-section--lead" id="change">
+  <p class="research-section-label">01 / Interface</p>
+  <h2>Replace the codebook token with downsampled RGB</h2>
+  <p>The one-step decoder in the previous record still depended on a pretrained tokenizer. v0.16.8 makes the most direct substitution: instead of predicting a code id, the Semantic AR model predicts a low-resolution RGB scaffold <code>r_t</code>. A one-step decoder reads both sampled RGB and hidden state <code>h_t</code> to render the full patch.</p>
+  <div class="research-thesis">
+    <span>Goal</span>
+    <p>Maintain <code>Pixel input → Pixel state → Pixel output</code> without a VQ codebook. Coarse RGB should carry the mode and layout, while hidden state supplies the remaining information.</p>
+  </div>
+  <p>The design retains two paths: a sampled-value path carries the coarse RGB decision forward, while a hidden-state path carries information about the distribution that has not been reduced to one sample. It is more multimodal than pure regression and more pixel-native than a tokenizer-based system.</p>
+</section>
+
+<section class="research-content-section" id="result">
+  <p class="research-section-label">02 / Observation</p>
+  <h2>Layout emerges, but detail does not recover with resolution</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01685c-result.png" alt="v0.16.8.5c generated samples">
+  <p class="research-figure-caption">v0.16.8.5c free runs: low-resolution RGB conveys rough color, layout, and identity, while boundaries and textures remain blurred or periodically block-structured.</p>
+  <p>This is not a total generation failure. The samples show that coarse RGB is a useful layout hint. The issue is that it does not uniquely determine a high-resolution patch. Two decoding choices expose two different symptoms:</p>
+  <table>
+    <thead><tr><th>Path</th><th>Model behavior</th><th>Visible symptom</th></tr></thead>
+    <tbody>
+      <tr><td>Mean / regression</td><td>Averages several plausible details</td><td>Washed textures and soft edges</td></tr>
+      <tr><td>Sampled coarse RGB</td><td>Treats one low-resolution draw as a hard downstream condition</td><td>Sampling drift becomes grid/patch artifacts</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="cause">
+  <p class="research-section-label">03 / Diagnosis</p>
+  <h2>Low-resolution RGB is a statistic, not a recoverable mode index</h2>
+  <p>A <code>1×1</code>, <code>2×2</code>, or <code>4×4</code> RGB value describes local mean color and coarse shape. Many textures, edge locations, and object details downsample to the same value. In general:</p>
+  <div class="research-equation">\[H(X_{\mathrm{high}}\mid R_{\mathrm{low}}) \gg 0.\]</div>
+  <p>This differs from the codebook-like representation in v0.16.7. A learned mode token can encode high-resolution patch identity deliberately; low-resolution RGB was never trained as an invertible index. A positive v0.16.7 result therefore does not imply that raw coarse RGB is sufficient.</p>
+  <p>CODEX_LOG records similar periodic block noise in both v0.16.8.x and later v0.17.2.x branches. Repetition across branches makes coarse-sample distribution drift a more credible account, but decoder capacity, train/inference mismatch, and independent patch sampling may still contribute.</p>
+</section>
+
+<section class="research-content-section" id="conclusion">
+  <p class="research-section-label">04 / Conclusion</p>
+  <h2>Pass belief forward, not only a single coarse sample</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Established: coarse RGB carries layout</h3><p>Object class, dominant color, and large-scale spatial structure are visible in free runs.</p></div></li>
+    <li><span>02</span><div><h3>Established: mean decoding removes detail</h3><p>When one low-resolution value maps to several patches, a deterministic renderer moves toward the conditional mean.</p></div></li>
+    <li><span>03</span><div><h3>Working account: hard sampled RGB accumulates errors</h3><p>Once a coarse sample leaves the training distribution, downstream levels treat it as fact rather than repairing it.</p></div></li>
+    <li><span>04</span><div><h3>Architectural requirement: separate value and belief</h3><p>The sampled value records a committed choice; hidden state should preserve a distribution summary for the next scale.</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="cascade">
+  <p class="research-section-label">05 / CascadeAR check</p>
+  <h2>Splitting the jump into scales does not remove ambiguity automatically</h2>
+  <p>v0.17.4–17.5 then replaces the one-step <code>1 → 16</code> jump with a <code>[1,2,4]</code> CascadeAR and tests sampled values, hidden conditions, and residual targets in actual runs. The evidence is more specific than the single-scale experiment, but it still does not establish coarse-RGB sufficiency.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v017x-gallery.png" alt="CascadeAR sample and diagnostic gallery across v0.17.x branches">
+  <p class="research-figure-caption">v0.17.x branch summary. Alternative histories, conditions, and residual paths change the failure mode without reliably removing blocks or recovering detail.</p>
+  <table>
+    <thead><tr><th>Version</th><th>Available evidence</th><th>Current reading</th></tr></thead>
+    <tbody>
+      <tr><td>v0.17.4 hard-fuse</td><td>The main <code>[1,2,4]</code> baseline has a checkpoint near 130k</td><td>The multiscale interface trains; this is not a sufficiency result</td></tr>
+      <tr><td>v0.17.4.3 GT-history + low-res CA</td><td>Stopped after about 9.5 hours because samples were noisy and the trend unpromising</td><td>Adding cross-attention alone did not reach the core issue</td></tr>
+      <tr><td>v0.17.4.3b GT hard-fuse</td><td>A 120k temperature sweep still contains block artifacts</td><td>Cleaner training history does not eliminate the free-run symptom</td></tr>
+      <tr><td>v0.17.5 Laplacian residual</td><td>Patch-local upsampling and residual paths pass debug checks</td><td>Long training and streaming sampling remain unverified</td></tr>
+    </tbody>
+  </table>
+  <p>The precise conclusion is not that low-resolution RGB is universally and strictly insufficient. It is that, under these interfaces, capacities, and training settings, coarse RGB does not carry enough recoverable detail, while extra levels and condition paths do not reliably cure sampled-history drift.</p>
+</section>
+
+<section class="research-content-section" id="next">
+  <p class="research-section-label">06 / Next step</p>
+  <h2>Do not ask one coarse RGB token to explain a full patch in one jump</h2>
+  <p>The natural repair is to split the <code>1 → 16</code> jump into several RGB resolutions and model a new distribution at every scale. The next stage therefore branches into two questions: grouped pixel ordering with diagonal and column AR, and CascadeAR experiments that isolate how sampled values, hidden conditions, and cross-attention should enter the next resolution.</p>
+</section>

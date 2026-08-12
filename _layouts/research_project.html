@@ -1,0 +1,102 @@
+---
+layout: default
+---
+{% assign project = page %}
+{% assign current_lang = page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+<main class="research-shell research-project research-project--{{ project.accent | default: 'signal' }}">
+  <header class="research-project-hero research-interactive-hero" data-interactive-field>
+    {% include research/interactive-field.html %}
+    <div class="research-container">
+      <div class="research-project-hero__language">
+        {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+      </div>
+      <div class="research-project-hero__grid">
+        <div class="research-project-hero__copy">
+          <div class="research-project-hero__meta">
+            {% include research/status-badge.html status=project.status label=project.status_label %}
+            <span>{{ t.project.updated }} {{ project.updated_at | date: '%Y.%m.%d' }}</span>
+          </div>
+          <p class="research-kicker">{{ project.eyebrow }}</p>
+          <h1>{{ project.title }}</h1>
+          <p class="research-project-hero__subtitle">{{ project.subtitle }}</p>
+          {% include research/view-switcher.html project=project active='public' lang=current_lang %}
+        </div>
+      </div>
+      {% include research/metric-strip.html items=project.metrics %}
+    </div>
+  </header>
+
+  <div class="research-container research-project-body">
+    <aside class="research-project-aside">
+        <p class="research-eyebrow">{{ t.project.on_page }}</p>
+      <nav aria-label="On this page">
+        <a href="#question">01 / {{ t.project.question }}</a>
+        <a href="#approach">02 / {{ t.project.approach }}</a>
+        <a href="#evidence">03 / {{ t.project.evidence }}</a>
+        <a href="#findings">04 / {{ t.project.findings }}</a>
+        <a href="#progress">05 / {{ t.project.progress }}</a>
+      </nav>
+      {% if project.links %}
+      <div class="research-project-aside__links">
+        <p class="research-eyebrow">{{ t.project.resources }}</p>
+        {% for link in project.links %}<a href="{{ link.url }}">{{ link.label }} <span aria-hidden="true">↗</span></a>{% endfor %}
+      </div>
+      {% endif %}
+    </aside>
+    <article class="research-project-article">
+      {{ content }}
+
+      {% if project.gallery %}
+      <section class="research-content-section" id="evidence">
+        <p class="research-section-label">03 / {{ t.project.evidence }}</p>
+        <div class="research-content-heading">
+          <h2>{{ t.project.evidence_title }}</h2>
+          <p>{{ t.project.evidence_desc }}</p>
+        </div>
+        <div class="research-gallery">
+          {% for image in project.gallery %}
+          <figure class="research-gallery__item{% if forloop.first %} research-gallery__item--wide{% endif %}">
+            <img src="{{ image.src | prepend: site.baseurl }}" alt="{{ image.alt }}" loading="lazy">
+            <figcaption><span>{{ image.label }}</span>{{ image.caption }}</figcaption>
+          </figure>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if project.findings %}
+      <section class="research-content-section" id="findings">
+        <p class="research-section-label">04 / {{ t.project.findings }}</p>
+        <div class="research-content-heading">
+          <h2>{{ t.project.findings_title }}</h2>
+          <p>{{ t.project.findings_desc }}</p>
+        </div>
+        <ol class="research-findings">
+          {% for finding in project.findings %}
+          <li><span>0{{ forloop.index }}</span><div><h3>{{ finding.title }}</h3><p>{{ finding.summary }}</p></div></li>
+          {% endfor %}
+        </ol>
+      </section>
+      {% endif %}
+
+      {% if project.milestones %}
+      <section class="research-content-section" id="progress">
+        <p class="research-section-label">05 / {{ t.project.progress }}</p>
+        <div class="research-content-heading">
+          <h2>{{ t.project.progress_title }}</h2>
+          <p>{{ t.project.progress_desc }}</p>
+        </div>
+        {% include research/progress-timeline.html items=project.milestones lang=current_lang %}
+      </section>
+      {% endif %}
+    </article>
+  </div>
+
+  <section class="research-project-cta">
+    <div class="research-container research-project-cta__inner">
+      <div><p class="research-kicker">{{ t.project.cta_label }}</p><h2>{{ t.project.cta_title }}</h2></div>
+      <a class="research-button research-button--light" href="{{ project.lab_url | prepend: site.baseurl }}">{{ t.project.cta_action }}</a>
+    </div>
+  </section>
+</main>

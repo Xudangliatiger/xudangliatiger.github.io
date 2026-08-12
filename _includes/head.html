@@ -3,26 +3,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ site.description }}">
-    <meta name="keywords"  content="{{ site.keyword }}">
+    <meta name="description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="keywords" content="{% if page.lang == 'en' %}Dongli Xu, research, computer vision, generative models, pixel generation{% else %}{{ site.keyword }}{% endif %}">
     <meta name="theme-color" content="{{ site.chrome-tab-theme-color }}">
     
     <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
+
+    <!-- Social preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.SEOTitle }}{% endif %}">
+    <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    {% if page.og_image %}<meta property="og:image" content="{{ page.og_image | prepend: site.baseurl | prepend: site.url }}">{% endif %}
+    <meta name="twitter:card" content="{% if page.og_image %}summary_large_image{% else %}summary{% endif %}">
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.ico">
+    <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.png">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    {% if page.alternate_url %}
+    <link rel="alternate" hreflang="{% if page.lang == 'en' %}zh-CN{% else %}en{% endif %}" href="{{ page.alternate_url | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" hreflang="{% if page.lang == 'en' %}en{% else %}zh-CN{% endif %}" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    {% endif %}
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ "/css/hux-blog.min.css" | prepend: site.baseurl }}">
+
+    {% if page.layout == 'research_hub' or page.layout == 'research_project' or page.layout == 'research_lab' or page.layout == 'research_note' or page.alternate_url %}
+    <!-- Shared styles for the research hub, public project pages and Lab Logs -->
+    <link rel="stylesheet" href="{{ "/css/research.css" | prepend: site.baseurl }}">
+    {% endif %}
+    {% if page.pipeline_visualization == 'v0191' %}
+    <link rel="stylesheet" href="{{ "/css/research-pipeline-v0191.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/research-refinement-v0191.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/research-shared-ar-v0191.css?v=70" | prepend: site.baseurl }}">
+    {% endif %}
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">

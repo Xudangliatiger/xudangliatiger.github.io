@@ -1,0 +1,99 @@
+---
+layout: default
+---
+{% assign current_lang = page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if current_lang == 'en' %}
+  {% assign matches = site.research_projects_en | where: 'project_id', page.project_id %}
+  {% assign long_records = site.research_experiments_en | where: 'project_id', page.project_id %}
+  {% assign note_records = site.research_notes_en | where: 'project_id', page.project_id %}
+{% else %}
+  {% assign matches = site.research_projects | where: 'project_id', page.project_id %}
+  {% assign long_records = site.research_experiments | where: 'project_id', page.project_id %}
+  {% assign experiment_posts = site.posts | where: 'content_type', 'experiment' %}
+  {% assign note_records = experiment_posts | where: 'project_id', page.project_id %}
+{% endif %}
+{% assign project = matches | first %}
+{% assign project_records = long_records | concat: note_records | sort: 'date' | reverse %}
+<main class="research-shell research-lab">
+  <header class="research-lab-hero research-interactive-hero" data-interactive-field>
+    {% include research/interactive-field.html %}
+    <div class="research-container">
+      <div class="research-lab-hero__language">
+        {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+      </div>
+      <div class="research-lab-hero__grid">
+        <div>
+          <p class="research-kicker">{{ project.title }}</p>
+          <h1>{{ t.lab.title }}</h1>
+        </div>
+        <div class="research-lab-hero__intro">
+          <p>{{ page.description }}</p>
+          <p class="research-lab-notice">{{ t.lab.notice }}</p>
+        </div>
+      </div>
+      {% include research/view-switcher.html project=project active='lab' lang=current_lang %}
+    </div>
+  </header>
+
+  <section class="research-lab-summary">
+    <div class="research-container">
+      {% include research/metric-strip.html items=project.metrics %}
+      <div class="research-lab-summary__grid">
+        <div><p class="research-eyebrow">{{ t.lab.hypothesis }}</p><p>{{ page.current_hypothesis }}</p></div>
+        <div><p class="research-eyebrow">{{ t.lab.blocker }}</p><p>{{ page.current_blocker }}</p></div>
+        <div><p class="research-eyebrow">{{ t.lab.next_run }}</p><p>{{ page.next_run }}</p></div>
+      </div>
+    </div>
+  </section>
+
+  {% if page.summary_findings %}
+  <section class="research-section research-section--cream" id="synthesis">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.lab.synthesis_title }}</h2>
+      </div>
+      <ol class="research-findings research-lab-synthesis">
+        {% for finding in page.summary_findings %}
+        <li><span>0{{ forloop.index }}</span><div><h3>{{ finding.title }}</h3><p>{{ finding.summary }}</p></div></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="research-section research-section--paper" id="run-matrix">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.lab.matrix_title }}</h2>
+      </div>
+      {% include research/experiment-table.html items=page.experiments lang=current_lang %}
+    </div>
+  </section>
+
+  <section class="research-section research-section--cream" id="decision-log">
+    <div class="research-container research-lab-log-grid">
+      <div class="research-lab-log-intro">
+        <h2>{{ t.lab.decision_title }}</h2>
+      </div>
+      {% include research/progress-timeline.html items=page.log_entries lang=current_lang scroll=true %}
+    </div>
+  </section>
+
+  {% if project_records.size > 0 %}
+  <section class="research-section research-section--paper" id="experiment-records">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.lab.records_title }}</h2>
+      </div>
+      {% include research/record-list.html items=project_records lang=current_lang %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if content != '' %}
+  <section class="research-section research-section--paper">
+    <article class="research-container research-lab-prose post-container">{{ content }}</article>
+  </section>
+  {% endif %}
+</main>

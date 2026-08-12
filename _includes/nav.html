@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{site.baseurl}}/">徐东篱</a>
+            <a class="navbar-brand" data-nav-brand href="{{site.baseurl}}/">{% if page.lang == 'en' %}Dongli Xu{% else %}徐东篱{% endif %}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,15 +19,12 @@
                     <li>
                         <a href="{{ site.baseurl }}/">About</a>
                     </li>
-                    {% for page in site.pages %}
-                        {% unless page.url contains 'page' %}
-                            {% if page.title %}
-                                <li>
-                                    <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
-                                </li>
-                            {% endif %}
-                        {% endunless %}
-                    {% endfor %}
+                    <li>
+                        <a data-nav-research href="{% if page.lang == 'en' %}{{ site.baseurl }}/en/blog/{% else %}{{ site.baseurl }}/blog/{% endif %}">Research</a>
+                    </li>
+                    <li>
+                        <a data-nav-tags href="{% if page.lang == 'en' %}{{ site.baseurl }}/en/tags/{% else %}{{ site.baseurl }}/tags/{% endif %}">Tags</a>
+                    </li>
                     
                 </ul>
             </div>

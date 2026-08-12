@@ -1,0 +1,32 @@
+<div class="article-header-field" aria-hidden="true">
+  <div class="article-header-field__focus"></div>
+  <div class="article-header-field__axis article-header-field__axis--x"></div>
+  <div class="article-header-field__axis article-header-field__axis--y"></div>
+  <div class="article-header-field__pixel"></div>
+</div>
+<script>
+(function () {
+  var headers = document.querySelectorAll('[data-interactive-field]:not([data-field-ready])');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  headers.forEach(function (header) {
+    header.setAttribute('data-field-ready', 'true');
+    if (reduceMotion) return;
+    var frame;
+    function setFieldPosition(x, y) {
+      header.style.setProperty('--field-x', x.toFixed(2) + '%');
+      header.style.setProperty('--field-y', y.toFixed(2) + '%');
+    }
+    header.addEventListener('pointermove', function (event) {
+      var rect = header.getBoundingClientRect();
+      var x = ((event.clientX - rect.left) / rect.width) * 100;
+      var y = ((event.clientY - rect.top) / rect.height) * 100;
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(function () { setFieldPosition(x, y); });
+    });
+    header.addEventListener('pointerleave', function () {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(function () { setFieldPosition(78, 38); });
+    });
+  });
+}());
+</script>

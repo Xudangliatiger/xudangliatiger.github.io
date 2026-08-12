@@ -1,0 +1,106 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（八）：层级误差从哪里开始，细节又去了哪里？"
+description: "通过 temperature、GT forcing、三层/五层对照、Laplacian residual 与 DMoL NLL，定位 HPA 的主要问题：coarse error 会被继承，fine levels 又低估了真实高频残差。"
+card_summary: "正确 L0 能显著稳定后续层，但五层仍比三层慢 1.69×且没有清晰视觉收益；GT 细节存在，模型只是没有在深层生成足够的连贯高频信息。"
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-08"
+stage: "HPA Error Analysis"
+status: completed
+status_label: "已完成 / 机制诊断"
+evidence_state: "包含固定 checkpoint 采样、GT forcing、同一步数计时与残差统计；focal / blur-history 改进尚未得到受控验证。"
+date: 2026-07-17
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-08/
+source_summary: "6 组诊断 · 2 个层级对照 · Laplacian / NLL"
+hero_image: /img/research/experiments/pixelar-v0178-laplacian.png
+hero_alt: "Ground-truth multiresolution pyramid and adjacent Laplacian residuals"
+hero_caption: "GT pyramid 表明后期层仍包含边缘、纹理和细线结构；细节并没有在 target construction 中消失。"
+og_image: /img/research/experiments/pixelar-v0178-laplacian.png
+tags:
+  - Pixel Generation
+  - Hierarchical Autoregression
+  - Error Analysis
+  - Curriculum
+sources:
+  - kind: "DIAGNOSTIC"
+    label: "v0.17.7 temperature / GT forcing"
+    detail: "固定 checkpoint 的采样与因果定位"
+  - kind: "RESULT"
+    label: "3-level vs 5-level @ 40k"
+    detail: "25.01s 与 42.36s 的单次诊断"
+  - kind: "METRIC"
+    label: "GT / generated Laplacian"
+    detail: "相邻层残差与 DMoL NLL map"
+toc:
+  - id: origin
+    label: "误差起点"
+  - id: forcing
+    label: "GT forcing"
+  - id: depth
+    label: "层数与成本"
+  - id: residual
+    label: "高频残差"
+  - id: objective
+    label: "目标改造"
+---
+
+<section class="research-content-section research-content-section--lead" id="origin">
+  <p class="research-section-label">01 / 误差起点</p>
+  <h2>L0 决定模式，fine-level temperature 只是在噪声与平均之间移动</h2>
+  <p>v0.17.7 的固定 checkpoint sweep 显示，no-CFG 下 <code>temperature ≈ 0.70–0.75</code> 是相对稳定的视觉区间。温度更高会增加颜色与局部变化，但很快转成 block noise 与 salt-and-pepper；温度更低则压制采样，同时让结构更保守、更模糊。</p>
+  <p>按层调节温度后，结论更清楚：保持 L0 不变，只升高 L1/L2，增加的主要是非结构化高频噪声；把 L1/L2 降到 <code>0.50 / 0.25</code> 能去掉部分颗粒，却不能把模糊边界变成一致的细边缘。</p>
+  <div class="research-experiment-verdict">
+    <span>当前判断</span>
+    <p>采样温度可以调节当前分布的随机性，却不能替代缺失的 child-pixel coupling，也不能让 fine level 主动改写错误的 coarse mode。</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="forcing">
+  <p class="research-section-label">02 / GT forcing</p>
+  <h2>给对第一层以后，层级明显稳定；但误差仍会逐层积累</h2>
+  <p>GT-L0 诊断把第一层 sampled RGB 替换成真实 coarse target，再让后续层按 <code>temperature=0.75</code> 自由生成。语义、颜色与布局立刻更稳定，说明正常 free run 的主要不确定性确实从 L0 开始。</p>
+  <p>进一步把五层模型的前四层都强制为 GT 时，最终 L16 能够在正确 prefix 上生成接近真实布局的结果。这证明最后一层并非完全不会读取好的 hierarchy；正常推理失败更像是历史逐层漂移，而不是 final head 单独失效。</p>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>GT L0 显著改善全局模式</h3><p>第一层对物体身份、主色和布局的影响远大于 fine-level temperature。</p></div></li>
+    <li><span>02</span><div><h3>GT history + sampled L0 仍会放大局部偏差</h3><p>即使历史位置正确，一次错误的 L0 value 仍可能在 L1/L2 扩大。</p></div></li>
+    <li><span>03</span><div><h3>正确前缀下 final level 可以工作</h3><p>这把问题定位到 sampled-history robustness 与 coarse calibration，而不是简单删除 fine levels。</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="depth">
+  <p class="research-section-label">03 / 层数与成本</p>
+  <h2>五层增加了像素位置，却没有在同一步数下增加清晰结构</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0178-five-level.png" alt="Five-level HPA qualitative and latency comparison">
+  <p class="research-figure-caption">同一 40k checkpoint 诊断：三层约 25.01s，五层约 42.36s，即本次设置下慢 1.69×；新增 L8/L16 没有产生清晰的语义收益。</p>
+  <p>这个 1.69× 不是可推广的系统性能结论，只适用于同一脚本、同一硬件和该次采样设置。它支持的窄结论是：在当前 HPA 中，增加两个完全采样的层级显著提高依赖路径与推理成本，而同一步数下没有看到相应视觉收益。</p>
+</section>
+
+<section class="research-content-section" id="residual">
+  <p class="research-section-label">04 / 高频残差</p>
+  <h2>真实细节存在；生成 hierarchy 在深层系统性低估它</h2>
+  <p>GT multiresolution pyramid 使用与模型相同的 target construction：patch-wise area downsample、8-bit rounding，再 nearest upsample 进行展示。相邻层残差包含物体轮廓、毛发、文字、建筑边缘和细纹理，因此“后期 target 本身没有信息”可以排除。</p>
+  <table>
+    <thead><tr><th>Transition</th><th>GT mean |Δ|</th><th>Generated mean |Δ|（GT-L0）</th><th>保留比例</th></tr></thead>
+    <tbody>
+      <tr><td>L1→L2</td><td>0.0481</td><td>0.0404</td><td>84%</td></tr>
+      <tr><td>L2→L4</td><td>0.0355</td><td>0.0266</td><td>75%</td></tr>
+      <tr><td>L4→L8</td><td>0.0283</td><td>0.0177</td><td>63%</td></tr>
+      <tr><td>L8→L16</td><td>0.0244</td><td>0.0132</td><td>54%</td></tr>
+    </tbody>
+  </table>
+  <p>v0.17.8 curriculum 的 free-run 相邻层变化更快衰减：<code>0.0238 → 0.0154 → 0.0098 → 0.0096</code>。模型在深层更像保守复制 parent RGB，而不是生成 GT 中真实存在的结构化新信息。</p>
+</section>
+
+<section class="research-content-section" id="objective">
+  <p class="research-section-label">05 / 目标改造</p>
+  <h2>Focal loss 能找到困难像素，但没有证明它就是主瓶颈</h2>
+  <p>teacher-forced DMoL NLL map 与边缘/高频区域明显对齐。v0.17.8.1 因此尝试按 per-channel probability 进行 focal weighting：</p>
+  <div class="research-equation">\[p_i=e^{-\mathrm{NLL}_i/3},\quad w_i=\mathrm{stopgrad}(1-p_i)^2,\quad \mathcal L=\frac{\sum_i w_i\mathrm{NLL}_i}{\sum_i w_i+\epsilon}.\]</div>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01781-focal.png" alt="Focal DMoL experiment and generated levels">
+  <p class="research-figure-caption">focal reweighting 后的视觉质量总体相近。它确认 loss 能定位难点，但没有受控证据表明最终生成质量改善。</p>
+  <p>blur-history、noisy-history 和“热 L0、冷 finer levels”也都对应合理假设，但当前记录不足以把它们写成成功方法。下一篇转向更强的结构变化：把随机性集中在一次 patch-level AR 选择，细层 decoder 只负责条件 refinement。</p>
+</section>

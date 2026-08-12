@@ -1,0 +1,27 @@
+{% assign experiments = include.items %}
+{% assign current_lang = include.lang | default: page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if experiments %}
+<div class="research-table-wrap" role="region" aria-label="Experiment matrix" tabindex="0">
+  <table class="research-experiment-table">
+    <thead>
+      <tr>
+        <th scope="col">{{ t.common.run }}</th>
+        <th scope="col">{{ t.common.change }}</th>
+        <th scope="col">{{ t.common.observation }}</th>
+        <th scope="col">{{ t.common.table_decision }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for experiment in experiments %}
+      <tr>
+        <td><code>{{ experiment.id }}</code><span class="research-run-state research-run-state--{{ experiment.state }}">{{ experiment.state }}</span></td>
+        <td><strong>{{ experiment.question }}</strong>{% if experiment.config %}<small>{{ experiment.config }}</small>{% endif %}</td>
+        <td>{{ experiment.observation }}</td>
+        <td>{{ experiment.decision }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}

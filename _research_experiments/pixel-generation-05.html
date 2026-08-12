@@ -1,0 +1,121 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（五）：低分辨率 RGB 不是充分 latent"
+description: "v0.16.8 用低分辨率 RGB 替代预训练 codebook。它保留了布局与物体类别，却在高频细节、patch 边界和 free-run 稳定性上暴露出信息不足。"
+card_summary: "RGB-as-tokenizer 去掉了预训练 tokenizer，但一个 coarse RGB value 对应许多高分辨率 patch；mean decode 变模糊，sampled coarse value 又会把偏差传给下游。"
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-05"
+stage: "RGB-as-tokenizer"
+status: completed
+status_label: "已验证 / 负结果"
+evidence_state: "有 v0.16.8.5c free-run 样本与跨版本复现的 patch artifact；因果解释仍标为当前判断。"
+date: 2026-06-21
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-05/
+source_summary: "v0.16.8 + v0.17.4–17.5 · 生成样本 · 训练记录"
+hero_image: /img/research/experiments/pixelar-v01685c-diagnosis.png
+hero_alt: "Diagnosis of low-resolution RGB as an insufficient latent"
+hero_caption: "v0.16.8.5c 的三个可重复症状：细节平均、patch artifact 与 coarse latent 歧义。"
+og_image: /img/research/experiments/pixelar-v01685c-diagnosis.png
+tags:
+  - Pixel Generation
+  - Autoregression
+  - Representation
+  - Negative Result
+sources:
+  - kind: "CODE"
+    label: "v0.16.7 / v0.16.8.x"
+    detail: "codebook-style mode 与 low-res RGB 接口"
+  - kind: "LOG"
+    label: "CODEX_LOG.md"
+    detail: "版本映射、patch artifact 与当前解释"
+  - kind: "IMAGE"
+    label: "v01685c-result.png"
+    detail: "low-res RGB free-run 样本"
+toc:
+  - id: change
+    label: "替换接口"
+  - id: result
+    label: "观察结果"
+  - id: cause
+    label: "问题定位"
+  - id: conclusion
+    label: "当前结论"
+  - id: cascade
+    label: "CascadeAR 复核"
+  - id: next
+    label: "下一步"
+---
+
+<section class="research-content-section research-content-section--lead" id="change">
+  <p class="research-section-label">01 / 替换接口</p>
+  <h2>把 codebook token 换成下采样 RGB</h2>
+  <p>上一篇的一步 decoder 仍然依赖预训练 tokenizer。v0.16.8 做了最直接的替换：Semantic AR 不再预测 code id，而是预测一个低分辨率 RGB scaffold <code>r_t</code>；一步 decoder 同时读取 sampled RGB 与隐藏状态 <code>h_t</code>，渲染完整 patch。</p>
+  <div class="research-thesis">
+    <span>目标</span>
+    <p>保持 <code>Pixel input → Pixel state → Pixel output</code>，不借助 VQ codebook；让粗 RGB 承担模式选择，让 hidden state 补足剩余信息。</p>
+  </div>
+  <p>这个设计仍然保留两个路径：sampled value path 把已经落地的 coarse RGB 送到下一阶段；hidden-state path 通过 condition 提供尚未采样的分布信息。它比纯回归更接近多峰生成，也比 tokenizer 路线更“像素原生”。</p>
+</section>
+
+<section class="research-content-section" id="result">
+  <p class="research-section-label">02 / 观察结果</p>
+  <h2>布局能够形成，但细节没有随分辨率一起恢复</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01685c-result.png" alt="v0.16.8.5c generated samples">
+  <p class="research-figure-caption">v0.16.8.5c free-run 结果：低分辨率 RGB 能传递大致颜色、布局和物体身份，但边界与纹理经常呈现模糊或周期性块状结构。</p>
+  <p>这不是“完全无法生成”的失败。相反，样本证明粗 RGB 是一个有效的布局提示；问题在于它不足以唯一确定高分辨率 patch。两种解码策略对应两类不同症状：</p>
+  <table>
+    <thead><tr><th>路径</th><th>模型行为</th><th>可见症状</th></tr></thead>
+    <tbody>
+      <tr><td>Mean / regression</td><td>对多个可能细节取条件平均</td><td>纹理被洗平、边缘变软</td></tr>
+      <tr><td>Sampled coarse RGB</td><td>把一次低分辨率采样当作后续硬条件</td><td>采样偏差累积为 grid / patch artifact</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="cause">
+  <p class="research-section-label">03 / 问题定位</p>
+  <h2>低分辨率 RGB 是统计摘要，不是可还原的模式索引</h2>
+  <p>一个 <code>1×1</code>、<code>2×2</code> 或 <code>4×4</code> 的 RGB 值只描述局部平均颜色与粗轮廓。大量不同纹理、边缘位置与物体细节都可以下采样到同一个值，因此一般有：</p>
+  <div class="research-equation">\[H(X_{\mathrm{high}}\mid R_{\mathrm{low}}) \gg 0.\]</div>
+  <p>这与 v0.16.7 中更接近 codebook/token 的表示不同。一个学习到的 mode token 可以专门编码高分辨率 patch 身份，而 low-res RGB 并没有被训练成可逆索引。于是“v0.16.7 有正面结果”不能被解释成“raw low-res RGB 也是充分 latent”。</p>
+  <p>CODEX_LOG 中 v0.16.8.x 与随后 v0.17.2.x 都出现了相似的周期性块状噪声。跨分支重复出现使“coarse sample 分布漂移”成为更可信的解释，但目前仍不能排除 decoder 容量、训练/推理不一致和 patch 独立采样共同造成的影响。</p>
+</section>
+
+<section class="research-content-section" id="conclusion">
+  <p class="research-section-label">04 / 当前结论</p>
+  <h2>应该传递 belief，而不是只传递一次 coarse sample</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>已证实：coarse RGB 能传递布局</h3><p>物体类别、主色和大尺度空间结构在 free-run 样本中可见。</p></div></li>
+    <li><span>02</span><div><h3>已证实：直接 mean decode 会丢细节</h3><p>当一个低分辨率值对应多个 patch 时，deterministic renderer 倾向条件平均。</p></div></li>
+    <li><span>03</span><div><h3>当前解释：硬传 sampled RGB 会累积误差</h3><p>一旦 coarse sample 离开训练分布，下游把它当成事实继续细化，难以主动修正。</p></div></li>
+    <li><span>04</span><div><h3>架构要求：value 与 belief 分开</h3><p>sampled value 记录已经作出的选择；hidden state 应保留可选模式的分布摘要，供下一尺度读取。</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="cascade">
+  <p class="research-section-label">05 / CascadeAR 复核</p>
+  <h2>拆成多个尺度以后，歧义不会自动消失</h2>
+  <p>v0.17.4–17.5 随后把一次 <code>1 → 16</code> 跳跃改成 <code>[1,2,4]</code> CascadeAR，用实际训练检验 sampled value、hidden condition 与 residual target。结果比单尺度实验更具体，但仍没有给出“coarse RGB 足够”的正面证据。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v017x-gallery.png" alt="CascadeAR sample and diagnostic gallery across v0.17.x branches">
+  <p class="research-figure-caption">v0.17.x 分支汇总：不同 history、condition 与 residual 路径改变了失败形态，但没有稳定消除块状结构和细节不足。</p>
+  <table>
+    <thead><tr><th>版本</th><th>实际证据</th><th>当前判断</th></tr></thead>
+    <tbody>
+      <tr><td>v0.17.4 hard-fuse</td><td><code>[1,2,4]</code> 主基线有约 130k checkpoint</td><td>多尺度接口能够训练，但不是充分性证明</td></tr>
+      <tr><td>v0.17.4.3 GT-history + low-res CA</td><td>约 9.5 小时后因样本噪声大、趋势不佳而停止</td><td>仅增加 cross-attention 没有触及核心问题</td></tr>
+      <tr><td>v0.17.4.3b GT hard-fuse</td><td>120k temperature sweep 仍有 block artifacts</td><td>训练历史更干净也没有消除 free-run 症状</td></tr>
+      <tr><td>v0.17.5 Laplacian residual</td><td>patch-local upsample 与 residual 路径通过 debug</td><td>长训练和 streaming sampling 未完成，效果未知</td></tr>
+    </tbody>
+  </table>
+  <p>因此，更准确的结论不是“严格证明低分辨率 RGB 永远不充分”，而是：在这些接口、容量和训练设置下，粗 RGB 没有携带足够的可恢复细节；简单增加层级或条件通道也没有稳定解决 sampled-history drift。</p>
+</section>
+
+<section class="research-content-section" id="next">
+  <p class="research-section-label">06 / 下一步</p>
+  <h2>不要让一个 coarse RGB token 一步解释完整 patch</h2>
+  <p>最自然的修正是把 <code>1 → 16</code> 的硬跳跃拆成多个分辨率层级，并在每一层重新建模自己的分布。下一阶段因此分成两条并行问题：一条研究 pixel 的生成顺序，比较 diagonal、column 等 grouped AR；另一条构建 CascadeAR，系统比较 sampled value、hidden condition 与 cross-attention 应怎样进入下一尺度。</p>
+</section>

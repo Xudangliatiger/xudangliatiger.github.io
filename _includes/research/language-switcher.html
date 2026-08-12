@@ -1,0 +1,10 @@
+{% assign current_lang = include.lang | default: page.lang | default: 'zh' %}
+<nav class="research-language-switcher" aria-label="Language">
+  {% if current_lang == 'en' %}
+    <a href="{{ include.alternate_url | default: page.alternate_url | prepend: site.baseurl }}" lang="zh-CN">中文</a>
+    <span aria-current="page">EN</span>
+  {% else %}
+    <span aria-current="page">中文</span>
+    <a href="{{ include.alternate_url | default: page.alternate_url | prepend: site.baseurl }}" lang="en">EN</a>
+  {% endif %}
+</nav>

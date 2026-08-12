@@ -1,0 +1,107 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (VI): How Should a Full Image Be Ordered Without Patchify?"
+description: "v0.18.1 and v0.18.2 treat a complete diagonal or column as one AR token. They reduce sequential rounds, but also imprint the generation direction as periodic image structure."
+card_summary: "Diagonal and column AR predict groups of pixels in parallel, yet the 58k/117k samples show direction-aligned artifacts; ordering becomes a measurable image bias."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-06"
+stage: "Grouped Pixel AR"
+status: completed
+status_label: "Completed / ordering diagnosis"
+evidence_state: "v0.18.1 and v0.18.2 have samples and 100-image phase statistics; v0.18.3 has implementation and scripts only."
+date: 2026-06-29
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-06/
+source_summary: "2 trained versions · 100-image analysis · 1 unverified version"
+hero_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+hero_alt: "Period-16 phase profiles for diagonal and column pixel autoregressive models"
+hero_caption: "Phase-aggregated gradients show that the generation order leaves a cohort-level directional structure."
+og_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+tags:
+  - Pixel Generation
+  - Autoregression
+  - Spatial Ordering
+  - Artifact Analysis
+sources:
+  - kind: "CONFIG"
+    label: "v0.18.1 / v0.18.2"
+    detail: "Diagonal-token and column-token Pixel AR"
+  - kind: "RESULT"
+    label: "58k / 117k samples"
+    detail: "Visible outcomes of the two generation orders"
+  - kind: "CSV"
+    label: "patch_phase_metrics.csv"
+    detail: "100 images and P2–P32 phase variation"
+toc:
+  - id: setup
+    label: "Ordering"
+  - id: samples
+    label: "Results"
+  - id: metrics
+    label: "Periodicity"
+  - id: boundary
+    label: "Boundaries"
+  - id: next
+    label: "Next step"
+---
+
+<section class="research-content-section research-content-section--lead" id="setup">
+  <p class="research-section-label">01 / Ordering</p>
+  <h2>Choosing which pixels run in parallel also chooses which pixels cannot condition on one another</h2>
+  <p>A fully rasterized 256×256 Pixel AR model requires 65,536 sequential steps. v0.18.x removes patchify and predicts one spatial group at a time: pixels inside a group emit DMoL parameters in parallel, while groups remain autoregressive.</p>
+  <table>
+    <thead><tr><th>Version</th><th>One token represents</th><th>Sequential rounds</th><th>Missing within-group dependency</th></tr></thead>
+    <tbody>
+      <tr><td>v0.18.1</td><td>One complete image diagonal</td><td>About 511</td><td>Pixels on the same diagonal</td></tr>
+      <tr><td>v0.18.2</td><td>One column of 256 pixels</td><td>256</td><td>Vertical pixels in the same column</td></tr>
+      <tr><td>v0.18.3</td><td>16×16 raster L0 → 32-column L1</td><td>Hierarchical</td><td>Implemented, but no complete result is visible locally</td></tr>
+    </tbody>
+  </table>
+  <div class="research-experiment-verdict">
+    <span>Trade-off</span>
+    <p>Larger groups reduce sequential depth, but strengthen conditional independence within a group and make the generation direction more likely to become image texture.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="samples">
+  <p class="research-section-label">02 / Results</p>
+  <h2>Neither diagonal nor column grouping organizes parallel pixels into stable semantics</h2>
+  <p>Local v0.18.1 samples at roughly 58k steps remain dominated by noisy structure. At roughly 117k steps, v0.18.2 forms larger color regions, but also shows left-to-right propagation, vertical bands, and periodic repetition. A v0.18.2 temperature sweep did not convert these patterns into stable ImageNet semantics.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0181-diagonal-step58000.png" alt="v0.18.1 diagonal-token model samples at step 58k">
+  <p class="research-figure-caption">v0.18.1 at 58k steps. Diagonal grouping lowers sequential depth, while samples remain primarily directional noise and weak structure.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0182-column-step117000.png" alt="v0.18.2 column-token model samples at step 117k">
+  <p class="research-figure-caption">v0.18.2 at 117k steps. Sampling a full column at once produces bands and propagation traces aligned with left-to-right generation.</p>
+</section>
+
+<section class="research-content-section" id="metrics">
+  <p class="research-section-label">03 / Periodicity</p>
+  <h2>Convert “it looks striped” into a comparable phase-variation statistic</h2>
+  <p>To avoid relying on selected images, we compute gradient and Laplacian phase profiles for 100 images at spatial periods <code>P ∈ {2,4,8,16,32}</code>. For each period, the range of phase means is normalized by the global mean:</p>
+  <div class="research-equation">\[A_P=\frac{\max_k m_{P,k}-\min_k m_{P,k}}{\bar m_P}.\]</div>
+  <p>At period 32 for horizontal gradients, the column model has <code>A₃₂ ≈ 0.302</code>, compared with about <code>0.056</code> for the diagonal model. This agrees with the visible column bands: column grouping imprints a substantially stronger horizontal phase bias into the generated cohort.</p>
+  <div class="research-approach-grid research-approach-grid--report">
+    <article><span>18.1</span><h3>Diagonal</h3><p>P32 gradient-x phase variation is about 5.6%.</p><small>Weaker but still significant directional bias</small></article>
+    <article><span>18.2</span><h3>Column</h3><p>P32 gradient-x phase variation is about 30.2%.</p><small>Column propagation leaves strong periodic structure</small></article>
+    <article><span>Real</span><h3>ImageNet</h3><p>The same statistic is computed on natural images.</p><small>Model phase is not treated as a per-image watermark</small></article>
+  </div>
+</section>
+
+<section class="research-content-section" id="boundary">
+  <p class="research-section-label">04 / Boundaries</p>
+  <h2>This is a distribution-level bias, not a recovered watermark in every image</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Established: ordering changes artifact direction</h3><p>Diagonal and column samples have different directional biases in both images and phase profiles.</p></div></li>
+    <li><span>02</span><div><h3>Established: fewer rounds do not imply better generation</h3><p>Column AR needs only 256 rounds, but missing within-column dependencies create a new structural gap.</p></div></li>
+    <li><span>03</span><div><h3>Unsupported: every image contains a detectable watermark</h3><p>The analysis supports a cohort-level distribution effect; it does not recover an exact RGB template per image.</p></div></li>
+    <li><span>04</span><div><h3>Unverified: v0.18.3 fixes the problem</h3><p>Raster L0 plus column L1 has model code, config, and scripts, but no complete local training artifact.</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="next">
+  <p class="research-section-label">05 / Next step</p>
+  <h2>The model needs hierarchical context and finer communication between groups</h2>
+  <p>Pure diagonal and column models turn an efficiency problem into a spatial-dependency problem. The next stage no longer asks one global ordering to carry both semantics and detail. It returns to a multiresolution hierarchy: coarse levels establish the global mode, fine levels add density, and cross-level experiments determine how sampled values and hidden belief should be passed forward.</p>
+</section>

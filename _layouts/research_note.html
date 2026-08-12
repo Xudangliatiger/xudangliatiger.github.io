@@ -1,0 +1,24 @@
+---
+layout: default
+---
+{% assign current_lang = page.lang | default: 'en' %}
+{% assign projects = site.research_projects_en | where: 'project_id', page.project_id %}
+{% assign project = projects | first %}
+{% include research/article-header.html %}
+<main class="research-shell research-note-page">
+  <nav class="research-note-utility" aria-label="Article navigation">
+    <div class="research-container research-note-utility__inner">
+      <a class="research-text-link research-text-link--muted" href="{{ project.lab_url | prepend: site.baseurl }}">← Back to {{ project.title }} Lab Log</a>
+      {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+    </div>
+  </nav>
+  <article class="research-container research-note-content post-container">
+    {{ content }}
+  </article>
+  <footer class="research-note-footer">
+    <div class="research-container">
+      <a class="research-text-link" href="{{ project.lab_url | prepend: site.baseurl }}">Back to the Lab Log <span aria-hidden="true">→</span></a>
+    </div>
+  </footer>
+</main>
+{% include research/mathjax.html %}

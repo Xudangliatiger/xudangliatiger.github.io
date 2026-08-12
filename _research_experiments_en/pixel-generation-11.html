@@ -1,0 +1,275 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (XI): From Patchify Bias to Detectable Decoder Fingerprints"
+description: "Across eight 1,000-image cohorts, multiscale Laplacian phase maps, five-fold grouped cross-validation, and energy tests localize pixel-lattice distribution shifts introduced by learned decoders and test whether they remain detectable in one image."
+card_summary: "ORT generation and AliTok oracle reconstruction share an almost identical P16 fingerprint (ρ=0.996), while PixelDiT remains close to Real. Eight-way single-image attribution reaches 63.2%, although the SD family benefits from smaller-period fingerprints."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-11"
+stage: "Decoder Fingerprint Diagnosis"
+status: completed
+status_label: "Completed / distribution and single-image diagnosis"
+evidence_state: "Eight cohorts contain 1,000 images each. Real and five reconstructions retain source pairing. Five-fold grouped CV, 2,000 grouped bootstraps, and 999 permutations are complete and have passed numerical and rendered-output QA."
+date: 2026-08-11
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-11/
+source_summary: "8 × 1,000 images · 5-fold grouped CV · multiscale P2–P16 fingerprints"
+hero_image: /img/research/experiments/pixelar-decoder-fingerprint-p16.png
+hero_alt: "Real, PixelDiT, ORT, and AliTok P16 gradient profiles and normalized Laplacian phase maps"
+hero_caption: "Under the same P16 statistic, Real and PixelDiT show weak phase modulation; ORT generation and AliTok oracle reconstruction exhibit almost identical strong decoder fingerprints."
+og_image: /img/research/experiments/pixelar-decoder-fingerprint-p16.png
+tags:
+  - Pixel Generation
+  - Decoder Fingerprint
+  - Patchify Bias
+  - Distribution Shift
+sources:
+  - kind: "DATA"
+    label: "8 cohorts × 1,000 images"
+    detail: "Real, PixelDiT, ORT, AliTok, Cosmos DV16, SD VAE, SDXL VAE, and RAE DINOv2-B"
+  - kind: "METRIC"
+    label: "P2–P32 phase analysis"
+    detail: "Normalized absolute-Laplacian maps, gradient profiles, and exact-frequency response"
+  - kind: "STAT"
+    label: "revision_v2"
+    detail: "Five-fold grouped CV, grouped bootstrap, energy permutation, and Holm correction"
+  - kind: "RUN"
+    label: "ORT · internal run"
+    detail: "ort_xl_32gpus_400ep_alpha_1_beta_0 · AliTok decoder"
+  - kind: "PAPER"
+    label: "ImageNet · CVPR 2009"
+    detail: "Deng et al. · doi:10.1109/CVPR.2009.5206848"
+  - kind: "PAPER"
+    label: "PixelDiT · CVPR 2026"
+    detail: "Yu et al. · arXiv:2511.20645"
+  - kind: "PAPER"
+    label: "AliTok · ICLR 2026"
+    detail: "Wu et al. · arXiv:2506.05289"
+  - kind: "PAPER"
+    label: "Cosmos · arXiv 2025"
+    detail: "NVIDIA et al. · arXiv:2501.03575 · official Cosmos-Tokenizer"
+  - kind: "MODEL"
+    label: "SD VAE ft-MSE"
+    detail: "stabilityai/sd-vae-ft-mse · LDM, CVPR 2022"
+  - kind: "PAPER"
+    label: "SDXL · arXiv 2023"
+    detail: "Podell et al. · arXiv:2307.01952"
+  - kind: "PAPER"
+    label: "RAE · technical report 2025"
+    detail: "Zheng et al. · arXiv:2510.11690 · official bytetriper/RAE"
+  - kind: "PAPER"
+    label: "DINOv2 · arXiv 2023"
+    detail: "Oquab et al. · arXiv:2304.07193"
+  - kind: "PAPER"
+    label: "NPR · CVPR 2024"
+    detail: "Tan et al. · arXiv:2312.10461"
+  - kind: "PAPER"
+    label: "DIF · WACV 2024"
+    detail: "Sinitsa & Fried · arXiv:2303.10762"
+toc:
+  - id: question
+    label: "Question"
+  - id: protocol
+    label: "Data and method"
+  - id: causal
+    label: "Causal localization"
+  - id: families
+    label: "Decoder families"
+  - id: distribution
+    label: "Distribution shift"
+  - id: attribution
+    label: "Single-image tests"
+  - id: scales
+    label: "Scales and CNNs"
+  - id: boundaries
+    label: "Evidence boundary"
+  - id: verdict
+    label: "Current verdict"
+  - id: references
+    label: "References"
+---
+
+<section class="research-content-section research-content-section--lead" id="question">
+  <p class="research-section-label">01 / Research question</p>
+  <h2>The issue is not only reconstruction error, but whether a decoder rewrites the pixel distribution</h2>
+  <p>The final stage of a latent generator must convert low-dimensional tokens or feature maps back to RGB. If a decoder emits pixels through fixed patches, unpatchification, or repeated upsampling, it may repeat the same filter response at spatial periods absent from the training images. The effect can alter the phase distribution of gradients and high-frequency energy even when no obvious blocks are visible.</p>
+  <p>Rather than starting from FID or training a new detector, we ask three more basic questions: <strong>does such a lattice shift exist; can it be localized to the decoder; and does one image contain enough statistics to detect or attribute its source?</strong></p>
+  <div class="research-thesis">
+    <span>Testable hypothesis</span>
+    <p>If a learned decoder causes the shift, latent generation and oracle reconstruction using that decoder should share a fingerprint. <a href="https://arxiv.org/abs/2511.20645">PixelDiT</a><sup><a href="#ref-pixeldit">[2]</a></sup>, with no separate decoder, should remain closer to Real, while distinct decoder architectures should produce different exact-frequency responses.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="protocol">
+  <p class="research-section-label">02 / Data and method</p>
+  <h2>One pixel-space statistic covers direct generation, latent generation, and five reconstruction controls</h2>
+  <table>
+    <thead><tr><th>Cohort</th><th>Role</th><th>Sampling and pairing</th></tr></thead>
+    <tbody>
+      <tr><td>Real <a href="https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf">ImageNet</a><sup><a href="#ref-imagenet">[1]</a></sup></td><td>Natural-image control</td><td>Random 1,000 images covering 650 classes</td></tr>
+      <tr><td>PixelDiT<sup><a href="#ref-pixeldit">[2]</a></sup></td><td>Direct pixel-space generation</td><td>One image for each of 1,000 classes; independent</td></tr>
+      <tr><td><a href="#ref-ort">ORT</a><sup><a href="#ref-ort">[3]</a></sup></td><td>Latent AR + <a href="https://arxiv.org/abs/2506.05289">AliTok</a><sup><a href="#ref-alitok">[4]</a></sup> decoder</td><td>One image for each of 1,000 classes; independent</td></tr>
+      <tr><td>AliTok<sup><a href="#ref-alitok">[4]</a></sup> / <a href="https://arxiv.org/abs/2501.03575">Cosmos</a><sup><a href="#ref-cosmos">[5]</a></sup> / <a href="https://huggingface.co/stabilityai/sd-vae-ft-mse">SD VAE</a><sup><a href="#ref-sdvae">[6]</a></sup> / <a href="https://arxiv.org/abs/2307.01952">SDXL</a><sup><a href="#ref-sdxl">[7]</a></sup> / <a href="https://arxiv.org/abs/2510.11690">RAE</a><sup><a href="#ref-rae">[8]</a></sup></td><td>Oracle reconstruction controls</td><td>The same 1,000 source images as Real; image-paired</td></tr>
+    </tbody>
+  </table>
+  <p>For each <code>256×256</code> image, we first compute absolute Laplacian energy. At period <code>P</code>, coordinates are grouped by <code>(u mod P, v mod P)</code> and normalized by the image-wide mean to obtain a per-image phase map <code>M<sub>P</sub></code>:</p>
+  <div class="research-equation">\[M_P(a,b)=\frac{\mathbb E[|L(x)|\mid u\bmod P=a,\ v\bmod P=b]}{\mathbb E[|L(x)|]},\qquad W_P(u,v)=M_P(u\bmod P,v\bmod P)-1.\]</div>
+  <p><code>W<sub>P</sub></code> only tiles the cohort-level expected phase-energy bias back into image coordinates to expose repetition. It is <strong>not</strong> an exact RGB watermark recovered from one image. The primary single-image feature is <code>f(x)=vec[M₂,M₄,M₈,M₁₆]</code>, with 340 dimensions; P32 is reserved for robustness.</p>
+  <p>This definition has a direct but non-equivalent relationship to <a href="https://arxiv.org/abs/2312.10461">Neighboring Pixel Relationships (NPR)</a><sup><a href="#ref-npr">[10]</a></sup>. NPR's <code>2×2</code> blocks follow the common <code>l=2</code> upsampling scale / stride, not the subsequent convolution's <code>3×3</code> kernel; NPR computes local RGB reference differences within fixed, non-overlapping <code>2×2</code> blocks. In contrast, <code>M<sub>P</sub></code> aggregates modulo-<code>P</code> absolute-Laplacian phase energy across the full image and does not retain NPR's blockwise RGB relative values.</p>
+  <p>The two representations nevertheless share one methodological risk: a fixed block origin or coordinate origin preserves absolute grid phase. Direct P2/P4/P8/P16 concatenation can therefore form a multi-scale NPR-like phase cue without establishing four independent mechanisms. The current experiments do not confirm that this confound drives performance; cyclic shifts, random grid origins, phase-marginalized features, and an explicit NPR baseline remain uncompleted phase-origin controls.</p>
+  <p>The statistical protocol uses deterministic five-fold grouped CV. The same source image in Real and all five reconstructions always remains in one fold; PixelDiT and ORT are allocated by their 1,000 class IDs. Every scaler, centroid, and OAS covariance estimate is fitted only on the training portion of the active fold, producing complete out-of-fold predictions.</p>
+</section>
+
+<section class="research-content-section" id="causal">
+  <p class="research-section-label">03 / Causal localization</p>
+  <h2>ORT and AliTok reconstruction share one P16 fingerprint</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-decoder-fingerprint-p16.png" alt="P16 gradient phase profiles and Laplacian phase maps for Real, PixelDiT, ORT, and AliTok">
+  <p class="research-figure-caption">There are 1,000 images per cohort. Rows show Real, PixelDiT, ORT generation, and AliTok oracle reconstruction. All heatmaps use the same normalized 0.90–1.10 scale.</p>
+  <table>
+    <thead><tr><th>Cohort</th><th>P16 Laplacian phase variation</th><th>Relative to Real</th></tr></thead>
+    <tbody>
+      <tr><td>Real ImageNet</td><td>0.0058</td><td>Control</td></tr>
+      <tr><td>PixelDiT</td><td>0.0086</td><td>Still weak modulation</td></tr>
+      <tr><td>ORT</td><td>0.1495</td><td>Strong P16 lattice</td></tr>
+      <tr><td>AliTok reconstruction</td><td>0.1531</td><td>Strong P16 lattice</td></tr>
+    </tbody>
+  </table>
+  <p>More importantly, the full ORT and AliTok-reconstruction P16 Laplacian fingerprints have correlation <code>ρ=0.996</code>. Their semantic sources differ: one cohort is generated by latent AR, while the other reconstructs real ImageNet images. Their key shared component is the AliTok decoder. This control localizes the strong P16 pattern from the “whole ORT generator” to the <strong>shared decoder output mechanism</strong>.</p>
+  <div class="research-experiment-verdict">
+    <span>Supported causal reading</span>
+    <p>The evidence strongly supports the AliTok decoder as the direct source of ORT's P16 fingerprint. It does not support the claim that every patch embedding must create the same shift: PixelDiT also uses patch representations internally, but has no separate image decoder and remains statistically close to Real.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="families">
+  <p class="research-section-label">04 / Decoder families</p>
+  <h2>Different output mechanisms leave distinct responses at P2, P4, P8, and P16</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-decoder-family-lattice.png" alt="Exact-frequency response matrix and phase-map insets for five decoder families">
+  <p class="research-figure-caption">Exact-frequency z-scores are measured against a random-phase permutation null; cell stars show raw permutation significance. The primary statistical conclusion is additionally protected by Holm correction over 28 planned comparisons.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-multiscale-decoder-fingerprints.png" alt="Multiscale P2, P4, P8, and P16 decoder fingerprint maps">
+  <p class="research-figure-caption">Multiscale normalized Laplacian phase maps. Each row identifies its dominant period; filled circles denote Holm-corrected <code>q&lt;.05</code>. Every column uses a shared within-period color scale so weak short-period responses are not visually exaggerated.</p>
+  <table>
+    <thead><tr><th>Decoder</th><th>Output mechanism</th><th>Observed frequency structure</th></tr></thead>
+    <tbody>
+      <tr><td>AliTok<sup><a href="#ref-alitok">[4]</a></sup> / ORT<sup><a href="#ref-ort">[3]</a></sup></td><td>Transformer; one projection emits <code>16×16×3</code> values, followed by rearrangement</td><td>Stable P4, P8, and P16 responses with a shared P16 pattern</td></tr>
+      <tr><td>Cosmos DV16<sup><a href="#ref-cosmos">[5]</a></sup></td><td>Causal convolutional ResNet + repeat-interleave upsampling + UnPatcher</td><td>Strong P2/P4/P8 and weaker P16</td></tr>
+      <tr><td>SD VAE ft-MSE<sup><a href="#ref-sdvae">[6]</a></sup></td><td>2D convolutional ResNet + repeated 2× upsampling</td><td>Concentrated at P2; P16 is not significant</td></tr>
+      <tr><td>SDXL VAE<sup><a href="#ref-sdxl">[7]</a></sup></td><td>The same broad AutoencoderKL / UpDecoderBlock2D family as SD VAE</td><td>Weaker overall, with reliable information in P2/P4/P8</td></tr>
+      <tr><td>RAE<sup><a href="#ref-rae">[8]</a></sup> <a href="https://arxiv.org/abs/2304.07193">DINOv2-B</a><sup><a href="#ref-dinov2">[9]</a></sup></td><td>ViT-MAE Transformer patch output + unpatchify</td><td>Strong P2/P4/P8 and a significant but different P16 pattern</td></tr>
+    </tbody>
+  </table>
+  <p>The fingerprint is therefore not a fixed “P16 detector.” A more accurate statement is that the <strong>decoder's output and upsampling structure define candidate periods, while trained filters, objectives, and data determine their amplitudes.</strong></p>
+</section>
+
+<section class="research-content-section" id="distribution">
+  <p class="research-section-label">05 / Distribution shift</p>
+  <h2>PixelDiT nearly overlaps Real, while decoder cohorts form distinct distance levels</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-fingerprint-distribution-shift.png" alt="Held-out distance to Real and pairwise normalized energy effects">
+  <p class="research-figure-caption">Left: fold-local held-out distance to Real with grouped-bootstrap intervals. Right: pairwise normalized energy effects; upper-triangle stars denote significance after Holm correction over 28 planned pairwise tests.</p>
+  <table>
+    <thead><tr><th>Cohort</th><th>Mean distance to Real</th><th>Normalized energy effect vs Real</th><th>Holm-corrected tests</th></tr></thead>
+    <tbody>
+      <tr><td>Real</td><td>0.984</td><td>—</td><td>Control</td></tr>
+      <tr><td>PixelDiT</td><td>0.988</td><td>0.0018</td><td>Distance <code>q=.738</code>; energy <code>q=.028</code></td></tr>
+      <tr><td>SDXL VAE</td><td>1.025</td><td>0.0035</td><td><code>q=.007 / .028</code></td></tr>
+      <tr><td>SD VAE</td><td>1.035</td><td>0.0094</td><td><code>q=.007 / .028</code></td></tr>
+      <tr><td>Cosmos DV16</td><td>1.399</td><td>0.0815</td><td><code>q=.007 / .028</code></td></tr>
+      <tr><td>ORT</td><td>2.668</td><td>0.1679</td><td><code>q=.007 / .028</code></td></tr>
+      <tr><td>AliTok</td><td>2.757</td><td>0.1778</td><td><code>q=.007 / .028</code></td></tr>
+      <tr><td>RAE DINOv2-B</td><td>2.984</td><td>0.2661</td><td><code>q=.007 / .028</code></td></tr>
+    </tbody>
+  </table>
+  <p>With 1,000 images per cohort, statistical power is high enough that the tiny Real–PixelDiT energy effect reaches <code>q=.028</code>. Effect size is therefore more informative than stars alone: PixelDiT's 0.0018 is almost two orders of magnitude smaller than ORT/AliTok at 0.168/0.178.</p>
+</section>
+
+<section class="research-content-section" id="attribution">
+  <p class="research-section-label">06 / Single-image detection and attribution</p>
+  <h2>One image detects most decoders, but generators sharing a decoder are difficult to separate</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-single-image-attribution.png" alt="Eight-way confusion matrix, one-vs-Real AUC, and attribution performance">
+  <p class="research-figure-caption">All values are five-fold out-of-fold results. Error bars show 95% grouped-bootstrap intervals; each Real/reconstruction source pair remains bound during resampling.</p>
+  <div class="research-approach-grid research-approach-grid--report">
+    <article><span>63.2%</span><h3>8-way balanced accuracy</h3><p>Whitened nearest centroid, with 95% CI 62.3–64.2%.</p><small>Random guessing is 12.5%</small></article>
+    <article><span>63.3%</span><h3>Macro-F1</h3><p>A balanced summary of precision and recall across all eight sources.</p><small>Complete OOF predictions</small></article>
+    <article><span>69.1%</span><h3>Shared-decoder 7-way</h3><p>Balanced accuracy after merging ORT and AliTok into one decoder family.</p><small>95% CI 68.2–70.0%</small></article>
+  </div>
+  <p>Eight-way balanced accuracy is the mean recall over eight sources; it is not “63.2% confidence” on one image. In the confusion matrix, <code>ORT→AliTok=41.3%</code> and <code>AliTok→ORT=35.9%</code>. This structure is exactly what shared decoding predicts, rather than random classifier failure.</p>
+  <p><a href="https://arxiv.org/abs/2303.10762">Deep Image Fingerprint (DIF)</a><sup><a href="#ref-dif">[11]</a></sup> provides an adjacent but broader forensic framing: it learns known-generator fingerprints and tests whether fine-tuned generators retain a source fingerprint for model-lineage analysis. Our method and task are narrower. We use a predefined 340-dimensional phase statistic and report closed-set OOF attribution over eight known cohorts; there is no unknown-generator / open-set protocol and no fine-tuned model chain. The ORT/AliTok correlation and confusion therefore constitute <strong>shared-decoder, component-level provenance evidence</strong>, not model lineage in the DIF sense.</p>
+  <table>
+    <thead><tr><th>Model vs Real</th><th>One-vs-Real AUC</th><th>95% CI</th></tr></thead>
+    <tbody>
+      <tr><td>PixelDiT</td><td>0.600</td><td>0.575–0.625</td></tr>
+      <tr><td>ORT</td><td>0.99999</td><td>0.99998–1.000</td></tr>
+      <tr><td>AliTok</td><td>1.00000</td><td>0.99999–1.000</td></tr>
+      <tr><td>Cosmos DV16</td><td>0.99991</td><td>0.99979–0.99998</td></tr>
+      <tr><td>SD VAE</td><td>0.819</td><td>0.802–0.835</td></tr>
+      <tr><td>SDXL VAE</td><td>0.693</td><td>0.673–0.713</td></tr>
+      <tr><td>RAE DINOv2-B</td><td>1.000</td><td>1.000–1.000</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="scales">
+  <p class="research-section-label">07 / Scales and CNNs</p>
+  <h2>The weaker SD-family signal is not evidence that “CNNs erase fingerprints”</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-fingerprint-scale-ablation.png" alt="Decoder exact-frequency shifts and scale-ablation performance">
+  <p class="research-figure-caption">Left: decoder exact-frequency shifts. Middle: one-vs-Real AUC for SD and SDXL. Right: eight-way balanced accuracy. Dashed lines mark the corresponding chance levels.</p>
+  <p>Cosmos is a direct counterexample: it also uses a convolutional ResNet and upsampling, yet is almost perfectly detectable from P4–P16. SD VAE and SDXL also share their broad topology while reaching all-scale AUCs of 0.819 and 0.693. <strong>CNN is therefore not a sufficient explanation for weak fingerprints</strong>; the specific upsampling/filter response, objective, data, and trained weights also matter.</p>
+  <p>NPR<sup><a href="#ref-npr">[10]</a></sup> and DIF<sup><a href="#ref-dif">[11]</a></sup> both support CNN / upsampling architecture as an artifact prior whose traces can persist in output images; EXP-11 does not reject that prior. What the present controls establish is narrower: <strong>architecture family alone does not determine fingerprint amplitude, dominant period, or single-image detectability</strong>. These quantities still vary jointly with the specific operator, filters, objective, data, and trained weights.</p>
+  <table>
+    <thead><tr><th>Fingerprint subset</th><th>Dimensions</th><th>8-way balanced accuracy</th><th>Main role</th></tr></thead>
+    <tbody>
+      <tr><td>P2</td><td>4</td><td>0.376</td><td>Strong pooling but insufficient expressiveness</td></tr>
+      <tr><td>P4</td><td>16</td><td>0.582</td><td>Best binary detection for SDXL</td></tr>
+      <tr><td>P8</td><td>64</td><td>0.611</td><td>Already near-best binary detection for SD VAE</td></tr>
+      <tr><td>P16</td><td>256</td><td>0.632</td><td>Key scale for patch-output decoders such as AliTok/ORT</td></tr>
+      <tr><td>P2+P4+P8+P16</td><td>340</td><td>0.632</td><td>Most general, but dimensionally dominated by P16</td></tr>
+    </tbody>
+  </table>
+  <p>Smaller periods improve SD-family binary detection. SD VAE rises from 0.819 at all scales to 0.832 at <code>P≤8</code>, with a difference CI of +0.004 to +0.022; SDXL rises from 0.693 to 0.724 at P4, with a difference CI of +0.014 to +0.048. But small periods are not a universal replacement: eight-way accuracy falls from 0.632 to 0.611 at P8 because AliTok/ORT P16 information is removed.</p>
+  <p>Mechanistically, each cell of a smaller phase map pools more image positions: a P8 cell aggregates 1,024 positions, while a P16 cell has only 256. That improves single-image signal-to-noise for weak periodic responses accumulated through repeated 2× upsampling. Conversely, P16 alone contributes 256 of the 340 concatenated dimensions, so naive concatenation can dilute subtle P2/P4/P8 signals.</p>
+</section>
+
+<section class="research-content-section" id="boundaries">
+  <p class="research-section-label">08 / Evidence boundary</p>
+  <h2>What is established, and what remains only architecture-consistent</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Observed: decoder cohorts have repeatable multiscale phase distributions</h3><p>Exact-frequency, distance, energy, and single-image OOF results agree across eight 1,000-image cohorts.</p></div></li>
+    <li><span>02</span><div><h3>Strongly supported: the AliTok decoder causes ORT's P16 fingerprint</h3><p>Generation and oracle reconstruction share a decoder and yield a P16 correlation of <code>ρ=0.996</code>; the PixelDiT control is weak.</p></div></li>
+    <li><span>03</span><div><h3>Unsupported: CNNs determine fingerprint strength</h3><p>Cosmos is a strongly detectable convolutional counterexample; SD and SDXL share a topology yet differ in amplitude.</p></div></li>
+    <li><span>04</span><div><h3>Not established: the tiled field is an exact RGB watermark</h3><p><code>W<sub>P</sub></code> is an expected high-frequency bias field; the single-image classifier reads noisy phase statistics.</p></div></li>
+    <li><span>05</span><div><h3>Sampling limit: generated controls lack a fully class-matched Real cohort</h3><p>The Real/reconstruction subset covers 650 classes, whereas PixelDiT/ORT have one image per 1,000 classes. A read-only audit found no prepared one-per-class Real control.</p></div></li>
+    <li><span>06</span><div><h3>Not completed: randomized decoder architecture under fixed conditions</h3><p>The present evidence is architecture-consistent. Upsampling or output heads have not been changed while fixing latent inputs, loss, capacity, and reconstruction quality.</p></div></li>
+    <li><span>07</span><div><h3>Method and novelty boundary: nested periods share a fixed phase origin</h3><p>P2/P4/P8/P16 are nested and origin-aligned statistics, so they cannot be described as four independent causal mechanisms. Phase-origin controls and fixed-latent decoder surgery are both incomplete.</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="verdict">
+  <p class="research-section-label">09 / Current verdict</p>
+  <h2>One advantage of pixel generation is that images need not pass through a decoder with its own lattice distribution</h2>
+  <p>These experiments turn the original “patchify artifact” intuition into reproducible distribution evidence. A learned decoder can imprint architecture-specific, multiscale, and partly single-image-detectable phase fingerprints in RGB space. PixelDiT is not exactly identically distributed to Real, but its effect size under this metric is tiny; ORT and its AliTok oracle reconstruction instead share a strong, almost identical P16 pattern.</p>
+  <div class="research-experiment-verdict">
+    <span>Current verdict</span>
+    <p>The evidence supports a separate latent decoder as an additional source of pixel-distribution shift, providing a principled advantage for direct pixel-space generation. It does not establish that every latent generator must be worse in perceptual quality, semantics, or FID.</p>
+  </div>
+  <p>The next step does not require training a new generator. First, add explicit NPR / DIF baselines and measure dependence on absolute phase through cyclic shifts, random grid origins, and phase-marginalized features. Next, compare naive concatenation, equal-block fusion, and calibrated max-over-P on the existing OOF features so P16 dimensionality does not dominate. Only after these phase-origin controls should fixed-latent decoder surgery change the upsampling or output head to create a stricter architecture-level causal control. If existing data permit, add a one-per-class Real control and unseen decoder families to test cross-dataset and cross-architecture generalization.</p>
+</section>
+
+<section class="research-content-section" id="references">
+  <p class="research-section-label">10 / References</p>
+  <h2>Papers, official model artifacts, and experiment provenance</h2>
+  <ol>
+    <li id="ref-imagenet">J. Deng et al., “<a href="https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf">ImageNet: A Large-Scale Hierarchical Image Database</a>,” CVPR 2009, doi:10.1109/CVPR.2009.5206848.</li>
+    <li id="ref-pixeldit">Y. Yu et al., “<a href="https://arxiv.org/abs/2511.20645">PixelDiT: Pixel Diffusion Transformers for Image Generation</a>,” CVPR 2026, arXiv:2511.20645.</li>
+    <li id="ref-ort"><strong>ORT internal run provenance.</strong> <code>configs/ort/ort_alitok_xl.yaml</code>; run <code>ort_xl_32gpus_400ep_alpha_1_beta_0</code>; evaluation <code>eval_scale15p5_pow2p5_internal1p5_temp1_seed5</code>. ORT is not presented here as an external publication.</li>
+    <li id="ref-alitok">P. Wu et al., “<a href="https://arxiv.org/abs/2506.05289">Towards Sequence Modeling Alignment between Tokenizer and Autoregressive Model</a>” (AliTok), ICLR 2026, arXiv:2506.05289; <a href="https://github.com/ali-vilab/alitok">official code and weights</a>.</li>
+    <li id="ref-cosmos">NVIDIA et al., “<a href="https://arxiv.org/abs/2501.03575">Cosmos World Foundation Model Platform for Physical AI</a>,” arXiv:2501.03575; <a href="https://github.com/NVIDIA/Cosmos-Tokenizer">official Cosmos-Tokenizer</a>.</li>
+    <li id="ref-sdvae"><a href="https://huggingface.co/stabilityai/sd-vae-ft-mse">stabilityai/sd-vae-ft-mse</a>, official model card; architecture provenance: R. Rombach et al., “<a href="https://arxiv.org/abs/2112.10752">High-Resolution Image Synthesis with Latent Diffusion Models</a>,” CVPR 2022, arXiv:2112.10752.</li>
+    <li id="ref-sdxl">D. Podell et al., “<a href="https://arxiv.org/abs/2307.01952">SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis</a>,” arXiv:2307.01952; <a href="https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/tree/main/vae">official VAE artifact</a>.</li>
+    <li id="ref-rae">B. Zheng et al., “<a href="https://arxiv.org/abs/2510.11690">Diffusion Transformers with Representation Autoencoders</a>,” technical report, arXiv:2510.11690; <a href="https://github.com/bytetriper/RAE">official implementation</a>. This experiment uses the DINOv2-B encoder with registers and the ViT-XL n08 decoder.</li>
+    <li id="ref-dinov2">M. Oquab et al., “<a href="https://arxiv.org/abs/2304.07193">DINOv2: Learning Robust Visual Features without Supervision</a>,” arXiv:2304.07193.</li>
+    <li id="ref-npr">C. Tan et al., “<a href="https://arxiv.org/abs/2312.10461">Rethinking the Up-Sampling Operations in CNN-based Generative Network for Generalizable Deepfake Detection</a>,” CVPR 2024, arXiv:2312.10461.</li>
+    <li id="ref-dif">K. Sinitsa and O. Fried, “<a href="https://arxiv.org/abs/2303.10762">Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis</a>,” WACV 2024, arXiv:2303.10762.</li>
+  </ol>
+</section>

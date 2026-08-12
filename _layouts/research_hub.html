@@ -1,0 +1,87 @@
+---
+layout: default
+---
+{% assign current_lang = page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if current_lang == 'en' %}
+  {% assign projects = site.research_projects_en | sort: 'updated_at' | reverse %}
+  {% assign experiments = site.research_experiments_en | sort: 'updated_at' | reverse %}
+  {% assign experiment_notes = site.research_notes_en | sort: 'date' | reverse %}
+  {% assign blogs = site.research_blog_en | sort: 'date' | reverse %}
+{% else %}
+  {% assign projects = site.research_projects | sort: 'updated_at' | reverse %}
+  {% assign experiments = site.research_experiments | sort: 'updated_at' | reverse %}
+  {% assign experiment_notes = site.posts | where: 'content_type', 'experiment' %}
+  {% assign blogs = site.posts | where: 'content_type', 'blog' %}
+{% endif %}
+{% assign latest_project = projects | first %}
+{% assign experiment_records = experiments | concat: experiment_notes | sort: 'date' | reverse %}
+{% assign experiment_count = experiment_records | size %}
+<main class="research-shell research-hub">
+  <header class="research-hub-hero research-interactive-hero" data-interactive-field>
+    {% include research/interactive-field.html %}
+    <div class="research-container research-hub-hero__simple">
+      <div class="research-hero-topline research-hero-topline--utility">
+        {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+      </div>
+      <h1>{{ t.hub.title_base }}{% if current_lang == 'en' %} {% endif %}<span>{{ t.hub.title_highlight }}</span></h1>
+      <p class="research-hub-hero__lede">{{ t.hub.lede }}</p>
+      <div class="research-hub-hero__actions">
+        <a class="research-button research-button--light" href="#projects">{{ t.hub.projects_action }}</a>
+        <a class="research-button research-button--ghost" href="#experiments">{{ t.hub.experiments_action }}</a>
+        <a class="research-button research-button--ghost" href="#blog">{{ t.hub.blog_action }}</a>
+      </div>
+      <div class="research-hub-hero__footer">
+        <span><strong>{{ projects | size }}</strong> {{ t.hub.active_projects }}</span>
+        <span><strong>{{ experiment_count }}</strong> {{ t.hub.experiments_count }}</span>
+        <span><strong>{{ blogs | size }}</strong> {{ t.hub.blog_count }}</span>
+        {% if latest_project %}<span>{{ t.hub.last_updated }} <strong>{{ latest_project.updated_at | date: '%Y.%m.%d' }}</strong></span>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  <section class="research-section research-section--cream" id="projects">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.hub.projects_title }}</h2>
+      </div>
+      <div class="research-project-list">
+        {% for project in projects %}
+          {% capture project_index %}0{{ forloop.index }}{% endcapture %}
+          {% include research/project-card.html project=project index=project_index lang=current_lang %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section research-section--paper" id="experiments">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.hub.experiments_title }}</h2>
+      </div>
+      {% include research/record-list.html items=experiment_records lang=current_lang %}
+    </div>
+  </section>
+
+  <section class="research-section research-section--soft" id="blog">
+    <div class="research-container">
+      <div class="research-section-heading research-section-heading--minimal">
+        <h2>{{ t.hub.blog_title }}</h2>
+      </div>
+      <div class="research-note-list">
+        {% for post in blogs limit: 8 %}
+        <article class="research-note-row research-note-row--blog">
+          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+          <div>
+            <span class="research-note-row__type">{{ t.common.blog_post }}</span>
+            <h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
+            <p>{{ post.summary | default: post.subtitle | default: post.content | strip_html | strip_newlines | truncate: 180 }}</p>
+          </div>
+          <a class="research-note-row__arrow" href="{{ post.url | prepend: site.baseurl }}" aria-label="Read {{ post.title }}">↗</a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,107 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（九）：把随机性集中到一次 Patch AR"
+description: "v0.17.9 把 stochastic AR 集中到完整 patch 的模式选择，后续尺度改用非 AR cascade decoder；实验随后比较 noisy history、residual DMoL、hard-detail loss 与 compact cross-attention。"
+card_summary: "Patch AR 减少了多层重复采样，但 residual objective 仍容易走向复制 parent 或黑白纹理；过窄的 pixel state 让 Compact-CA 初版在 6k step 退化为纯噪声。"
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-09"
+stage: "Patch AR Cascade Decoder"
+status: completed
+status_label: "已完成 / 结构与损失消融"
+evidence_state: "v0.17.9.3 有 70k checkpoint 与后续诊断；v0.17.9.4b 跑到 66k，但没有足够证据证明修正成功。"
+date: 2026-07-28
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-09/
+source_summary: "6 个版本 · 2 组失败诊断 · RGB residual 统计"
+hero_image: /img/research/experiments/pixelar-v01793-step6000.png
+hero_alt: "v0.17.9.3 residual DMoL cascade samples at step 6000"
+hero_caption: "v0.17.9.3 · step 6k：单次 patch-level AR 之后，非 AR residual decoders 逐层恢复更高分辨率。"
+og_image: /img/research/experiments/pixelar-v01793-step6000.png
+tags:
+  - Pixel Generation
+  - Patch Autoregression
+  - Residual Modeling
+  - Negative Result
+sources:
+  - kind: "CODE"
+    label: "patch_ar_cascade_decoder.py"
+    detail: "single-query 与 compact-CA decoder"
+  - kind: "LOG"
+    label: "v0.17.9.2–v0.17.9.4b"
+    detail: "history、residual、hard loss 与容量诊断"
+  - kind: "METRIC"
+    label: "GT residual color check"
+    detail: "chroma ratio 与 RGB channel correlation"
+toc:
+  - id: design
+    label: "Patch AR"
+  - id: residual
+    label: "Residual DMoL"
+  - id: hardloss
+    label: "困难残差"
+  - id: compact
+    label: "Compact CA"
+  - id: conclusion
+    label: "当前结论"
+---
+
+<section class="research-content-section research-content-section--lead" id="design">
+  <p class="research-section-label">01 / Patch AR</p>
+  <h2>只在一次 patch-level AR 中作随机选择</h2>
+  <p>HPA 的每个分辨率层都重新运行随机 DMoL sampling，既增加推理路径，也给每一层一次偏离历史的机会。v0.17.9 改变职责划分：一个 patch-level AR state 负责全局顺序与随机模式，后续 <code>[1,2,4,8,16]</code> 尺度由非 AR cascade decoders 条件生成。</p>
+  <div class="research-thesis">
+    <span>新合同</span>
+    <p><code>one stochastic patch AR → deterministic context → multiscale DMoL decoders</code>。随机性集中在一次模式选择，细层只负责把同一模式细化。</p>
+  </div>
+  <p>这个方向并不等于完全 deterministic：DMoL head 仍可以 sample RGB；区别是细层不再拥有独立的 patch-level causal process。它试图减少层级 exposure bias，同时保留多尺度像素监督。</p>
+</section>
+
+<section class="research-content-section" id="residual">
+  <p class="research-section-label">02 / Residual DMoL</p>
+  <h2>让每一层只预测相对 parent 的新信息</h2>
+  <p>v0.17.9.2 先尝试对训练 history 加 flow-to-uniform noise，但运行约 10 小时 50 分后停止：当前样本不足以说明随机 corruption 触及了核心问题。v0.17.9.3 随后把目标改为 Laplacian-style residual：</p>
+  <div class="research-equation">\[r_l=x_l-\mathrm{up}_{\text{patch-nearest}}(x_{l-1}),\qquad \hat{x}_l=\mathrm{up}(\hat{x}_{l-1})+\hat r_l.\]</div>
+  <p>L0 仍预测 absolute RGB，L1+ 预测 residual DMoL；恢复后的 absolute RGB 用于可视化和后续条件。这样可以避免 fine head 仅复制 parent 就获得很低的 absolute likelihood。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01793c-step2000.png" alt="v0.17.9.3c debug chain sample at step 2000">
+  <p class="research-figure-caption">v0.17.9.3c debug chain · step 2k。早期结构比 gamma=2 hard-loss 分支健康，但还不足以证明最终收敛质量。</p>
+</section>
+
+<section class="research-content-section" id="hardloss">
+  <p class="research-section-label">03 / 困难残差</p>
+  <h2>强调高能量 residual 后，模型学到了纹理模板而不是语义边缘</h2>
+  <p>GT residual 的能量高度稀疏：阈值 8/255 只保留约 23.6%–44.1% 的 groups，却保留 94.6%–97.4% 的 residual energy。v0.17.9.3B 因此保留 base DMoL，并添加 batch-minmax difficulty 加权的 hard term：</p>
+  <div class="research-equation">\[d_i=\mathrm{minmax}(\mathrm{RMS}(r_i))^\gamma,\qquad \mathcal L_l=\mathcal L_{\text{base}}+\lambda\frac{\sum_i d_i\mathrm{NLL}_i}{\sum_i d_i}.\]</div>
+  <p><code>γ=2, λ=1</code> 使 hard term 在 fine levels 主导 loss，生成结果出现强黑白高频场。降低到 <code>γ=1</code> 虽然改善早期 1k→2k 的训练动力学，但 40k 诊断仍表现为高频纹理/噪声过度，最终转向 <code>λ=0.1</code> 的弱辅助；该弱辅助版本没有完整结果可作为成功证据。</p>
+  <table>
+    <thead><tr><th>Residual 统计</th><th>GT</th><th>v0.17.9.3B generated</th></tr></thead>
+    <tbody>
+      <tr><td>Chroma ratio</td><td>0.374–0.418</td><td>0.110–0.139</td></tr>
+      <tr><td>RGB correlation</td><td>约 0.75–0.93</td><td>约 0.996–0.999</td></tr>
+      <tr><td>解释</td><td>含亮度边缘，也保留 chromatic detail</td><td>几乎退化为灰度边缘/纹理模板</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="compact">
+  <p class="research-section-label">04 / Compact CA</p>
+  <h2>参数更多不等于 pixel readout 更强</h2>
+  <p>v0.17.9.4 尝试 PixelDiT/PRA-style compact cross-attention：per-pixel tokens 压成一个 compact token，读取 AR memory，再展开回像素。总参数从约 709.6M 增到 745.9M，decoder-side 从 57.0M 增到 93.2M；但 6k step 的五层输出仍是纯噪声。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01794-step6000.png" alt="v0.17.9.4 compact cross-attention samples at step 6000">
+  <p class="research-figure-caption">v0.17.9.4 · step 6k。smoke test 与 tensor shape 都正确，但实际训练动力学显著落后于 v0.17.9.3。</p>
+  <p>失败定位到三个同时发生的变化：L0 也被新 decoder 替换；每个 pixel state 只有 8 维；所有位置共享 <code>8→100</code> DMoL readout，且 pixel positional embedding 从零初始化。模型把参数花在 1280-d CA 矩阵上，却削弱了最关键的 position-specific pixel distribution。</p>
+  <p>v0.17.9.4b 将 compact dim 降到 512、pixel dim 提到 64，并恢复更接近 v0.17.9.3 的接口，训练到约 66k 后因 walltime 结束。现有记录只能说明它“跑得更久且没有相同早期崩溃”，不能声称质量已经改善。</p>
+</section>
+
+<section class="research-content-section" id="conclusion">
+  <p class="research-section-label">05 / 当前结论</p>
+  <h2>随机性集中是合理方向，但 refinement 仍需要显式空间依赖</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>保留：一次 patch-level mode selection</h3><p>它减少每层重新选择模式的机会，也让结构问题更容易定位。</p></div></li>
+    <li><span>02</span><div><h3>保留：residual target</h3><p>它明确要求 fine head 预测新信息，但必须防止 loss 只追逐高能量纹理。</p></div></li>
+    <li><span>03</span><div><h3>拒绝：用强 hard loss 代替结构</h3><p>权重可以找到困难像素，却不能建立像素之间一致的边缘模式。</p></div></li>
+    <li><span>04</span><div><h3>下一问题：局部 AR 与并行 patch 如何结合</h3><p>需要 patch 内严格像素依赖，同时避免 256 个 macro patches 全串行。</p></div></li>
+  </ol>
+</section>

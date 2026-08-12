@@ -1,0 +1,87 @@
+{% assign refinement_lang = include.lang | default: page.lang | default: 'zh' %}
+{% if refinement_lang == 'en' %}
+  {% assign refinement_pause = 'Pause refinement animation' %}
+  {% assign refinement_play = 'Play refinement animation' %}
+  {% assign refinement_pause_short = 'Pause' %}
+  {% assign refinement_play_short = 'Play' %}
+  {% assign refinement_previous = 'Previous refinement stage' %}
+  {% assign refinement_next = 'Next refinement stage' %}
+  {% assign refinement_stage_group = 'Select in-place refinement stage' %}
+  {% assign refinement_canvas = 'One image refined in place from L0 through alternating A and B phases at L4' %}
+  {% assign refinement_old = 'retained previous-level pixels' %}
+  {% assign refinement_a = 'Phase A pixels being replaced' %}
+  {% assign refinement_b = 'Phase B pixels being replaced' %}
+  {% assign refinement_note = 'The canvas never resets between levels. A replaces only its checkerboard half; B then replaces the remaining half. The next level starts from that completed image.' %}
+  {% assign refinement_nojs = 'Enable JavaScript to inspect the in-place multilevel refinement.' %}
+{% else %}
+  {% assign refinement_pause = '暂停原位细化动画' %}
+  {% assign refinement_play = '播放原位细化动画' %}
+  {% assign refinement_pause_short = '暂停' %}
+  {% assign refinement_play_short = '播放' %}
+  {% assign refinement_previous = '上一个细化阶段' %}
+  {% assign refinement_next = '下一个细化阶段' %}
+  {% assign refinement_stage_group = '选择原位细化阶段' %}
+  {% assign refinement_canvas = '同一张图片从 L0 到 L4 依次经过 A/B phase 原位细化' %}
+  {% assign refinement_old = '保留的上一层 pixels' %}
+  {% assign refinement_a = '正在替换的 Phase A pixels' %}
+  {% assign refinement_b = '正在替换的 Phase B pixels' %}
+  {% assign refinement_note = '画布在 level 之间不会重置。A 只替换 checkerboard 的一半，B 再替换剩余一半；完成后的整张图直接成为下一层的起点。' %}
+  {% assign refinement_nojs = '启用 JavaScript 后可检查多层级原位细化过程。' %}
+{% endif %}
+
+<div class="refinement-v0191"
+     id="in-place-refinement"
+     data-refinement-v0191
+     data-lang="{{ refinement_lang }}"
+     data-pause-label="{{ refinement_pause }}"
+     data-play-label="{{ refinement_play }}"
+     data-pause-short="{{ refinement_pause_short }}"
+     data-play-short="{{ refinement_play_short }}">
+  <div class="refinement-v0191__topline">
+    <span>IN-PLACE MULTISCALE REFINEMENT · ONE IMAGE / NINE STAGES</span>
+    <button class="refinement-v0191__control" type="button" aria-label="{{ refinement_pause }}" data-refinement-control>
+      <span class="refinement-v0191__control-icon" aria-hidden="true"></span>
+      <span data-refinement-control-label>{{ refinement_pause_short }}</span>
+    </button>
+  </div>
+
+  <div class="refinement-v0191__stages" role="tablist" aria-label="{{ refinement_stage_group }}">
+    <button type="button" role="tab" aria-selected="true" class="refinement-v0191__stage-button is-active" data-refinement-stage="0"><strong>L0</strong><small>AR · 16²</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="1"><strong>L1A</strong><small>2² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="2"><strong>L1B</strong><small>2² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="3"><strong>L2A</strong><small>4² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="4"><strong>L2B</strong><small>4² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="5"><strong>L3A</strong><small>8² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="6"><strong>L3B</strong><small>8² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="7"><strong>L4A</strong><small>16² / patch</small></button>
+    <button type="button" role="tab" aria-selected="false" class="refinement-v0191__stage-button" data-refinement-stage="8"><strong>L4B</strong><small>16² / patch</small></button>
+  </div>
+
+  <div class="refinement-v0191__canvas-wrap">
+    <canvas data-refinement-canvas role="img" aria-label="{{ refinement_canvas }}"></canvas>
+    <div class="refinement-v0191__hud" aria-hidden="true">
+      <strong data-refinement-live-stage>L0 · Global AR</strong>
+      <span data-refinement-live-detail>16×16 · 0 / 256</span>
+    </div>
+    <p class="sr-only" aria-live="polite" data-refinement-announcement>L0 · Global AR</p>
+  </div>
+
+  <div class="refinement-v0191__navigation">
+    <button type="button" class="refinement-v0191__nav" aria-label="{{ refinement_previous }}" title="{{ refinement_previous }}" data-refinement-previous>&#8592;</button>
+    <div class="refinement-v0191__state">
+      <strong data-refinement-state-title>L0 · 16²</strong>
+      <span data-refinement-state-equation>EMPTY → L0</span>
+    </div>
+    <button type="button" class="refinement-v0191__nav" aria-label="{{ refinement_next }}" title="{{ refinement_next }}" data-refinement-next>&#8594;</button>
+    <span class="refinement-v0191__stage-index" data-refinement-stage-index>01 / 09</span>
+  </div>
+
+  <div class="refinement-v0191__legend" aria-label="Legend">
+    <span><i class="refinement-v0191__key refinement-v0191__key--old"></i>{{ refinement_old }}</span>
+    <span><i class="refinement-v0191__key refinement-v0191__key--a"></i>{{ refinement_a }}</span>
+    <span><i class="refinement-v0191__key refinement-v0191__key--b"></i>{{ refinement_b }}</span>
+    <strong>L0 → L1A → L1B → … → L4B</strong>
+  </div>
+  <p class="refinement-v0191__note">{{ refinement_note }}</p>
+  <noscript><p class="refinement-v0191__noscript">{{ refinement_nojs }}</p></noscript>
+</div>

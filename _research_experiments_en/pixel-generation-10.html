@@ -1,0 +1,168 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (X): From Periodic Artifacts to Phase-Parallel Pixel AR"
+description: "Diagonal and column grouping in v0.18.x localizes periodic bias to spatial ordering. v0.19.1 supplies a checkerboard A/B prototype, while the complete hierarchical phase-parallel model remains unimplemented and unvalidated."
+card_summary: "Spatial grouping leaves measurable directional bias. A/B checkerboarding is therefore a testable dependency hypothesis, not an established quality or speed result."
+project_id: pixel-generation
+content_type: experiment
+pipeline_visualization: v0191
+project_title: PixelGen
+record_id: "EXP-10"
+stage: "Phase-Parallel Pixel AR"
+status: design
+status_label: "Diagnosis complete / design unvalidated"
+evidence_state: "v0.18.1/18.2 provide samples and phase statistics; v0.19.1 provides code, configuration, and a launch script but no visible checkpoint, training log, or result."
+date: 2026-08-07
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-10/
+source_summary: "2 ordering diagnoses · 1 checkerboard prototype · 1 validation matrix"
+hero_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+hero_alt: "Period-32 phase profiles measured from diagonal and column grouped autoregressive samples"
+hero_caption: "Period-32 phase profile: horizontal-gradient phase variation is about 30.2% for the column cohort and 5.6% for the diagonal cohort. This is a cohort statistic, not a fixed watermark in every image."
+og_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+tags:
+  - Pixel Generation
+  - Phase Parallelism
+  - Autoregression
+  - Architecture Design
+sources:
+  - kind: "IMAGE"
+    label: "v0.18.1 / v0.18.2 samples"
+    detail: "58k diagonal and 117k / 110k column samples"
+  - kind: "METRIC"
+    label: "period-32 phase profile"
+    detail: "Cohort-level phase variation of horizontal gradients"
+  - kind: "CODE"
+    label: "v0.19.1"
+    detail: "[1,16] checkerboard A/B and patch-batching prototype"
+  - kind: "DESIGN"
+    label: "full phase-parallel HPA"
+    detail: "Unvalidated AdaLN conditioning, rolling KV, and local Pixel AR design"
+toc:
+  - id: diagnosis
+    label: "Ordering diagnosis"
+  - id: prototype
+    label: "Prototype"
+  - id: pipeline
+    label: "Multilevel schedule"
+  - id: proposal
+    label: "Full hypothesis"
+  - id: unknowns
+    label: "Unknowns"
+  - id: plan
+    label: "Validation plan"
+---
+
+<section class="research-content-section research-content-section--lead" id="diagnosis">
+  <p class="research-section-label">01 / Ordering diagnosis</p>
+  <h2>Spatial generation order leaves a directional fingerprint across a sample cohort</h2>
+  <p>Rather than flattening an image into an arbitrary sequence, v0.18.x compares diagonal and column groups. v0.18.1 leaves actual diagonal samples at about 58k steps; v0.18.2 leaves column samples around 117k / 110k. Both produce image structure, but their periodic patterns differ.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0181-diagonal-step58000.png" alt="Diagonal grouped autoregressive samples at step 58000">
+  <p class="research-figure-caption">v0.18.1 · diagonal groups · step 58k. Global structure forms, while group boundaries can still surface in local texture.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0182-column-step117000.png" alt="Column grouped autoregressive samples at step 117000">
+  <p class="research-figure-caption">v0.18.2 · column groups · step 117k. Changing the spatial organization changes where errors accumulate.</p>
+  <p>For period-32 horizontal-gradient statistics, phase variation is about 30.2% in the column cohort and 5.6% in the diagonal cohort. This supports the claim that grouping direction changes aggregate bias. It does not show that every column sample has the same 32-pixel watermark, nor does comparison of unmatched checkpoints rank one order above the other.</p>
+  <div class="research-thesis">
+    <span>Diagnosis</span>
+    <p>Spatial factorization is not merely an implementation detail. Which positions communicate first and which positions run in parallel changes the direction and period of visible errors.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="prototype">
+  <p class="research-section-label">02 / Prototype</p>
+  <h2>v0.19.1 implements a minimal checkerboard A/B path, but provides no result</h2>
+  <p>v0.19.1 divides a <code>256×256</code> image into 256 macro patches of <code>16×16</code> pixels and partitions them into checkerboard A/B phases. The 128 patches inside one phase share each pixel step, while every patch retains strict raster-order Pixel AR; Phase B may read the generated Phase A.</p>
+  <table>
+    <thead><tr><th>Component</th><th>Current state</th><th>What it establishes</th></tr></thead>
+    <tbody>
+      <tr><td><code>[1,16]</code> coarse-to-patch hierarchy</td><td>Implemented</td><td>The tensor path and two-scale interface exist</td></tr>
+      <tr><td>A/B checkerboard + 128-patch batching</td><td>Implemented</td><td>A code path for within-phase parallelism exists</td></tr>
+      <tr><td>Local <code>16×16</code> Pixel AR + KV cache</td><td>Implemented</td><td>The patch-local causal generator exists</td></tr>
+      <tr><td>Training checkpoint / log / sample</td><td>Not found</td><td>No claim about quality, speed, or boundary continuity</td></tr>
+    </tbody>
+  </table>
+  <p>v0.19.1 is therefore a proof-of-concept implementation, not proof of effectiveness. It advances the question from “can this graph be expressed?” to “is this factorization worth training?”</p>
+</section>
+
+<section class="research-content-section" id="pipeline">
+  <p class="research-section-label">03 / Multilevel Phase Schedule</p>
+  <h2>The same image gains resolution from L0 to L4: global AR at L0, then batched A/B phases</h2>
+  <p>The interactive figure exposes the five spatial levels of the full design. <code>L0-L4</code> render the same image at <code>16², 32², 64², 128², and 256²</code>, corresponding to <code>1², 2², 4², 8², and 16²</code> RGB pixels inside each macro patch. L0 retains a conventional raster-order scan over 256 coarse RGB tokens. Only L1-L4 split the 256 patches into A/B groups and advance 128 patches at a time. This visualizes the proposed full Phase-Parallel HPA schedule; it does not claim that v0.19.1 already implements five-level training.</p>
+
+  {% include research/pipeline-v0191.html lang='en' %}
+
+  <div id="in-place-refinement-section">
+    <h3>One image, refined in place: each phase overwrites only its checkerboard half</h3>
+    <p>This second view removes the duplicate A/B canvases and follows one persistent image. After L0 finishes, <code>L1A</code> changes only A while B remains at L0 resolution; <code>L1B</code> then replaces the remaining B pixels. The completed L1 image becomes the base for L2, and the same process continues through L4.</p>
+    {% include research/refinement-v0191.html lang='en' %}
+  </div>
+
+  <div id="shared-ar">
+    <h3>One shared HPA trunk, one lightweight Pixel AR head</h3>
+    <p>The top-level design follows v0.17.7: every level and phase reuses one causal HPA Transformer instead of creating a new network, but its token granularity changes by stage. L0 is conventional next-token AR: one coarse RGB token enters and the model predicts the next. At each L1-L4 phase transition, 128 carrier tokens enter the shared HPA as one masked parallel group and produce 128 patch conditions <code>h_i</code>. Conditioned by AdaLN, the lightweight Pixel AR head remains autoregressive inside each patch, while all 128 patch-local next-token loops run in parallel. For readability, the animation groups A/B positions into two contiguous blocks after L0; an implementation can express the same order through indices and the causal mask without physically permuting tokens.</p>
+    {% include research/shared-ar-v0191.html lang='en' %}
+    <table>
+      <thead><tr><th>Module</th><th>Responsibility</th><th>Parameter sharing</th></tr></thead>
+      <tbody>
+        <tr><td>Shared HPA Transformer</td><td>Models global semantics and the dependency between levels and A/B phases</td><td>One large causal backbone for all nine stage groups</td></tr>
+        <tr><td>L0 RGB head</td><td>Predicts the 256 coarse RGB tokens in conventional global AR order</td><td>Used only by L0</td></tr>
+        <tr><td>AdaLN bridge</td><td>Combines <code>h_i</code>, parent RGB, level, phase, and local pixel position</td><td>Modulates every layer of the local head</td></tr>
+        <tr><td>Tiny Pixel AR head</td><td>Preserves strict raster causality inside one patch</td><td>Proposed shared weights across L1-L4 and 128 parallel patch streams</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Training.</strong> Expand the nine stage groups in one graph, supervise the HPA transitions with the stage mask, and teacher-force each patch-local RGB sequence. <strong>Inference.</strong> Run one highlighted stage at a time, sample the tiny Pixel AR head, re-embed its phase RGB, and pass that carrier into the same HPA for the next stage.</p>
+    <p><strong>Resource implication, still only a design estimate.</strong> The logical sequence remains <code>256 + 8×128 = 1,280</code> HPA tokens. Rolling pre-eviction would keep about 128 carrier tokens resident and peak near 256; post-eviction would keep about 256 and peak near 384, versus up to 1,280 for full history. Treating B as a compressed carrier of earlier A remains a hypothesis that needs a full-history control. A block mask alone also does not reduce dense-kernel FLOPs.</p>
+  </div>
+
+  <div class="research-experiment-verdict">
+    <span>Implementation boundary</span>
+    <p>v0.19.1 implements two-stage checkerboarding and patch batching, but remains a two-level <code>[1,16]</code> model. Phase communication uses a separate bidirectional context layer, and Pixel AR receives one 64-dimensional prefix rather than the shared Phase AR, rolling KV, or AdaLN proposed below.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="proposal">
+  <p class="research-section-label">04 / Full hypothesis</p>
+  <h2>Replace fully serial Patch AR with cross-level, cross-phase, and within-patch dependencies</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-hpa-shared-sequence.png" alt="Shared hierarchical autoregressive sequence across RGB scales">
+  <p class="research-figure-caption">v0.17.7 establishes that one shared causal Transformer can train and sample across RGB levels. The proposal only replaces each level's total patch order with a two-phase partial order.</p>
+  <div class="research-approach-grid research-approach-grid--report">
+    <article><span>01</span><h3>Coarse AR</h3><p>The 256 coarse RGB values at L0 remain globally autoregressive and carry semantics and layout.</p><small>Retain the HPA trunk</small></article>
+    <article><span>02</span><h3>Phase AR</h3><p>L1-L4 generate A before B; one large shared Transformer carries state across levels and phases.</p><small>Two-stage partial order</small></article>
+    <article><span>03</span><h3>Patch RGB AR</h3><p>The 128 patches in a phase advance the current pixel together, while each patch preserves raster causality.</p><small>Strict local AR</small></article>
+  </div>
+  <p>The full five-level proposal needs <code>2(4+16+64+256)=680</code> synchronized local Pixel AR rounds. Adding 256 L0 rounds and eight phase transitions gives a dependency path of roughly 944. This describes the computational graph, not a measured speedup.</p>
+  <p>The condition interface would also grow from a single 64-dimensional prefix to layer-wise modulation: parent RGB, pixel position, level, and phase jointly generate AdaLN parameters. Shared-Transformer KV states would roll across phases so memory and retained history become an explicit, measurable trade-off.</p>
+</section>
+
+<section class="research-content-section" id="unknowns">
+  <p class="research-section-label">05 / Unknowns</p>
+  <h2>Five questions must be isolated before the design is credible</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Is within-phase conditional independence too strong?</h3><p>Checkerboarding prevents same-phase patches from sharing horizontal or vertical edges, but does not guarantee consistent color, texture, or long-range structure.</p></div></li>
+    <li><span>02</span><div><h3>Does A→B communication help?</h3><p>A no-A→B control is required to separate the checkerboard partition from the value of phase communication.</p></div></li>
+    <li><span>03</span><div><h3>Where does the teacher-forcing gap begin?</h3><p>Sampled parent, sampled Phase A, and sampled pixel history must be substituted separately rather than collapsed into one free run.</p></div></li>
+    <li><span>04</span><div><h3>Does AdaLN use its condition?</h3><p>Correct, shuffled, and zero conditions should create interpretable NLL differences; training loss alone cannot establish this.</p></div></li>
+    <li><span>05</span><div><h3>When should rolling KV be evicted?</h3><p>Pre-eviction, post-eviction, and full history must be compared on quality, memory, and phase latency.</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="plan">
+  <p class="research-section-label">06 / Validation plan</p>
+  <h2>Prove equivalence and causality before training the full five-level model</h2>
+  <table>
+    <thead><tr><th>Stage</th><th>Control</th><th>Pass condition</th></tr></thead>
+    <tbody>
+      <tr><td>Correctness</td><td>cached / uncached; one patch / 128-patch batch</td><td>Teacher-forcing logits and sampled sequences align exactly</td></tr>
+      <tr><td>Condition interface</td><td>prefix / AdaLN; correct / shuffled / zero</td><td>Establish condition sensitivity, not only low training loss</td></tr>
+      <tr><td>Phase factorization</td><td>serial / A-B / no A→B</td><td>Report Phase A/B NLL, seams, and measured latency</td></tr>
+      <tr><td>Sampling gap</td><td>GT / sampled parent; GT / sampled Phase A</td><td>Separate cross-level, cross-phase, and within-patch errors</td></tr>
+      <tr><td>Rolling KV</td><td>full / pre / post eviction</td><td>Record quality, peak memory, and phase latency together</td></tr>
+      <tr><td>Scale-up</td><td><code>[1,2,4]</code> → five levels</td><td>Expand only after the small model validates communication</td></tr>
+    </tbody>
+  </table>
+  <div class="research-experiment-verdict">
+    <span>Current verdict</span>
+    <p>We have evidence that spatial ordering creates directional bias and that a phase-parallel path can be implemented. We do not yet have evidence that it improves quality, speed, or patch-boundary continuity.</p>
+  </div>
+</section>

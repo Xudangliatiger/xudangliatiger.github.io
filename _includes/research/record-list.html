@@ -1,0 +1,22 @@
+{% assign records = include.items %}
+{% assign current_lang = include.lang | default: page.lang | default: 'zh' %}
+{% assign t = site.data.research_i18n[current_lang] %}
+{% if records and records.size > 0 %}
+<div class="research-note-list research-record-list">
+  {% for record in records %}
+  {% assign record_date = record.updated_at | default: record.date %}
+  <article class="research-note-row research-record-row">
+    <time datetime="{{ record_date | date: '%Y-%m-%d' }}">{{ record_date | date: '%Y.%m.%d' }}</time>
+    <div>
+      <span class="research-note-row__type">
+        {% if record.record_id %}{{ record.record_id }}{% elsif record.part %}{{ record.part }}{% else %}{{ record.project_id | default: 'EXPERIMENT' }}{% endif %}
+        {% if record.status_label %}<em>{{ record.status_label }}</em>{% endif %}
+      </span>
+      <h3><a href="{{ record.url | prepend: site.baseurl }}">{{ record.title }}</a></h3>
+      <p>{{ record.card_summary | default: record.summary | default: record.subtitle | default: record.description | default: record.content | strip_html | strip_newlines | truncate: 180 }}</p>
+    </div>
+    <a class="research-note-row__arrow" href="{{ record.url | prepend: site.baseurl }}" aria-label="{{ t.common.full_note }}: {{ record.title }}">↗</a>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}

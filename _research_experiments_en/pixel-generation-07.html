@@ -1,0 +1,103 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (VII): Can One Shared Transformer Model the Entire Pixel Hierarchy?"
+description: "v0.17.7 concatenates 1×1, 2×2, and 4×4 RGB patch tokens into one causal sequence. A shared HPA Transformer connects all resolutions, with only level-specific inputs and heads."
+card_summary: "HPA verifies that one causal backbone can generate across resolutions, but triples the sequence work and does not remove coarse errors, parallel DMoL blur, or exposure bias."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-07"
+stage: "Hierarchical Pixel AR"
+status: completed
+status_label: "Completed / architecture validated"
+evidence_state: "v0.17.7 has long training, KV-cache inference, and several diagnostics; Patch-MDN variants do not have matched training budgets."
+date: 2026-07-03
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-07/
+source_summary: "HPA implementation · 6 versions · multiscale samples"
+hero_image: /img/research/experiments/pixelar-hpa-shared-sequence.png
+hero_alt: "Hierarchical Pixel AR with one shared causal Transformer across resolutions"
+hero_caption: "v0.17.7 HPA uses level-specific RGB embeddings and DMoL heads around one shared causal Transformer."
+og_image: /img/research/experiments/pixelar-hpa-shared-sequence.png
+tags:
+  - Pixel Generation
+  - Hierarchical Autoregression
+  - DMoL
+  - Architecture
+sources:
+  - kind: "CODE"
+    label: "hierarchical_pixel_ar.py"
+    detail: "Shared sequence, level embeddings, and KV-cache inference"
+  - kind: "LOG"
+    label: "v0.17.6–v0.17.7e"
+    detail: "DMoL, Patch-MDN, level decoders, and scale jumps"
+  - kind: "IMAGE"
+    label: "v0177-naive-three-level.png"
+    detail: "L1 / L2 / L4 / decoder0 comparison"
+toc:
+  - id: architecture
+    label: "Hierarchy"
+  - id: variants
+    label: "Ablations"
+  - id: result
+    label: "Results"
+  - id: diagnosis
+    label: "Failures"
+  - id: decision
+    label: "Decision"
+---
+
+<section class="research-content-section research-content-section--lead" id="architecture">
+  <p class="research-section-label">01 / Hierarchy</p>
+  <h2>Write several RGB resolutions into one token sequence</h2>
+  <p>CascadeAR uses separate modules for each resolution, creating many cross-level interfaces and confounding capacity with information flow. v0.17.7 Hierarchical Pixel AR uses one shared backbone instead. Every macro patch forms token groups at <code>1×1</code>, <code>2×2</code>, and <code>4×4</code>; all groups are concatenated into one causal sequence.</p>
+  <div class="research-equation">\[S=[S_{L1};S_{L2};S_{L4}],\qquad H=\mathrm{Transformer}_{\theta}(S).\]</div>
+  <p>Value dimensionality varies by scale, so RGB encoders and DMoL heads remain level-specific. The Transformer, causal attention, and most parameters are shared. RoPE repeats the patch grid at each level, while learned level embeddings distinguish resolutions.</p>
+  <div class="research-experiment-verdict">
+    <span>Objective</span>
+    <p>If one causal space can represent both coarse belief and fine refinement, it reduces interface differences and lets every fine token read the full earlier context.</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="variants">
+  <p class="research-section-label">02 / Ablations</p>
+  <h2>We vary scale jumps, output distributions, and auxiliary decoders</h2>
+  <table>
+    <thead><tr><th>Version</th><th>Main change</th><th>Supported reading</th></tr></thead>
+    <tbody>
+      <tr><td>v0.17.6 / 17.6b</td><td>Patch-MDN with full-tri coupling</td><td>No clear, stable benefit from patch-level mixtures</td></tr>
+      <tr><td>v0.17.7</td><td><code>[1,2,4]</code> shared HPA + DMoL + L0 decoder</td><td>The shared backbone trains, samples, and supports KV-cache inference</td></tr>
+      <tr><td>v0.17.7b</td><td>HPA + Patch-MDN</td><td>Weak at 30k; not a fair comparison with 170k DMoL</td></tr>
+      <tr><td>v0.17.7c</td><td><code>[1,2,4,8,16]</code></td><td>The five-level path runs, but does not automatically add structure</td></tr>
+      <tr><td>v0.17.7d</td><td>Deterministic decoder loss at every level</td><td>Qualitatively steadier; may regularize same-patch consistency</td></tr>
+      <tr><td>v0.17.7e</td><td><code>[1,4,16]</code>, no REG decoder</td><td>Aggressive scale jumps already distort the 4×4 stage</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="result">
+  <p class="research-section-label">03 / Results</p>
+  <h2>The shared model refines progressively, but fine levels do not reliably repair the coarse branch</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0177-diagnosis.png" alt="v0.17.7 three-level HPA qualitative diagnosis">
+  <p class="research-figure-caption">v0.17.7 L1, L2, L4, and deterministic decoder0. Later rows raise nominal resolution and sharpen slightly, but do not consistently repair an incorrect object structure or boundary selected at L0.</p>
+  <p>The positive result is clear: L0 produces class-related color and layout, and the shared Transformer carries those states into finer levels. The hierarchy is trainable. The cost is also clear: three levels repeat patch-grid sequence positions three times, and the observed training cost is roughly three times the single-level setup.</p>
+  <p>Fine DMoL heads predict multiple RGB values in parallel within one token. They read the same coarse context but lack sufficient within-patch coordination. Hotter sampling tends to add salt-and-pepper noise; colder sampling tends toward smooth averaging.</p>
+</section>
+
+<section class="research-content-section" id="diagnosis">
+  <p class="research-section-label">04 / Failures</p>
+  <h2>Parameter sharing does not automatically remove three error sources</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Incorrect coarse choices</h3><p>Once L0 samples a wrong color, layout, or local mode, later levels usually inherit it rather than overturn it.</p></div></li>
+    <li><span>02</span><div><h3>Insufficient coordination inside parallel DMoL</h3><p>A fine token samples several pixels together; uncertain edges can lead those pixels to select incompatible modes independently.</p></div></li>
+    <li><span>03</span><div><h3>Exposure bias grows with depth</h3><p>Training sees GT history while inference sees sampled history. Every added level creates another opportunity for drift.</p></div></li>
+  </ol>
+  <p>Early Patch-MDN results do not clearly fix these issues, but their training budget is not matched to the DMoL baseline. We therefore do not claim that DMoL is generally superior. The supported statement is narrower: under the observed checkpoints, changing the output distribution family alone is insufficient.</p>
+</section>
+
+<section class="research-content-section" id="decision">
+  <p class="research-section-label">05 / Decision</p>
+  <h2>Locate the first error before adding more hierarchy</h2>
+  <p>HPA has passed architecture feasibility, so the next question is no longer whether a Transformer can be shared. We move to controlled diagnostics: temperature and CFG sweeps at fixed checkpoints, forced GT L0 or GT history, three-versus-five-level comparisons at the same step, and Laplacian residual measurements of how much new information each fine stage adds.</p>
+</section>

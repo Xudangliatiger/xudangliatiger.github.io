@@ -1,0 +1,168 @@
+---
+layout: research_experiment
+title: "像素级别的生成模型（十）：从周期性伪影到 Phase-Parallel Pixel AR"
+description: "v0.18.x 的 diagonal / column 分组实验把周期性偏差定位到空间生成顺序；v0.19.1 提供 checkerboard A/B 原型，但完整的层级 phase-parallel 模型仍待实现和验证。"
+card_summary: "空间分组会留下可测的方向性偏差。A/B checkerboard 因而成为一个可检验的依赖假设，而不是已经成立的加速或质量结论。"
+project_id: pixel-generation
+content_type: experiment
+pipeline_visualization: v0191
+project_title: PixelGen
+record_id: "EXP-10"
+stage: "Phase-Parallel Pixel AR"
+status: design
+status_label: "诊断完成 / 方案待验证"
+evidence_state: "v0.18.1/18.2 有训练样本与 phase 统计；v0.19.1 仅有代码、配置和启动脚本，没有可见 checkpoint、训练日志或结果。"
+date: 2026-08-07
+updated_at: 2026-08-11
+lang: zh
+alternate_url: /en/research/experiments/pixel-generation-10/
+source_summary: "2 组排序诊断 · 1 个 checkerboard 原型 · 1 套验证矩阵"
+hero_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+hero_alt: "Period-32 phase profiles measured from diagonal and column grouped autoregressive samples"
+hero_caption: "Period-32 phase profile：column cohort 的横向梯度相位波动约 30.2%，diagonal cohort 约 5.6%。这是组级统计差异，不等于每张图都有固定水印。"
+og_image: /img/research/experiments/pixelar-v018x-phase-profile-p16.png
+tags:
+  - Pixel Generation
+  - Phase Parallelism
+  - Autoregression
+  - Architecture Design
+sources:
+  - kind: "IMAGE"
+    label: "v0.18.1 / v0.18.2 samples"
+    detail: "58k diagonal 与 117k / 110k column 样本"
+  - kind: "METRIC"
+    label: "period-32 phase profile"
+    detail: "横向梯度的 cohort-level 相位变化"
+  - kind: "CODE"
+    label: "v0.19.1"
+    detail: "[1,16] checkerboard A/B 与 patch batching 原型"
+  - kind: "DESIGN"
+    label: "full phase-parallel HPA"
+    detail: "AdaLN 条件、rolling KV 与局部 Pixel AR 的待验证方案"
+toc:
+  - id: diagnosis
+    label: "排序诊断"
+  - id: prototype
+    label: "已有原型"
+  - id: pipeline
+    label: "多层级流程"
+  - id: proposal
+    label: "完整假设"
+  - id: unknowns
+    label: "未知项"
+  - id: plan
+    label: "验证路线"
+---
+
+<section class="research-content-section research-content-section--lead" id="diagnosis">
+  <p class="research-section-label">01 / 排序诊断</p>
+  <h2>空间生成顺序会在样本总体中留下方向性指纹</h2>
+  <p>v0.18.x 不再把整图任意压成一条序列，而是比较 diagonal groups 与 column groups。v0.18.1 的 diagonal 模型留下了约 58k step 的实际样本；v0.18.2 的 column 分支留下了约 117k / 110k step 的样本。两组都能够形成图像，但它们的周期性结构并不相同。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0181-diagonal-step58000.png" alt="Diagonal grouped autoregressive samples at step 58000">
+  <p class="research-figure-caption">v0.18.1 · diagonal groups · step 58k。模型能够生成整体结构，但分组边界仍可能在局部纹理中显现。</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v0182-column-step117000.png" alt="Column grouped autoregressive samples at step 117000">
+  <p class="research-figure-caption">v0.18.2 · column groups · step 117k。与 diagonal 分组相比，纵向组织方式改变了误差的空间分布。</p>
+  <p>在 period-32 横向梯度统计上，column cohort 的 phase variation 约为 30.2%，diagonal cohort 约为 5.6%。这支持“分组方向会改变总体偏差”的判断，但不能推出每张 column 样本都有同一个 32-pixel 水印，也不能仅凭两个不同 checkpoint 断言哪一种排序质量更高。</p>
+  <div class="research-thesis">
+    <span>诊断结论</span>
+    <p>空间 factorization 不是纯粹的工程细节：模型允许哪些位置先交流、哪些位置并行，会改变可见误差的方向与周期。</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="prototype">
+  <p class="research-section-label">02 / 已有原型</p>
+  <h2>v0.19.1 实现了最小 checkerboard A/B 路径，但没有结果</h2>
+  <p>v0.19.1 把 <code>256×256</code> 图像切成 256 个 <code>16×16</code> macro patches，再按 checkerboard 分为 A/B 两组。一个 phase 内的 128 个 patches 共享当前 pixel step，patch 内仍采用严格 raster-order Pixel AR；B phase 可以读取已经生成的 A phase。</p>
+  <table>
+    <thead><tr><th>组件</th><th>当前状态</th><th>能够说明什么</th></tr></thead>
+    <tbody>
+      <tr><td><code>[1,16]</code> coarse-to-patch hierarchy</td><td>有实现</td><td>tensor path 与两尺度接口已写出</td></tr>
+      <tr><td>A/B checkerboard + 128-patch batching</td><td>有实现</td><td>phase 内并行的代码路径存在</td></tr>
+      <tr><td>局部 <code>16×16</code> Pixel AR + KV cache</td><td>有实现</td><td>patch 内因果生成组件存在</td></tr>
+      <tr><td>训练 checkpoint / log / sample</td><td>未找到</td><td>不能声称质量、速度或边界连续性改善</td></tr>
+    </tbody>
+  </table>
+  <p>因此，v0.19.1 是 proof-of-concept implementation，不是 proof of effectiveness。它只把下一步的问题从“能否表达这个图”推进到“这个 factorization 是否值得训练”。</p>
+</section>
+
+<section class="research-content-section" id="pipeline">
+  <p class="research-section-label">03 / 多层级 Phase Schedule</p>
+  <h2>同一张图从 L0 到 L4 逐层提高分辨率：L0 全局 AR，后续层按 A/B phase 批量生成</h2>
+  <p>交互图展示完整设计中的五层空间关系：<code>L0-L4</code> 分别生成 <code>16²、32²、64²、128²、256²</code> 的同一张图，对应每个 macro patch 内 <code>1²、2²、4²、8²、16²</code> 个 RGB pixels。L0 仍按传统 raster order 顺序生成 256 个 coarse RGB tokens；只有 L1-L4 才把 256 个 patches 拆成 A/B 两组，每组 128 个 patches 批量推进。它是对完整 Phase-Parallel HPA schedule 的可视化，不代表 v0.19.1 已经实现五层训练。</p>
+
+  {% include research/pipeline-v0191.html lang='zh' %}
+
+  <div id="in-place-refinement-section">
+    <h3>同一张图如何原位变细：每个 phase 只覆盖 checkerboard 的一半</h3>
+    <p>第二个动画去掉重复的 A/B 画布，只跟踪一张持续存在的图。L0 完成后，<code>L1A</code> 只修改 A，B 仍保持 L0 分辨率；随后 <code>L1B</code> 再替换剩余的 B pixels。完整的 L1 直接成为 L2 的起点，并以同样方式继续到 L4。</p>
+    {% include research/refinement-v0191.html lang='zh' %}
+  </div>
+
+  <div id="shared-ar">
+    <h3>一个 Shared HPA 主干，加一个轻量 Pixel AR head</h3>
+    <p>顶层结构沿用 v0.17.7：所有 level 与 phase 都复用同一个 causal HPA Transformer，而不是为每层新建网络，但不同阶段使用不同的 token 粒度。L0 是传统 next-token AR：输入一个 coarse RGB token，再预测下一个。L1-L4 每次 phase 更替时，128 个 carrier tokens 作为一个 masked parallel group 同批进入 Shared HPA，并输出 128 个 patch conditions <code>h_i</code>。经过 AdaLN 调制后，轻量 Pixel AR head 仍在单个 patch 内逐 token 自回归，但 128 条 patch-local next-token loops 同时运行。动画为了便于理解，会在 L0 后把 A/B positions 画成连续两段；实际实现可直接通过 indices 与 causal mask 表达相同顺序，不需要真的移动 tokens。</p>
+    {% include research/shared-ar-v0191.html lang='zh' %}
+    <table>
+      <thead><tr><th>模块</th><th>职责</th><th>参数复用方式</th></tr></thead>
+      <tbody>
+        <tr><td>Shared HPA Transformer</td><td>建模全局语义，以及 level 与 A/B phase 之间的依赖</td><td>九组 stage 共用一个大型 causal backbone</td></tr>
+        <tr><td>L0 RGB head</td><td>按传统全局 AR 顺序预测 256 个 coarse RGB tokens</td><td>只由 L0 使用</td></tr>
+        <tr><td>AdaLN bridge</td><td>融合 <code>h_i</code>、parent RGB、level、phase 与局部 pixel position</td><td>逐层调制 local head</td></tr>
+        <tr><td>轻量 Pixel AR head</td><td>保持单个 patch 内严格的 raster causality</td><td>方案中由 L1-L4 与 128 条并行 patch streams 共享参数</td></tr>
+      </tbody>
+    </table>
+    <p><strong>训练。</strong> 把九组 stage 展开在同一张计算图中，用 stage mask 监督 HPA transition，并对每条 patch-local RGB 序列使用 teacher forcing。<strong>推理。</strong> 每次只运行图中高亮的一组 stage，采样轻量 Pixel AR head，把生成的 phase RGB 重新 embedding，再送回同一个 HPA 进入下一阶段。</p>
+    <p><strong>资源影响目前仍只是设计估算。</strong> 逻辑序列仍为 <code>256 + 8×128 = 1,280</code> 个 HPA tokens。Rolling pre-eviction 预计常驻约 128 个 carrier tokens、峰值约 256；post-eviction 常驻约 256、峰值约 384，而 full history 最多为 1,280。把 B 当作更早 A 的压缩 carrier 仍是假设，必须用 full-history 对照验证；仅修改 block mask 也不会自动减少 dense-kernel FLOPs。</p>
+  </div>
+
+  <div class="research-experiment-verdict">
+    <span>Implementation boundary</span>
+    <p>v0.19.1 已实现两阶段 checkerboard 与 patch batching，但它仍是 <code>[1,16]</code> 两层模型：phase communication 使用独立 bidirectional context layer，Pixel AR 读取单个 64-d prefix，而不是后文方案中的 shared Phase AR、rolling KV 或 AdaLN。</p>
+  </div>
+</section>
+
+<section class="research-content-section" id="proposal">
+  <p class="research-section-label">04 / 完整假设</p>
+  <h2>把全串行 Patch AR 改成跨层、跨 phase、patch 内三种依赖</h2>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-hpa-shared-sequence.png" alt="Shared hierarchical autoregressive sequence across RGB scales">
+  <p class="research-figure-caption">v0.17.7 已验证同一个 causal Transformer 可以跨 RGB 层级训练与采样；新设计只把每层内部的全序改成 A/B 两阶段偏序。</p>
+  <div class="research-approach-grid research-approach-grid--report">
+    <article><span>01</span><h3>Coarse AR</h3><p>L0 的 256 个 coarse RGB values 继续按全局顺序生成，负责语义与布局。</p><small>沿用 HPA 主干</small></article>
+    <article><span>02</span><h3>Phase AR</h3><p>L1-L4 先生成 A，再生成 B；共享大 Transformer 传递跨层和跨 phase state。</p><small>两阶段偏序</small></article>
+    <article><span>03</span><h3>Patch RGB AR</h3><p>同 phase 的 128 个 patches 并行推进当前 pixel，单个 patch 内保持 raster causal order。</p><small>局部严格 AR</small></article>
+  </div>
+  <p>完整五层方案的局部 Pixel AR 需要 <code>2(4+16+64+256)=680</code> 个同步 pixel rounds；再加 L0 的 256 轮与 8 次 phase transition，依赖路径约为 944。这个数字描述计算图，不是已经测得的加速比。</p>
+  <p>条件接口也需要从一个 64-d prefix 扩展为逐层调制：parent RGB、pixel position、level 与 phase 共同生成 AdaLN 参数。共享 Transformer 的 KV 则按 phase 滚动保留，以在显存和历史信息之间建立可测的取舍。</p>
+</section>
+
+<section class="research-content-section" id="unknowns">
+  <p class="research-section-label">05 / 未知项</p>
+  <h2>这套设计仍有五个必须单独回答的问题</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Phase 内条件独立是否过强？</h3><p>checkerboard 避免同 phase patches 共用水平或垂直边，但不保证颜色、纹理与长距离结构一致。</p></div></li>
+    <li><span>02</span><div><h3>A→B 通信是否真的有用？</h3><p>需要和 no A→B 对照，才能区分“checkerboard 划分”与“phase communication”的贡献。</p></div></li>
+    <li><span>03</span><div><h3>Teacher-forcing gap 出现在哪一段？</h3><p>sampled parent、sampled Phase A 与 sampled pixel history 必须分别替换，不能合并成一个 free-run 结果。</p></div></li>
+    <li><span>04</span><div><h3>AdaLN 是否读取了条件？</h3><p>correct、shuffled 与 zero condition 应产生可解释的 NLL 差异，否则调制路径可能被模型忽略。</p></div></li>
+    <li><span>05</span><div><h3>Rolling KV 何时清理？</h3><p>pre-eviction、post-eviction 与 full-history 需要同时比较质量、显存和 phase latency。</p></div></li>
+  </ol>
+</section>
+
+<section class="research-content-section" id="plan">
+  <p class="research-section-label">06 / 验证路线</p>
+  <h2>先证明等价和因果，再训练完整五层模型</h2>
+  <table>
+    <thead><tr><th>阶段</th><th>对照</th><th>通过标准</th></tr></thead>
+    <tbody>
+      <tr><td>实现正确性</td><td>cached / uncached；单 patch / 128-patch batch</td><td>teacher-forcing logits 与采样序列严格对齐</td></tr>
+      <tr><td>条件接口</td><td>prefix / AdaLN；correct / shuffled / zero</td><td>确认 condition sensitivity，而不只看训练 loss</td></tr>
+      <tr><td>Phase factorization</td><td>serial / A-B / no A→B</td><td>报告 Phase A/B NLL、seam 与实际 latency</td></tr>
+      <tr><td>Sampling gap</td><td>GT / sampled parent；GT / sampled Phase A</td><td>分离跨层、跨 phase 与 patch 内误差</td></tr>
+      <tr><td>Rolling KV</td><td>full / pre / post eviction</td><td>同时记录质量、峰值显存与 phase latency</td></tr>
+      <tr><td>Scale-up</td><td><code>[1,2,4]</code> → 五层</td><td>只有小模型验证 communication 后才扩展</td></tr>
+    </tbody>
+  </table>
+  <div class="research-experiment-verdict">
+    <span>Current verdict</span>
+    <p>目前成立的是“空间排序会产生方向性偏差”与“phase-parallel 路径已经可实现”；尚未成立的是“它能提高质量、速度或边界连续性”。</p>
+  </div>
+</section>

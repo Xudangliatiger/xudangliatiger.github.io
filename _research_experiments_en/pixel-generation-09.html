@@ -1,0 +1,107 @@
+---
+layout: research_experiment
+title: "Pixel-level Generative Models (IX): Concentrating Stochasticity in One Patch AR"
+description: "v0.17.9 concentrates stochastic AR in a full-patch mode choice and replaces later autoregressive levels with non-AR cascade decoders, followed by ablations on noisy history, residual DMoL, hard-detail loss, and compact cross-attention."
+card_summary: "Patch AR reduces repeated hierarchical sampling, but residual objectives still collapse toward parent copying or monochrome texture. An 8-dimensional pixel state makes the first Compact-CA model pure noise at 6k."
+project_id: pixel-generation
+content_type: experiment
+project_title: PixelGen
+record_id: "EXP-09"
+stage: "Patch AR Cascade Decoder"
+status: completed
+status_label: "Completed / structure and loss ablations"
+evidence_state: "v0.17.9.3 has a 70k checkpoint and later diagnostics; v0.17.9.4b ran to 66k but does not establish a successful correction."
+date: 2026-07-28
+updated_at: 2026-08-11
+lang: en
+alternate_url: /research/experiments/pixel-generation-09/
+source_summary: "6 versions · 2 failure diagnoses · RGB residual statistics"
+hero_image: /img/research/experiments/pixelar-v01793-step6000.png
+hero_alt: "v0.17.9.3 residual DMoL cascade samples at step 6000"
+hero_caption: "v0.17.9.3 at 6k: non-AR residual decoders recover higher resolutions after one patch-level AR state."
+og_image: /img/research/experiments/pixelar-v01793-step6000.png
+tags:
+  - Pixel Generation
+  - Patch Autoregression
+  - Residual Modeling
+  - Negative Result
+sources:
+  - kind: "CODE"
+    label: "patch_ar_cascade_decoder.py"
+    detail: "Single-query and compact-CA decoders"
+  - kind: "LOG"
+    label: "v0.17.9.2–v0.17.9.4b"
+    detail: "History, residual, hard-loss, and capacity diagnosis"
+  - kind: "METRIC"
+    label: "GT residual color check"
+    detail: "Chroma ratio and RGB-channel correlation"
+toc:
+  - id: design
+    label: "Patch AR"
+  - id: residual
+    label: "Residual DMoL"
+  - id: hardloss
+    label: "Hard residuals"
+  - id: compact
+    label: "Compact CA"
+  - id: conclusion
+    label: "Conclusion"
+---
+
+<section class="research-content-section research-content-section--lead" id="design">
+  <p class="research-section-label">01 / Patch AR</p>
+  <h2>Make the stochastic choice once at patch level</h2>
+  <p>HPA reruns stochastic DMoL sampling at every resolution, lengthening inference and creating another opportunity for history drift at each level. v0.17.9 changes the division of labor: one patch-level AR state carries global order and stochastic mode, while non-AR cascade decoders generate <code>[1,2,4,8,16]</code> resolutions conditionally.</p>
+  <div class="research-thesis">
+    <span>New contract</span>
+    <p><code>one stochastic patch AR → deterministic context → multiscale DMoL decoders</code>. Random mode choice is concentrated once; fine stages refine the same mode.</p>
+  </div>
+  <p>The pipeline is not fully deterministic—DMoL heads can still sample RGB—but fine levels no longer own separate patch-level causal processes. The objective is to reduce hierarchical exposure bias while preserving multiscale supervision.</p>
+</section>
+
+<section class="research-content-section" id="residual">
+  <p class="research-section-label">02 / Residual DMoL</p>
+  <h2>Predict only the innovation relative to the parent</h2>
+  <p>v0.17.9.2 first adds flow-to-uniform noise to training history, but is stopped after about 10 hours 50 minutes because the available samples do not indicate that random corruption reaches the core failure. v0.17.9.3 then changes the objective to a Laplacian-style residual:</p>
+  <div class="research-equation">\[r_l=x_l-\mathrm{up}_{\text{patch-nearest}}(x_{l-1}),\qquad \hat{x}_l=\mathrm{up}(\hat{x}_{l-1})+\hat r_l.\]</div>
+  <p>L0 predicts absolute RGB, while L1+ predict residual DMoL. Restored absolute RGB is used for visualization and downstream conditioning. This prevents a fine head from achieving low absolute likelihood merely by copying its parent.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01793c-step2000.png" alt="v0.17.9.3c debug chain sample at step 2000">
+  <p class="research-figure-caption">v0.17.9.3c debug chain at 2k. Early dynamics are healthier than the gamma-2 hard-loss branch, but this is not evidence of final convergence quality.</p>
+</section>
+
+<section class="research-content-section" id="hardloss">
+  <p class="research-section-label">03 / Hard residuals</p>
+  <h2>Emphasizing high-energy residuals produces texture templates rather than semantic edges</h2>
+  <p>GT residual energy is sparse. A threshold of 8/255 retains only about 23.6%–44.1% of groups while retaining 94.6%–97.4% of residual energy. v0.17.9.3B therefore keeps base DMoL and adds a batch-minmax difficulty-weighted term:</p>
+  <div class="research-equation">\[d_i=\mathrm{minmax}(\mathrm{RMS}(r_i))^\gamma,\qquad \mathcal L_l=\mathcal L_{\text{base}}+\lambda\frac{\sum_i d_i\mathrm{NLL}_i}{\sum_i d_i}.\]</div>
+  <p>With <code>γ=2, λ=1</code>, the hard term dominates fine-level losses and generates black-and-white high-frequency fields. Reducing <code>γ</code> to 1 improves the 1k→2k dynamics, but a 40k diagnostic still over-emphasizes high-frequency texture/noise. The final change to a weak <code>λ=0.1</code> auxiliary has no completed result that supports a success claim.</p>
+  <table>
+    <thead><tr><th>Residual statistic</th><th>GT</th><th>v0.17.9.3B generated</th></tr></thead>
+    <tbody>
+      <tr><td>Chroma ratio</td><td>0.374–0.418</td><td>0.110–0.139</td></tr>
+      <tr><td>RGB correlation</td><td>about 0.75–0.93</td><td>about 0.996–0.999</td></tr>
+      <tr><td>Reading</td><td>Luminance edges plus chromatic detail</td><td>Nearly grayscale edge/texture templates</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="research-content-section" id="compact">
+  <p class="research-section-label">04 / Compact CA</p>
+  <h2>More parameters do not imply a stronger pixel readout</h2>
+  <p>v0.17.9.4 introduces PixelDiT/PRA-style compact cross-attention: compress per-pixel tokens into one compact token, read AR memory, then expand back to pixels. Total parameters increase from about 709.6M to 745.9M, and decoder-side parameters from 57.0M to 93.2M, yet all five rows remain pure noise at 6k steps.</p>
+  <img class="research-pipeline-figure" src="/img/research/experiments/pixelar-v01794-step6000.png" alt="v0.17.9.4 compact cross-attention samples at step 6000">
+  <p class="research-figure-caption">v0.17.9.4 at 6k. Smoke tests and tensor shapes pass, but training dynamics lag far behind v0.17.9.3.</p>
+  <p>Three simultaneous changes explain the regression: the new decoder also replaces L0; each pixel state is only eight-dimensional; and all positions share an <code>8→100</code> DMoL readout with zero-initialized pixel positions. Capacity moved into 1280-dimensional CA matrices while the position-specific pixel distribution became much weaker.</p>
+  <p>v0.17.9.4b reduces compact width to 512, increases pixel width to 64, and restores an interface closer to v0.17.9.3. It reaches about 66k before walltime. The supported statement is only that it avoids the same immediate collapse—not that final quality improves.</p>
+</section>
+
+<section class="research-content-section" id="conclusion">
+  <p class="research-section-label">05 / Conclusion</p>
+  <h2>Concentrated stochasticity is promising, but refinement still needs explicit spatial dependency</h2>
+  <ol class="research-findings">
+    <li><span>01</span><div><h3>Keep one patch-level mode selection</h3><p>It reduces repeated mode changes and makes structural failures easier to localize.</p></div></li>
+    <li><span>02</span><div><h3>Keep residual targets</h3><p>They explicitly request innovation, but the loss must not chase high-energy texture alone.</p></div></li>
+    <li><span>03</span><div><h3>Reject strong hard loss as a substitute for structure</h3><p>Weights can identify hard pixels, but cannot create a coherent edge mode across pixels.</p></div></li>
+    <li><span>04</span><div><h3>Next question: combine local AR with parallel patches</h3><p>We need strict pixel dependency inside each patch without serializing all 256 macro patches.</p></div></li>
+  </ol>
+</section>

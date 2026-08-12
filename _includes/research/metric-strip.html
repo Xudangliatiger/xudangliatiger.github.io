@@ -1,0 +1,12 @@
+{% assign metrics = include.items %}
+{% if metrics %}
+<div class="research-metrics" aria-label="Key project metrics">
+  {% for metric in metrics %}
+  <div class="research-metric">
+    <span class="research-metric__value">{{ metric.value }}</span>
+    <span class="research-metric__label">{{ metric.label }}</span>
+    {% if metric.note %}<span class="research-metric__note">{{ metric.note }}</span>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

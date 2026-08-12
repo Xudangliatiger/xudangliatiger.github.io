@@ -1,0 +1,18 @@
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: true
+    }
+  };
+</script>
+<script defer src="{{ '/js/mathjax-tex-svg-3.2.2.js' | prepend: site.baseurl }}"></script>

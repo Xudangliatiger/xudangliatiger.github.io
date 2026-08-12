@@ -1,0 +1,55 @@
+{% assign article_header_image = include.image | default: page.header-img | default: site.header-img %}
+{% assign article_header_path = article_header_image | remove_first: '/' %}
+{% assign article_header_title = include.title | default: page.title %}
+{% assign article_header_subtitle = include.subtitle | default: page.subtitle %}
+{% assign article_header_date = include.date | default: page.date %}
+{% assign article_header_interactive = false %}
+{% if page.content_type == 'experiment' %}{% assign article_header_interactive = true %}{% endif %}
+{% if page.lang == 'en' %}
+  {% assign article_tag_index = '/en/tags/' %}
+{% else %}
+  {% assign article_tag_index = '/tags/' %}
+{% endif %}
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    {% unless article_header_interactive %}
+    background-image: url('{{ site.baseurl }}/{{ article_header_path }}');
+    {% endunless %}
+  }
+
+  {% if page.header-mask %}
+  header.intro-header .header-mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, {{ page.header-mask }});
+  }
+  {% endif %}
+</style>
+<header class="intro-header{% if include.variant %} article-header--{{ include.variant }}{% endif %}{% if article_header_interactive %} article-header--interactive research-interactive-hero{% endif %}"{% if article_header_interactive %} data-interactive-field{% endif %}>
+  {% if article_header_interactive %}
+  {% include research/interactive-field.html %}
+  {% endif %}
+  <div class="header-mask"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <div class="tags">
+            {% for tag in page.tags %}
+            <a class="tag" href="{{ article_tag_index | prepend: site.baseurl }}#{{ tag | slugify }}" title="{{ tag }}">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          <h1>{{ article_header_title }}</h1>
+          <h2 class="subheading">{{ article_header_subtitle }}</h2>
+          {% if include.meta %}
+          <span class="meta">{{ include.meta }}</span>
+          {% else %}
+          <span class="meta">Posted by {{ page.author | default: site.title }} on {{ article_header_date | date: "%B %-d, %Y" }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,120 @@
+---
+layout: default
+---
+{% assign current_lang = page.lang | default: 'zh' %}
+{% if current_lang == 'en' %}
+  {% assign content_items = site.research_projects_en | concat: site.research_experiments_en | concat: site.research_notes_en | concat: site.research_blog_en %}
+  {% assign page_title = 'Featured Tags' %}
+  {% assign page_lede = 'Search projects, experiment records, and blog posts from one index.' %}
+  {% assign search_label = 'Search all research content' %}
+  {% assign search_placeholder = 'Search title, summary, or tag' %}
+  {% assign all_label = 'All content' %}
+  {% assign result_label = 'items' %}
+  {% assign empty_label = 'No matching content.' %}
+{% else %}
+  {% assign content_items = site.research_projects | concat: site.research_experiments | concat: site.posts %}
+  {% assign page_title = 'Featured Tags' %}
+  {% assign page_lede = '在一个索引中搜索项目概览、实验记录和 Blog。' %}
+  {% assign search_label = '搜索全部研究内容' %}
+  {% assign search_placeholder = '搜索标题、摘要或标签' %}
+  {% assign all_label = '全部内容' %}
+  {% assign result_label = '项内容' %}
+  {% assign empty_label = '没有匹配的内容。' %}
+{% endif %}
+<main class="research-shell research-tag-index">
+  <header class="research-tag-hero">
+    <div class="research-container">
+      <div class="research-hero-topline">
+        <p class="research-kicker">Dongli Xu / Content Index</p>
+        {% include research/language-switcher.html lang=current_lang alternate_url=page.alternate_url %}
+      </div>
+      <h1>{{ page_title }}</h1>
+      <p>{{ page_lede }}</p>
+    </div>
+  </header>
+
+  <section class="research-tag-tools">
+    <div class="research-container">
+      <label for="content-search">{{ search_label }}</label>
+      <input id="content-search" type="search" placeholder="{{ search_placeholder }}" autocomplete="off">
+      <nav class="research-tag-filters" aria-label="Featured Tags">
+        <a class="tag-index-filter is-active" href="#all" data-tag-filter="all">{{ all_label }}</a>
+        {% for tag in site.data.content_tags %}
+          {% assign tag_count = 0 %}
+          {% for item in content_items %}{% if item.tags contains tag.label %}{% assign tag_count = tag_count | plus: 1 %}{% endif %}{% endfor %}
+          {% if tag_count > 0 %}<a class="tag-index-filter" href="#{{ tag.label | slugify }}" data-tag-filter="{{ tag.label | slugify }}">{{ tag.label }} <span>{{ tag_count }}</span></a>{% endif %}
+        {% endfor %}
+      </nav>
+      <p class="research-tag-result-count"><strong id="visible-content-count">{{ content_items | size }}</strong> {{ result_label }}</p>
+    </div>
+  </section>
+
+  <section class="research-section research-section--paper">
+    <div class="research-container research-tag-results" id="content-results">
+      {% for item in content_items %}
+        {% capture item_tag_slugs %}{% for tag in item.tags %}{{ tag | slugify }}{% unless forloop.last %}|{% endunless %}{% endfor %}{% endcapture %}
+        {% capture item_search %}{{ item.title }} {{ item.card_summary }} {{ item.summary }} {{ item.description }} {{ item.content | strip_html | strip_newlines | truncate: 500 }} {{ item.tags | join: ' ' }}{% endcapture %}
+        <article class="research-tag-item tag-index-item" data-tags="{{ item_tag_slugs | strip }}" data-search="{{ item_search | strip_html | strip_newlines | downcase | escape }}">
+          <div class="research-tag-item__meta">
+            {% case item.content_type %}
+              {% when 'project' %}{% if current_lang == 'en' %}PROJECT{% else %}项目概览{% endif %}
+              {% when 'experiment' %}{% if current_lang == 'en' %}EXPERIMENT RECORD{% else %}实验记录{% endif %}
+              {% when 'blog' %}BLOG
+              {% else %}CONTENT
+            {% endcase %}
+            {% assign item_date = item.updated_at | default: item.date %}
+            {% if item_date %}<time datetime="{{ item_date | date: '%Y-%m-%d' }}">{{ item_date | date: '%Y.%m.%d' }}</time>{% endif %}
+          </div>
+          <div class="research-tag-item__body">
+            <h2><a href="{{ item.url | prepend: site.baseurl }}">{{ item.title }}</a></h2>
+            <p>{{ item.card_summary | default: item.summary | default: item.description | default: item.content | strip_html | strip_newlines | truncate: 190 }}</p>
+            <div class="research-tag-item__tags">{% for tag in item.tags %}<a href="#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}</div>
+          </div>
+          <a class="research-note-row__arrow" href="{{ item.url | prepend: site.baseurl }}" aria-label="Open {{ item.title }}">↗</a>
+        </article>
+      {% endfor %}
+      <p class="research-tag-empty" id="content-empty" hidden>{{ empty_label }}</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var input = document.getElementById('content-search');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.tag-index-item'));
+  var filters = Array.prototype.slice.call(document.querySelectorAll('.tag-index-filter'));
+  var count = document.getElementById('visible-content-count');
+  var empty = document.getElementById('content-empty');
+
+  function activeTag() {
+    var value = window.location.hash.replace(/^#/, '');
+    return filters.some(function (filter) { return filter.dataset.tagFilter === value; }) ? value : 'all';
+  }
+
+  function applyFilters() {
+    var tag = activeTag();
+    var query = input.value.trim().toLowerCase();
+    var visible = 0;
+    filters.forEach(function (filter) {
+      filter.classList.toggle('is-active', filter.dataset.tagFilter === tag);
+    });
+    items.forEach(function (item) {
+      var tags = item.dataset.tags.split('|');
+      var matchesTag = tag === 'all' || tags.indexOf(tag) !== -1;
+      var matchesQuery = !query || item.dataset.search.indexOf(query) !== -1;
+      var show = matchesTag && matchesQuery;
+      item.hidden = !show;
+      if (show) visible += 1;
+    });
+    count.textContent = visible;
+    empty.hidden = visible !== 0;
+  }
+
+  input.addEventListener('input', applyFilters);
+  window.addEventListener('hashchange', applyFilters);
+  document.querySelectorAll('.research-tag-item__tags a').forEach(function (link) {
+    link.addEventListener('click', function () { window.setTimeout(applyFilters, 0); });
+  });
+  applyFilters();
+}());
+</script>

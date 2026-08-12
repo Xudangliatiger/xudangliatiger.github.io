@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: dongliixu@gmail.com
 description: "Thanks for visiting!"
 keyword: "徐东篱, donglixu, homepage, Dongli's homepage, Web"
-url: "donglixu.site"              # your host, for absolute URL
+url: "https://donglixu.site"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
@@ -26,16 +26,47 @@ google_scholar_username:   BfZECLsAAAAJ
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
 permalink: pretty
-paginate: 10
-paginate_path: "/blog/page:num"
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
+exclude:
+  - less
+  - node_modules
+  - Gruntfile.js
+  - package.json
+  - README.md
+  - README.zh.md
+  - test.py
+  - test_private_huatuo_v3.csv
+  - test_private_huatuo_v3_revised.csv
+  - test_private_huatuo_v3_revised_plus_baseline.csv
+  - test_private_v1_40000.csv
+  - test_public_huatuo_v3.csv
+  - test_public_huatuo_v3_revised.csv
+  - test_public_huatuo_v3_revised_plus_baseline.csv
+  - test_public_v1_40000.csv
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
-
-
-# Gems
-# from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
+# Research publishing system
+# Each document in `_research_projects` becomes a polished public project page.
+# The matching Lab Log lives under `research/<project-id>/lab/` and reuses the
+# same project metadata and shared components.
+collections:
+  research_projects:
+    output: true
+    permalink: /research/:name/
+  research_projects_en:
+    output: true
+    permalink: /en/research/:name/
+  research_notes_en:
+    output: true
+    permalink: /en/research/notes/:name/
+  research_experiments:
+    output: true
+    permalink: /research/experiments/:name/
+  research_experiments_en:
+    output: true
+    permalink: /en/research/experiments/:name/
+  research_blog_en:
+    output: true
+    permalink: /en/blog/notes/:name/
 
 
 
@@ -102,4 +133,3 @@ friends: [
     #     href: "https://orzzzjq.github.io"
     }
 ]
-
