@@ -202,6 +202,20 @@
   padding-left: 25px;
   border-left: 3px solid #d4b56f;
   font-size: 15px;
+  /* 固定最大高度，展开 Show more history 后在框内滚动 */
+  max-height: 640px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #d4b56f transparent;
+}
+.timeline::-webkit-scrollbar {
+  width: 6px;
+}
+.timeline::-webkit-scrollbar-thumb {
+  background: #d4b56f;
+  border-radius: 3px;
 }
 
 .timeline-item {
@@ -358,7 +372,6 @@ He has gained industry research experience at [SAIS](https://www.sais.com.cn/) a
     </div>
   </div>
 
-  <!-- 2025 -->
   <div class="timeline-item normal">
     <div class="timeline-date">Jan. 2026</div>
     <div class="timeline-content">
@@ -371,8 +384,11 @@ He has gained industry research experience at [SAIS](https://www.sais.com.cn/) a
       A paper is accepted by <b>ICASSP</b>. Congratulations to <b>Congyi</b>!
     </div>
   </div> 
-  
 
+<details class="timeline-more">
+    <summary>Show more history</summary>
+
+  <!-- 2025 -->
   <div class="timeline-item gold">
     <div class="timeline-date">Oct. 2025</div>
     <div class="timeline-content">
@@ -403,9 +419,6 @@ He has gained industry research experience at [SAIS](https://www.sais.com.cn/) a
       <a href="https://www.flandersairesearch.be/en" target="_blank">Flanders AI Research Program</a>.
     </div>
   </div>
-
-<details class="timeline-more">
-    <summary>Show more history</summary>
 
 <div class="timeline-item">
   <div class="timeline-date">Dec. 2024</div>
@@ -517,6 +530,21 @@ Harbin, Heilongjiang, P. R. China
 ---
 ## Preprints
 
+  <div class="paper-card">
+    <div class="card-content">
+    <h4>HPT: Hierarchical Pixel Transformers for Native Pixel Generation</h4>
+    <div class="authors"> <strong>Dongli Xu</strong>, Matthew B. Blaschko</div>
+    <div class="venue">Will be released soon!</div>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="card-content">
+    <h4>Pixel Echo: Multiscale Phase Decomposition of Generator Fingerprints</h4>
+    <div class="authors"> <strong>Dongli Xu</strong>, Matthew B. Blaschko</div>
+    <div class="venue">Will be released soon!</div>
+    </div>
+  </div>
   
   <div class="paper-card">
     <img src="{{page.homepage.url}}/img/papers/2025-10-2-ORT.png" alt="Paper Image" class="card-image">
