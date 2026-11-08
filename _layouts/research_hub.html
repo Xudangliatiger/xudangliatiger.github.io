@@ -17,6 +17,7 @@ layout: default
 {% assign latest_project = projects | first %}
 {% assign experiment_records = experiments | concat: experiment_notes | sort: 'date' | reverse %}
 {% assign experiment_count = experiment_records | size %}
+<link rel="stylesheet" href="{{ '/css/research-highlight.css' | prepend: site.baseurl }}">
 <main class="research-shell research-hub">
   <header class="research-hub-hero research-interactive-hero" data-interactive-field>
     {% include research/interactive-field.html %}
@@ -85,3 +86,4 @@ layout: default
   </section>
 
 </main>
+<script src="{{ '/js/research/highlight-cards.js' | prepend: site.baseurl }}" defer></script>

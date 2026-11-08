@@ -1,0 +1,14 @@
+/* Highlight project cards: animated visuals drawn on a canvas over the poster image. */
+.research-project-card__visual[data-card-anim] canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.research-project-card__visual.is-animated canvas { opacity: 1; }
+.research-project-card__visual[data-card-anim] .research-project-card__number { z-index: 1; }
+.research-project-card__visual[data-card-anim]:not([data-image]) { background: #f7f5f0; }
+.research-project-card__visual[data-card-anim]:hover canvas { filter: saturate(1.08); }

@@ -9,8 +9,10 @@
   {% assign tag_list_label = '研究标签' %}
 {% endif %}
 <article class="research-project-card research-project-card--{{ project.accent | default: 'signal' }}">
-  <a class="research-project-card__visual" href="{{ project.url | prepend: site.baseurl }}" aria-label="Open {{ project.title }} discovery page">
-    <img src="{{ project.hero_image | prepend: site.baseurl }}" alt="{{ project.hero_alt }}" loading="lazy">
+  {% assign card_url = project.card_url | default: project.url %}
+  <a class="research-project-card__visual" href="{{ card_url | prepend: site.baseurl }}" aria-label="Open {{ project.title }}"{% if project.card_animation %} data-card-anim="{{ project.card_animation }}"{% if project.card_animation_src %} data-src="{{ project.card_animation_src | prepend: site.baseurl }}"{% endif %}{% if project.hero_image %} data-image="{{ project.hero_image | prepend: site.baseurl }}"{% endif %}{% endif %}>
+    {% if project.hero_image %}<img src="{{ project.hero_image | prepend: site.baseurl }}" alt="{{ project.hero_alt }}" loading="lazy">{% endif %}
+    {% if project.card_animation %}<canvas aria-hidden="true"></canvas>{% endif %}
     <span class="research-project-card__number">{{ include.index | default: '01' }}</span>
   </a>
   <div class="research-project-card__body">
@@ -18,7 +20,7 @@
       {% include research/status-badge.html status=project.status label=project.status_label %}
       <time datetime="{{ project.updated_at | date: '%Y-%m-%d' }}">{{ t.common.updated }} {{ project.updated_at | date: '%Y.%m.%d' }}</time>
     </div>
-    <h3 class="research-project-card__title"><a href="{{ project.url | prepend: site.baseurl }}">{{ project.title }}</a></h3>
+    <h3 class="research-project-card__title"><a href="{{ card_url | prepend: site.baseurl }}">{{ project.title }}</a></h3>
     <p class="research-project-card__summary">{{ project.card_summary | default: project.description }}</p>
     {% if project.tags %}
     <ul class="research-chip-list" aria-label="{{ tag_list_label }}">
@@ -26,8 +28,8 @@
     </ul>
     {% endif %}
     <div class="research-project-card__actions">
-      <a class="research-text-link" href="{{ project.url | prepend: site.baseurl }}">{{ t.common.overview_action }} <span aria-hidden="true">→</span></a>
-      <a class="research-text-link research-text-link--muted" href="{{ project.lab_url | prepend: site.baseurl }}">{{ t.common.lab_action }}</a>
+      <a class="research-text-link" href="{{ card_url | prepend: site.baseurl }}">{{ project.card_action | default: t.common.overview_action }} <span aria-hidden="true">→</span></a>
+      {% if project.lab_url %}<a class="research-text-link research-text-link--muted" href="{{ project.lab_url | prepend: site.baseurl }}">{{ t.common.lab_action }}</a>{% endif %}
     </div>
   </div>
 </article>

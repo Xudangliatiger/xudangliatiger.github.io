@@ -539,14 +539,6 @@ Harbin, Heilongjiang, P. R. China
   </div>
 
   <div class="paper-card">
-    <div class="card-content">
-    <h4>Pixel Echo: Multiscale Phase Decomposition of Generator Fingerprints</h4>
-    <div class="authors"> <strong>Dongli Xu</strong>, Matthew B. Blaschko</div>
-    <div class="venue">Will be released soon!</div>
-    </div>
-  </div>
-  
-  <div class="paper-card">
     <img src="{{page.homepage.url}}/img/papers/2025-10-2-ORT.png" alt="Paper Image" class="card-image">
     <div class="card-content">
     <h4>Revisiting Random Generation Order: Ordinal-biased Random Training for Efficient Visual Autoregressive Models</h4>

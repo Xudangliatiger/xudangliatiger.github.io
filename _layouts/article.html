@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="{{ page.default_lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <meta name="description" content="{{ page.summary | strip_html | strip_newlines | escape }}">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:description" content="{{ page.summary | strip_html | strip_newlines | escape }}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  {% if page.og_image %}<meta property="og:image" content="{{ site.url }}{{ page.og_image }}">{% endif %}
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  {% if page.math %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false},{left:'$',right:'$',display:false}],ignoredClasses:['cite-block']});"></script>
+  {% endif %}
+  <link rel="stylesheet" href="{{ '/css/article.css' | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}">
+</head>
+<body class="article-page">
+  <header class="article-topbar">
+    <div class="article-topbar__inner">
+      <a class="article-brand" href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
+      <nav class="article-nav">
+        <a href="{{ '/' | prepend: site.baseurl }}">About</a>
+        <a href="{{ '/en/blog/' | prepend: site.baseurl }}" class="is-current">Research</a>
+        <a href="{{ '/en/tags/' | prepend: site.baseurl }}">Tags</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-shell">
+    <div class="article-crumbs"><a href="{{ '/en/blog/#blog' | prepend: site.baseurl }}">Research</a> <span>›</span> {{ page.title }}</div>
+    <div class="article-meta-row">
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%b %-d, %Y' }}</time>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en">EN</button>
+        <button type="button" data-set-lang="zh">中文</button>
+      </div>
+    </div>
+    <h1 class="article-title">
+      <span data-lang="en">{{ page.title }}</span>
+      <span data-lang="zh">{{ page.title_zh | default: page.title }}</span>
+    </h1>
+    <p class="article-dek">
+      <span data-lang="en">{{ page.summary }}</span>
+      <span data-lang="zh">{{ page.summary_zh | default: page.summary }}</span>
+    </p>
+    {% unless page.hide_byline %}
+    <div class="article-byline">
+      <img src="{{ page.author_avatar | default: site.sidebar-avatar | prepend: site.baseurl }}" alt="" onerror="this.remove()">
+      <span><span data-lang="en">By</span><span data-lang="zh">作者</span> {{ page.authors | default: page.author }}</span>
+    </div>
+    {% endunless %}
+
+    {% if page.toc %}
+    <nav class="article-toc" aria-label="Contents">
+      {% for item in page.toc %}<a href="#{{ item.id }}"><span data-lang="en">{{ item.en }}</span><span data-lang="zh">{{ item.zh }}</span></a>{% endfor %}
+    </nav>
+    {% endif %}
+
+    <article class="article-body">
+      {{ content }}
+    </article>
+  </main>
+
+  <footer class="article-footer">
+    <div class="article-footer__inner">
+      <span>© {{ site.time | date: '%Y' }} {{ site.title }}</span>
+      <a href="{{ '/en/blog/#blog' | prepend: site.baseurl }}">← <span data-lang="en">Back to Research</span><span data-lang="zh">返回 Research</span></a>
+    </div>
+  </footer>
+
+  <script src="{{ '/js/article/kit.js' | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+  {% for s in page.scripts %}<script src="{{ s | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+  {% endfor %}
+</body>
+</html>
